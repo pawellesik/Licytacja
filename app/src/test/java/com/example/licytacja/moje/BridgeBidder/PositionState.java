@@ -112,8 +112,7 @@ public class PositionState {
     }
 
     public boolean isValidNextCall(Call call) {
-        // TODO: Port ContractState logic
-        return true;
+        return biddingState.getContract().isValid(call, this.direction);
     }
 
     public void makeCall(CallDetails callDetails) {
@@ -183,7 +182,23 @@ public class PositionState {
     }
 
     public boolean isReverse(Call call) {
-        // TODO
+        if (call instanceof Bid) {
+            Bid bid = (Bid) call;
+            if (bid.getSuit() != null) {
+                for (int i = bids.size() - 1; i >= 0; i--) {
+                    Call lastCall = bids.get(i).getCall();
+                    if (lastCall instanceof Bid) {
+                        Bid lastBid = (Bid) lastCall;
+                        if (lastBid.getSuit() != null) {
+                            return (lastBid.getLevel() == bid.getLevel() - 1 &&
+                                    lastBid.getSuit().ordinal() < bid.getSuit().ordinal() &&
+                                    biddingState.getContract().isJump(bid) == 0 &&
+                                    pairState.firstToShow(bid.getSuit()) == null);
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 

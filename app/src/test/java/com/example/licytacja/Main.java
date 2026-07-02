@@ -42,8 +42,10 @@ public class Main {
             System.out.println("  Wszystkie " + result.getRunCount() + " testów OK.");
         } else {
             System.out.println("  BŁĘDY: " + result.getFailureCount() + " na " + result.getRunCount());
+            int count = 0;
             for (Failure f : result.getFailures()) {
                 System.out.println("    - " + f.getTestHeader() + ": " + f.getMessage());
+                if (++count >= 10) break;
             }
         }
     }

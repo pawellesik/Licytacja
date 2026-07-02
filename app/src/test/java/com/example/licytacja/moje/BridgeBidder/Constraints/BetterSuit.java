@@ -21,12 +21,12 @@ public class BetterSuit {
             Suit b = getSuit(this.better, call);
             Suit w = getSuit(this.worse, call);
             Suit d = getSuit(this.defaultIfEqual, call);
-            if (b != null && w != null && d != null) {
+            if (b != null && w != null) {
                 Range bShape = hs.getSuits().get(b).getShape();
                 Range wShape = hs.getSuits().get(w).getShape();
                 if (bShape.getMax() < wShape.getMin()) return false;
                 if (bShape.getMax() == wShape.getMin() && w == d) return false;
-                if (!lengthOnly && bShape.equals(wShape)) {
+                if (!lengthOnly && bShape.getMax() == wShape.getMin()) {
                     int bq = hs.getSuits().get(b).getQuality().getMin();
                     int wq = hs.getSuits().get(w).getQuality().getMin();
                     if (bq > wq) return true;

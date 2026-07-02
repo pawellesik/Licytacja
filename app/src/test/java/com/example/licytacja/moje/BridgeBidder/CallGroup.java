@@ -53,8 +53,9 @@ public class CallGroup extends HashMap<Call, CallDetails> {
 
     private void recurseAddRules(Iterable<CallFeature> features) {
         for (CallFeature feature : features) {
-            // TODO: Port full logic from C#
-            if (feature.getCall() == null) {
+            if (feature instanceof CallFeatureGroup) {
+                recurseAddRules(((CallFeatureGroup) feature).getFeatures());
+            } else if (feature.getCall() == null) {
                 if (feature.satisfiesStaticConstraints(getPositionState())) {
                     if (feature instanceof CallProperties) {
                         this.partnerCalls = (CallProperties) feature;

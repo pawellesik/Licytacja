@@ -55,6 +55,13 @@ public class BiddingTests {
     @Test
     public void testTwoOverOne() {
         String suggestion = BridgeBidder.suggestBid(test.getDeal(), test.getVulnerable(), test.getAuction());
+        if (!test.getExpectedCall().equals(suggestion)) {
+            System.out.println("FAILURE: " + test.getName());
+            System.out.println("  Expected: " + test.getExpectedCall());
+            System.out.println("  Actual:   " + suggestion);
+            System.out.println("  Auction:  " + test.getAuction());
+            System.out.println("  Deal:     " + test.getDeal());
+        }
         assertEquals(test.getName(), test.getExpectedCall(), suggestion);
     }
 }
