@@ -37,8 +37,10 @@ public class BiddingState {
     }
 
     private static IBiddingSystem getBidSystem(String bidSystem) {
-        // TODO: Port LCStandard
-        return null;
+        if (bidSystem == null || bidSystem.isEmpty() || bidSystem.equals("TwoOverOneGameForce") || bidSystem.equals("LC-Basic")) {
+            return new com.example.licytacja.moje.BridgeBidder.LCStandard.LCStandard();
+        }
+        throw new IllegalArgumentException("Unknown bidding system " + bidSystem);
     }
 
     public PositionCalls getCallChoices() {

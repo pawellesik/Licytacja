@@ -26,7 +26,7 @@ public class FromString {
 
         List<Game> games = new ArrayList<>();
         for (String gt : gameTextList) {
-            // games.add(Game.parse(gt)); // Need to implement PBN parsing in Game
+            games.add(Game.parse(gt));
         }
         return games;
     }

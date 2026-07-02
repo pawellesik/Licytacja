@@ -118,6 +118,20 @@ public class Game {
         // Card validation logic could be added here
     }
 
+    public void dealCards(List<Card> deck) {
+        if (deck.size() != 52) {
+            throw new IllegalArgumentException("Deck must contain 52 cards. deck parameter count = " + deck.size());
+        }
+        Direction direction = Direction.N;
+        for (int h = 0; h < 4; h++) {
+            deal.setHand(direction, new Hand(deck.subList(h * 13, (h + 1) * 13)));
+            direction = direction.leftHandOpponent();
+        }
+    }
+
+    public void dealRandomHands() {
+        dealCards(Card.newDeck(true));
+    }
     public Map<String, String> tags = new HashMap<>();
     public Map<String, List<String>> tagData = new HashMap<>();
     public Map<String, String> tagCommentary = new HashMap<>();

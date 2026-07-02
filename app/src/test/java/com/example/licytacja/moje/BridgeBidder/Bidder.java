@@ -17,7 +17,11 @@ public abstract class Bidder {
     }
 
     public static CallFeature convention(Call call, String text, StaticConstraint... constraints) {
-        return new CallAnnotation(call, CallAnnotation.AnnotationType.Convention, text, constraints);
+        return new CallAnnotation(call, CallAnnotation.AnnotationType.Convention, text, (StaticConstraint[]) constraints);
+    }
+
+    public static CallFeature convention(String text, StaticConstraint... constraints) {
+        return new CallAnnotation(null, CallAnnotation.AnnotationType.Convention, text, (StaticConstraint[]) constraints);
     }
 
     public static CallProperties partnerBids(Call call, PositionCallsFactory pcf) {
@@ -57,12 +61,12 @@ public abstract class Bidder {
         return properties(calls, partnerBids, false, forcingToGame, false, null, null, null, null, null);
     }
 
-    public static CallFeatureGroup propertiesAgreeTrump(Call[] calls, PositionCallsFactory partnerBids, boolean agreeTrump) {
-        return properties(calls, partnerBids, false, false, agreeTrump, null, null, null, null, null);
-    }
-    
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
         return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+    
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, String alert) {
@@ -160,6 +164,10 @@ public abstract class Bidder {
 
     public static HandConstraint dummyPoints(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.Dummy);
+    }
+
+    public static HandConstraint shape(Suit suit, int count) {
+        return new Shape.ShowsShape(suit, count, count);
     }
 
     public static HandConstraint shape(int count) {
@@ -312,7 +320,11 @@ public abstract class Bidder {
         return new Break.HandBreak(name);
     }
 
-    public static Constraint agreedStrain(Strain... strains) {
-        return new AgreedStrain(strains);
+    public static Constraint raisePartner(Suit suit, int jump, int fit) {
+        return and(partner(new HasShownSuit(suit, false)), fit(fit, suit), isJump(jump));
+    }
+
+    public static Constraint raisePartner() {
+        return raisePartner(null, 0, 8);
     }
 }

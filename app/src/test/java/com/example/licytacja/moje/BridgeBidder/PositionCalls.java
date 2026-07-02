@@ -29,6 +29,10 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
         return bestCall;
     }
 
+    public void addRules(CallFeaturesFactory factory) {
+        addRules(factory.apply(positionState));
+    }
+
     public void addRules(Iterable<CallFeature> rules) {
         CallGroup group = CallGroup.create(this, rules);
         for (Map.Entry<Call, CallDetails> entry : group.entrySet()) {

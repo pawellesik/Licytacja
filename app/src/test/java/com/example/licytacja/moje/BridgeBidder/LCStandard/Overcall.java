@@ -1,6 +1,7 @@
 package com.example.licytacja.moje.BridgeBidder.LCStandard;
 
 import com.example.licytacja.moje.BridgeBidder.*;
+import com.example.licytacja.moje.BridgeBidder.Conventions.TakeoutDouble;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +9,9 @@ public class Overcall extends LCStandard {
     public static PositionCalls getOvercallPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(suitOvercall(ps));
-        // choices.addRules(NoTrump.strongOvercall(ps));
-        // choices.addRules(TakeoutDouble.initiateConvention(ps));
-        // choices.addRules(NoTrump.balancingOvercall(ps));
+        choices.addRules(NoTrump::strongOvercall);
+        choices.addRules(TakeoutDouble::initiateConvention);
+        choices.addRules(NoTrump::balancingOvercall);
         choices.addPassRule(points(0, 17));
         return choices;
     }
