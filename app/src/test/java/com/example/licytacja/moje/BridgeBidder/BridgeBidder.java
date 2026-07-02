@@ -1,0 +1,39 @@
+package com.example.licytacja.moje.BridgeBidder;
+
+public class BridgeBidder {
+    public static String suggestBid(String deal, String vulnerable, String auction) {
+        return suggestBid(deal, vulnerable, auction, "TwoOverOneGameForce", "TwoOverOneGameForce");
+    }
+
+    public static String suggestBid(String deal, String vulnerable, String auction, String bidSystemNS, String bidSystemEW) {
+        if (!bidSystemNS.equals("TwoOverOneGameForce") || !bidSystemEW.equals("TwoOverOneGameForce")) {
+            throw new IllegalArgumentException("Bidding system is limited to 2/1");
+        }
+
+        Game game = Game.parse(deal, vulnerable);
+        game.parseAuction(auction);
+        CallDetails callDetails = suggestCall(game);
+        return callDetails.getCall().toString();
+    }
+
+    public static CallDetails suggestCall(Game game) {
+        return suggestCall(game, false);
+    }
+
+    public static CallDetails suggestCall(Game game, boolean throwExceptionIfNoBestCall) {
+        BiddingState biddingState = new BiddingState(game);
+        if (!biddingState.getNextToAct().hasHand()) {
+            throw new RuntimeException("Can not suggest next bid when position has no defined hand.");
+        }
+        CallGroup choices = biddingState.getCallChoices();
+        if (choices.getBestCall() != null) return choices.getBestCall();
+        if (throwExceptionIfNoBestCall) {
+            throw new RuntimeException("No suggested call given by bidding system.");
+        }
+
+        if (!choices.containsKey(Call.PASS)) {
+            choices.addPassRule();
+        }
+        return choices.get(Call.PASS);
+    }
+}
