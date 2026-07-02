@@ -25,7 +25,7 @@ public class Strong2Clubs extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         if (ps.getRHO().isPassed()) {
             Call[] positiveCalls = {Bid._2H, Bid._2S, Bid._2NT, Bid._3C, Bid._3D};
-            choices.addRules(properties(positiveCalls, Strong2Clubs::openerRebidPositiveResponse, true));
+            choices.addRules(propertiesForcingToGame(positiveCalls, Strong2Clubs::openerRebidPositiveResponse, true));
             choices.addRules(shows(Bid._2H, points(8, 18), shape(5, 11))); // Simplified GoodPlusSuit
             choices.addRules(shows(Bid._2S, points(8, 18), shape(5, 11)));
             choices.addRules(shows(Bid._2NT, points(8, 18), BALANCED));
@@ -43,7 +43,7 @@ public class Strong2Clubs extends Bidder {
     private static PositionCalls openerRebidWaiting(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         // choices.addRules(TwoNoTrump.After2COpen.BIDS(ps));
-        choices.addRules(properties(new Call[]{Bid._2H, Bid._2S, Bid._3C, Bid._3D}, Strong2Clubs::responder2ndBid, true));
+        choices.addRules(propertiesForcingToGame(new Call[]{Bid._2H, Bid._2S, Bid._3C, Bid._3D}, Strong2Clubs::responder2ndBid, true));
         choices.addRules(shows(Bid._2H, shape(5, 11)));
         choices.addRules(shows(Bid._2S, shape(5, 11)));
         choices.addRules(shows(Bid._3C, shape(5, 11)));

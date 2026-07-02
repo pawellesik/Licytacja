@@ -24,6 +24,10 @@ public abstract class Bidder {
         return new CallProperties(call, pcf, false, false, false, null);
     }
 
+    public static CallProperties partnerBids(PositionCallsFactory pcf) {
+        return new CallProperties(null, pcf, false, false, false, null);
+    }
+
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, boolean forcingToGame, boolean agreeTrump, Suit trump,
                                               String alert, String announce, String convention,
                                               StaticConstraint onlyIf) {
@@ -49,8 +53,12 @@ public abstract class Bidder {
         return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, null);
     }
 
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcingToGame) {
+    public static CallFeatureGroup propertiesForcingToGame(Call[] calls, PositionCallsFactory partnerBids, boolean forcingToGame) {
         return properties(calls, partnerBids, false, forcingToGame, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup propertiesAgreeTrump(Call[] calls, PositionCallsFactory partnerBids, boolean agreeTrump) {
+        return properties(calls, partnerBids, false, false, agreeTrump, null, null, null, null, null);
     }
     
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
@@ -59,14 +67,6 @@ public abstract class Bidder {
 
     public static CallFeatureGroup properties(Call call, String alert) {
         return properties(call, null, false, false, false, null, alert, null, null, null);
-    }
-
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean agreeTrump) {
-        return properties(calls, partnerBids, false, false, agreeTrump, null, null, null, null, null);
-    }
-
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention) {
-        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, null);
     }
 
     // Static Constraints
@@ -98,6 +98,12 @@ public abstract class Bidder {
         return new SimpleStaticConstraint((call, ps) -> ps.getBiddingState().getOpeningBid().equals(bid));
     }
 
+    public static final StaticConstraint IS_REBID = new BidHistory(0, null);
+    public static final StaticConstraint IS_NOT_REBID = not(IS_REBID);
+
+    public static StaticConstraint id(String id) {
+        return new LogID(id);
+    }
     public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
     public static final StaticConstraint IS_NOT_CUE_BID = not(IS_CUE_BID);
 

@@ -16,6 +16,11 @@ public class SimpleStaticConstraint extends StaticConstraint implements IDescrib
     }
 
     public SimpleStaticConstraint(BiFunction<Call, PositionState, Boolean> eval,
+                                  BiFunction<Call, PositionState, String> getDescription) {
+        this(eval, getDescription, null);
+    }
+
+    public SimpleStaticConstraint(BiFunction<Call, PositionState, Boolean> eval,
                                   BiFunction<Call, PositionState, String> getDescription,
                                   String logDescription) {
         this.eval = eval != null ? eval : (call, ps) -> true;
