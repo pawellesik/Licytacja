@@ -52,9 +52,9 @@ public class Open extends LCStandard {
         bids.add(shows(Call.PASS, isSeat(4), passIn4thSeat()));
 
         if (ps.getSeat() == 3) {
-            bids.addAll(thirdSeat4CardMajor(and(IS_VUL, not(BALANCED), points(11, 13))));
+            bids.addAll(thirdSeat4CardMajor(and(IS_VUL, NOT_BALANCED, points(11, 13))));
             bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, BALANCED, points(11, 13))));
-            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, not(BALANCED), points(10, 13))));
+            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, NOT_BALANCED, points(10, 13))));
         }
 
         // Medium+ hands - longest suit first
@@ -79,9 +79,9 @@ public class Open extends LCStandard {
         bids.add(shows(Bid._1S, OneLevel, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
 
         if (ps.getSeat() == 3) {
-            bids.addAll(thirdSeatWeak(and(IS_VUL, not(BALANCED), points(11, 11))));
+            bids.addAll(thirdSeatWeak(and(IS_VUL, NOT_BALANCED, points(11, 11))));
             bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, BALANCED, DECENT_PLUS_SUIT, points(11, 11))));
-            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, not(BALANCED), points(10, 11))));
+            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, NOT_BALANCED, points(10, 11))));
         }
 
         bids.add(shows(Call.PASS, isSeat(4), DontOpen));

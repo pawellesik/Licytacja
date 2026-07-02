@@ -2,7 +2,6 @@ package com.example.licytacja.moje.BridgeBidder.LCStandard;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 import com.example.licytacja.moje.BridgeBidder.Conventions.NegativeDouble;
-import com.example.licytacja.moje.BridgeBidder.Conventions.TakeoutDouble;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class Respond extends LCStandard {
         if (!ps.getRHO().isPassed()) {
             return oppsInterferred(ps, Suit.Clubs);
         }
-
         PositionCalls choices = new PositionCalls(ps);
         if (ps.isPassedHand()) {
             choices.addRules(partnerBids(OpenBid2::responderChangedSuits));
@@ -32,7 +30,7 @@ public class Respond extends LCStandard {
             choices.addRules(shows(Bid._1H, points(6, 40), shape(4)));
             choices.addRules(shows(Bid._1S, points(6, 40), shape(4, 10)));
         }
-        choices.addPassRule(points(0, 5));
+        choices.addPassRule(points(RESPOND_PASS));
         return choices;
     }
 
@@ -45,7 +43,7 @@ public class Respond extends LCStandard {
         choices.addRules(properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true));
         choices.addRules(shows(Bid._1H, points(6, 40), shape(4)));
         choices.addRules(shows(Bid._1S, points(6, 40), shape(4)));
-        choices.addPassRule(points(0, 5));
+        choices.addPassRule(points(RESPOND_PASS));
         return choices;
     }
 
@@ -55,10 +53,9 @@ public class Respond extends LCStandard {
         }
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(SolidSuit.BIDS(ps));
-        // choices.addRules(Jacoby2NT.initiateConvention(ps));
-        choices.addRules(Bidder.properties(Bid._1S, OpenBid2::responderChangedSuits, true));
+        choices.addRules(properties(Bid._1S, OpenBid2::responderChangedSuits, true));
         choices.addRules(shows(Bid._1S, points(6, 40), shape(4)));
-        choices.addPassRule(points(0, 5));
+        choices.addPassRule(points(RESPOND_PASS));
         return choices;
     }
 
@@ -68,17 +65,28 @@ public class Respond extends LCStandard {
         }
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(SolidSuit.BIDS(ps));
-        // choices.addRules(Jacoby2NT.initiateConvention(ps));
-        choices.addRules(Bidder.properties(Bid._1NT, OpenBid2::semiForcingNT, true));
-        choices.addPassRule(points(0, 5));
+        choices.addRules(properties(Bid._1NT, OpenBid2::semiForcingNT, true));
+        choices.addPassRule(points(RESPOND_PASS));
         return choices;
     }
 
     private static PositionCalls oppsInterferred(PositionState ps, Suit openSuit) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(NegativeDouble.initiateConvention(ps));
-        // Add more interference logic
         return choices;
+    }
+
+    public static Iterable<CallFeature> weakOpen(PositionState ps) {
+        List<CallFeature> bids = new ArrayList<>();
+        bids.add(shows(Bid._4H, FIT_8_PLUS, ruleOf17()));
+        bids.add(shows(Bid._4H, fit(10)));
+        bids.add(shows(Bid._4S, FIT_8_PLUS, ruleOf17()));
+        bids.add(shows(Bid._4S, fit(10)));
+        bids.add(shows(Bid._3D, fit(9)));
+        bids.add(shows(Bid._3H, fit(9)));
+        bids.add(shows(Bid._3S, fit(9)));
+        bids.add(shows(Call.PASS));
+        return bids;
     }
 
     public static Iterable<CallFeature> weakJumpShift(Suit openSuit) {

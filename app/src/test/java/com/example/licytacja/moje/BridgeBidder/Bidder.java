@@ -32,6 +32,14 @@ public abstract class Bidder {
         return new CallProperties(null, pcf, false, false, false, null);
     }
 
+    public static CallProperties partnerBids(CallFeaturesFactory cff) {
+        return partnerBids(PositionCalls.fromCallFeaturesFactory(cff));
+    }
+
+    public static CallProperties partnerBids(Call call, CallFeaturesFactory cff) {
+        return partnerBids(call, PositionCalls.fromCallFeaturesFactory(cff));
+    }
+
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, boolean forcingToGame, boolean agreeTrump, Suit trump,
                                               String alert, String announce, String convention,
                                               StaticConstraint onlyIf) {
@@ -61,12 +69,12 @@ public abstract class Bidder {
         return properties(calls, partnerBids, false, forcingToGame, false, null, null, null, null, null);
     }
 
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
-        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
-    }
-    
     public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
         return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, String alert) {
@@ -103,7 +111,7 @@ public abstract class Bidder {
     }
 
     public static StaticConstraint isOpeningBid(Bid bid) {
-        return new SimpleStaticConstraint((call, ps) -> ps.getBiddingState().getOpeningBid().equals(bid));
+        return new SimpleStaticConstraint((call, ps) -> java.util.Objects.equals(ps.getBiddingState().getOpeningBid(), bid));
     }
 
     public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
@@ -158,12 +166,24 @@ public abstract class Bidder {
         return new Points.ShowsPoints(null, min, max, Points.PointType.HighCard);
     }
 
+    public static HandConstraint highCardPoints(Range range) {
+        return highCardPoints(range.getMin(), range.getMax());
+    }
+
     public static HandConstraint points(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.Starting);
     }
 
+    public static HandConstraint points(Range range) {
+        return points(range.getMin(), range.getMax());
+    }
+
     public static HandConstraint dummyPoints(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.Dummy);
+    }
+
+    public static HandConstraint dummyPoints(Suit suit, Range range) {
+        return new Points.ShowsPoints(suit, range.getMin(), range.getMax(), Points.PointType.Dummy);
     }
 
     public static HandConstraint shape(Suit suit, int count) {
@@ -178,17 +198,16 @@ public abstract class Bidder {
         return new Shape.ShowsShape(null, min, max);
     }
 
-    public static Constraint aces(int... count) {
-        return new KeyCards(null, null, count);
-    }
-
     public static HandConstraint shape(Suit suit, int min, int max) {
         return new Shape.ShowsShape(suit, min, max);
     }
 
     public static final HandConstraint BALANCED = new Balanced.ShowsBalanced(true);
     public static final HandConstraint NOT_BALANCED = new Balanced.ShowsBalanced(false);
-    
+
+    public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
+    public static final HandConstraint NOT_FLAT = new Flat.ShowsFlat(false);
+
     public static HandConstraint longerThan(Suit worse) {
         return new BetterSuit.ShowsBetterSuit(null, worse, worse, true);
     }
@@ -223,8 +242,16 @@ public abstract class Bidder {
 
     public static final HandConstraint LONGEST_SUIT = new LongestSuit.ShowsLongestSuit(null);
 
+    public static HandConstraint passIn4thSeat() {
+        return new PassIn4thSeat();
+    }
+
     public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) {
         return new PairKeyCards(suit, hasQueen, count);
+    }
+
+    public static Constraint aces(int... count) {
+        return new KeyCards(null, null, count);
     }
 
     public static Constraint kings(int... count) {
@@ -257,12 +284,9 @@ public abstract class Bidder {
         return new PairPoints.PairShowsPoints(min, max);
     }
 
-    public static HandConstraint passIn4thSeat() {
-        return new PassIn4thSeat();
+    public static HandConstraint pairPoints(Range range) {
+        return pairPoints(range.getMin(), range.getMax());
     }
-
-    public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
-    public static final HandConstraint NOT_FLAT = new Flat.ShowsFlat(false);
 
     public static HandConstraint quality(SuitQuality min, SuitQuality max) {
         return new HasQuality.ShowsQuality(null, min, max);
@@ -320,6 +344,10 @@ public abstract class Bidder {
     public static Constraint breakConstraint(boolean isStatic, String name) {
         if (isStatic) return new Break.StaticBreak(name);
         return new Break.HandBreak(name);
+    }
+
+    public static Constraint agreedStrain(Strain... strains) {
+        return new AgreedStrain(strains);
     }
 
     public static Constraint raisePartner(Suit suit, int jump, int fit) {
