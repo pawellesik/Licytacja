@@ -17,8 +17,8 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
 
     private Iterable<CallFeature> initiate(PositionState ps) {
         Call call = Bid._2C;
-        if (ps.getRHO().getLastCall() instanceof Bid) {
-            Bid rhoBid = (Bid) ps.getRHO().getLastCall();
+        if (ps.getRHO().getBid() != null) {
+            Bid rhoBid = ps.getRHO().getBid();
             if (call.equals(rhoBid)) {
                 call = Call.DOUBLE;
             }

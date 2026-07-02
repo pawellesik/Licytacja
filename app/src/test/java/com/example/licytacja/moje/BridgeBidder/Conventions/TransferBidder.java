@@ -40,7 +40,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
     }
 
     private PositionCalls acceptTransfer(PositionState ps) {
-        if (ps.getRHO().getLastCall() != null) {
+        if (ps.getRHO().getBid() != null) {
             return ps.getPairState().getBiddingSystem().getPositionCalls(ps);
         }
         PositionCalls choices = new PositionCalls(ps);

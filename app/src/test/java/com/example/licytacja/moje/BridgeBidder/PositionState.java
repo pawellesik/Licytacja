@@ -202,6 +202,14 @@ public class PositionState {
         return false;
     }
 
+    public Bid getBid() {
+        Call lastCall = getLastCall();
+        if (lastCall instanceof Bid) {
+            return (Bid) lastCall;
+        }
+        return null;
+    }
+
     public Call getLastCall() {
         return getBidHistory(0);
     }
