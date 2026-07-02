@@ -94,7 +94,7 @@ public class OpenBid2 extends Open {
 
     public static PositionCalls twoOverOne(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        Suit partnerSuit = ((Bid)ps.getPartner().getBidHistory(0)).getSuit();
+        Suit partnerSuit = ((Bid)ps.getPartner().getLastCall()).getSuit();
         choices.addRules(
             partnerBids(RespondBid2::secondBid2Over1),
 
@@ -197,14 +197,14 @@ public class OpenBid2 extends Open {
 
     public static PositionCalls responderRaisedMinor(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(Compete.compBids(ps));
+        choices.addRules(Compete::compBids);
         return choices;
     }
 
     public static PositionCalls responderRaisedMajor(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(Blackwood::initiateConvention);
         choices.addRules(
+            Blackwood.initiateConvention(ps),
             partnerBids(Bid._3H, RespondBid2::openerInvitedGame),
             partnerBids(Bid._3S, RespondBid2::openerInvitedGame),
 

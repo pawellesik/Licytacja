@@ -46,7 +46,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
         PositionCalls choices = new PositionCalls(ps);
         if (ps.getRHO().isDoubled()) {
             choices.addRules(
-                partnerBids(Call.PASS, (CallFeaturesFactory) this::openerShowsTwo),
+                partnerBids(Call.PASS, this::openerShowsTwo),
                 shows(Call.PASS, partner(isLastBid(2, Suit.Diamonds)), shape(Suit.Hearts, 0, 2)),
                 shows(Call.PASS, partner(isLastBid(2, Suit.Hearts)), shape(Suit.Spades, 0, 2)),
                 shows(Bid._2H, partner(isLastBid(2, Suit.Diamonds)), shape(3, 5)),
@@ -54,7 +54,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
             );
         }
         choices.addRules(
-            partnerBids((CallFeaturesFactory) this::explainTransfer),
+            partnerBids((PositionCallsFactory) (ps2 -> PositionCalls.fromCallFeaturesFactory(this::explainTransfer).apply(ps2))),
             shows(Bid._3H, partner(isLastBid(2, Suit.Diamonds)), ntd.OR.superAccept, shape(4, 5)),
             shows(Bid._3S, partner(isLastBid(2, Suit.Hearts)), ntd.OR.superAccept, shape(4, 5)),
             shows(Bid._2H, partner(isLastBid(2, Suit.Diamonds))),
@@ -64,23 +64,29 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
         return choices;
     }
 
-    private Iterable<CallFeature> openerShowsTwo(PositionState ps) {
-        Suit suit = ps.getLastCall().equals(Bid._2D) ? Suit.Hearts : Suit.Spades;
-        List<CallFeature> bids = new ArrayList<>();
-        bids.add(partnerBids((CallFeaturesFactory) this::openerRebid));
-        bids.add(shows(new Bid(4, suit), ntd.RR.gameOrBetter, OPPS_NOT_STOPPED));
-        bids.add(shows(new Bid(4, suit), shape(6, 10), ntd.RR.gameOrBetter));
-        bids.add(shows(Bid._3NT, ntd.RR.gameOrBetter, OPPS_STOPPED));
-        bids.add(shows(new Bid(3, suit), ntd.RR.inviteGame, OPPS_NOT_STOPPED));
-        bids.add(shows(new Bid(3, suit), shape(6, 10), ntd.RR.inviteGame));
-        bids.add(shows(Bid._2NT, ntd.RR.inviteGame, OPPS_STOPPED));
-        bids.add(shows(new Bid(2, suit)));
-        return bids;
+    private PositionCalls openerShowsTwo(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        Suit suit = ps.getBidHistory(0).equals(Bid._2D) ? Suit.Hearts : Suit.Spades;
+        choices.addRules(partnerBids((PositionCallsFactory) this::openerRebidFactory));
+        choices.addRules(shows(new Bid(4, suit), ntd.RR.gameOrBetter, OPPS_NOT_STOPPED));
+        choices.addRules(shows(new Bid(4, suit), shape(6, 10), ntd.RR.gameOrBetter));
+        choices.addRules(shows(Bid._3NT, ntd.RR.gameOrBetter, OPPS_STOPPED));
+        choices.addRules(shows(new Bid(3, suit), ntd.RR.inviteGame, OPPS_NOT_STOPPED));
+        choices.addRules(shows(new Bid(3, suit), shape(6, 10), ntd.RR.inviteGame));
+        choices.addRules(shows(Bid._2NT, ntd.RR.inviteGame, OPPS_STOPPED));
+        choices.addRules(shows(new Bid(2, suit)));
+        return choices;
+    }
+
+    private PositionCalls openerRebidFactory(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(openerRebid(ps));
+        return choices;
     }
 
     private Iterable<CallFeature> explainTransfer(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.add(partnerBids((CallFeaturesFactory) this::openerRebid));
+        bids.add(partnerBids((PositionCallsFactory) this::openerRebidFactory));
         bids.add(shows(Bid._2S, ntd.RR.inviteGame, shape(5, 11)));
         bids.add(properties(Bid._3H, true));
         bids.add(shows(Bid._3H, ntd.RR.gameOrBetter, partner(isLastBid(Bid._2S)), shape(5)));
@@ -154,7 +160,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
 
         private PositionCalls acceptTransfer(PositionState ps) {
             PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(partnerBids((CallFeaturesFactory) this::explainTransfer));
+            choices.addRules(partnerBids((PositionCallsFactory) (ps2 -> PositionCalls.fromCallFeaturesFactory(this::explainTransfer).apply(ps2))));
             choices.addRules(shows(Bid._3H, partner(isLastBid(Bid._3D))));
             choices.addRules(shows(Bid._3S, partner(isLastBid(Bid._3H))));
             return choices;
@@ -162,8 +168,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
 
         private Iterable<CallFeature> explainTransfer(PositionState ps) {
             List<CallFeature> bids = new ArrayList<>();
-            bids.add(partnerBids((CallFeaturesFactory) this::placeContract));
-            bids.add(shows(Call.PASS, ntb.respondNoGame));
+            bids.add(partnerBids((PositionCallsFactory) this::placeContractFactory));
             bids.add(shows(Bid._3NT, ntb.respondGame, partner(isLastBid(Bid._3H)), shape(Suit.Hearts, 5)));
             bids.add(shows(Bid._3NT, ntb.respondGame, partner(isLastBid(Bid._3S)), shape(Suit.Spades, 5)));
             bids.add(shows(Bid._4H, ntb.respondGame, partner(isLastBid(Bid._3H)), shape(6, 11)));
@@ -171,12 +176,12 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
             return bids;
         }
 
-        private Iterable<CallFeature> placeContract(PositionState ps) {
-            List<CallFeature> bids = new ArrayList<>();
-            bids.add(shows(Bid._4H, FIT_8_PLUS));
-            bids.add(shows(Bid._4S, FIT_8_PLUS));
-            bids.add(shows(Call.PASS));
-            return bids;
+        private PositionCalls placeContractFactory(PositionState ps) {
+            PositionCalls choices = new PositionCalls(ps);
+            choices.addRules(shows(Bid._4H, FIT_8_PLUS));
+            choices.addRules(shows(Bid._4S, FIT_8_PLUS));
+            choices.addRules(shows(Call.PASS));
+            return choices;
         }
     }
 
@@ -189,16 +194,22 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
 
         public Iterable<CallFeature> initiateConvention(PositionState ps) {
             List<CallFeature> bids = new ArrayList<>();
-            bids.add(properties(Bid._4D, (PositionCallsFactory) (p -> acceptTransfer(p, Strain.Hearts))));
-            bids.add(partnerBids(Bid._4H, (PositionCallsFactory) (p -> acceptTransfer(p, Strain.Spades))));
+            bids.add(properties(Bid._4D, (PositionCallsFactory) this::acceptTransferHearts));
+            bids.add(partnerBids(Bid._4H, (PositionCallsFactory) this::acceptTransferSpades));
             bids.add(shows(Bid._4D, shape(Suit.Hearts, 5, 11)));
             bids.add(shows(Bid._4H, shape(Suit.Spades, 5, 11)));
             return bids;
         }
 
-        public PositionCalls acceptTransfer(PositionState ps, Strain strain) {
+        public PositionCalls acceptTransferHearts(PositionState ps) {
             PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(shows(new Bid(4, strain)));
+            choices.addRules(shows(Bid._4H));
+            return choices;
+        }
+
+        public PositionCalls acceptTransferSpades(PositionState ps) {
+            PositionCalls choices = new PositionCalls(ps);
+            choices.addRules(shows(Bid._4S));
             return choices;
         }
     }

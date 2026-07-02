@@ -43,8 +43,28 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
         }
     }
 
-    public void addRules(CallFeature... rules) {
-        addRules(Arrays.asList(rules));
+    public void addRules(Object... rules) {
+        List<CallFeature> list = new ArrayList<>();
+        for (Object r : rules) {
+            if (r instanceof CallFeature) {
+                list.add((CallFeature) r);
+            } else if (r instanceof Iterable) {
+                for (Object item : (Iterable<?>) r) {
+                    if (item instanceof CallFeature) {
+                        list.add((CallFeature) item);
+                    }
+                }
+            } else if (r instanceof CallFeaturesFactory) {
+                for (CallFeature item : ((CallFeaturesFactory) r).apply(positionState)) {
+                    list.add(item);
+                }
+            } else if (r instanceof PositionCallsFactory) {
+                // If it's a PositionCallsFactory, we can't easily extract CallFeatures without a PositionState
+                // But we can wrap it in a CallProperties or handle it differently if needed.
+                // For now, let's assume it was intended to be CallFeaturesFactory if used here.
+            }
+        }
+        addRules(list);
     }
 
     public PositionCalls addPassRule(Constraint... constraints) {

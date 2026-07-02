@@ -23,7 +23,7 @@ public class Respond extends LCStandard {
     protected static final Range MAX_PASSED = new Range(10, 11);
 
     public static PositionCalls oneClub(PositionState ps) {
-        if (!ps.getRHO().isPassed()) {
+        if (ps.getRHO().getBid() != null) {
             return oppsInterferred(ps, Suit.Clubs);
         }
         PositionCalls choices = new PositionCalls(ps);
@@ -41,8 +41,8 @@ public class Respond extends LCStandard {
                 shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         } else {
-            choices.addRules(SolidSuit.BIDS(ps));
             choices.addRules(
+                SolidSuit.BIDS(ps),
                 properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true),
                 shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
                 shows(Bid._1D, points(LIMIT_RAISE_OR_BETTER), shape(5, 10), longerThan(Suit.Hearts), longerThan(Suit.Spades)),
@@ -63,12 +63,12 @@ public class Respond extends LCStandard {
     }
 
     public static PositionCalls oneDiamond(PositionState ps) {
-        if (!ps.getRHO().isPassed()) {
+        if (ps.getRHO().getBid() != null) {
             return oppsInterferred(ps, Suit.Diamonds);
         }
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
         choices.addRules(
+            SolidSuit.BIDS(ps),
             propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2::responderRaisedMinor, true),
             properties(Bid._2C, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null), // forcingToGame
             properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true),
@@ -88,12 +88,12 @@ public class Respond extends LCStandard {
     }
 
     public static PositionCalls oneHeart(PositionState ps) {
-        if (!ps.getRHO().isPassed()) {
+        if (ps.getRHO().getBid() != null) {
             return oppsInterferred(ps, Suit.Hearts);
         }
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
         choices.addRules(
+            SolidSuit.BIDS(ps),
             partnerBids(OpenBid2::responderChangedSuits),
             propertiesAgreeTrump(new Call[]{Bid._2H, Bid._3H, Bid._4H}, OpenBid2::responderRaisedMajor, true),
             shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
@@ -109,12 +109,12 @@ public class Respond extends LCStandard {
     }
 
     public static PositionCalls oneSpade(PositionState ps) {
-        if (!ps.getRHO().isPassed()) {
+        if (ps.getRHO().getBid() != null) {
             return oppsInterferred(ps, Suit.Spades);
         }
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
         choices.addRules(
+            SolidSuit.BIDS(ps),
             partnerBids(OpenBid2::responderChangedSuits),
             propertiesAgreeTrump(new Call[]{Bid._2S, Bid._3S, Bid._4S}, OpenBid2::responderRaisedMajor, true),
             shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),

@@ -38,94 +38,112 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
 
     public PositionCalls answer(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(partnerBids(Bid._2D, (PositionCallsFactory) this::respondTo2D));
-        choices.addRules(partnerBids(Bid._2H, (PositionCallsFactory) (p -> respondTo2M(p, Suit.Hearts))));
-        choices.addRules(partnerBids(Bid._2S, (PositionCallsFactory) (p -> respondTo2M(p, Suit.Spades))));
+        choices.addRules(
+            partnerBids(Bid._2D, (PositionCallsFactory) this::respondTo2D),
+            partnerBids(Bid._2H, (PositionCallsFactory) (p -> respondTo2M(p, Suit.Hearts))),
+            partnerBids(Bid._2S, (PositionCallsFactory) (p -> respondTo2M(p, Suit.Spades))),
 
-        choices.addRules(shows(Bid._2D, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)));
-        choices.addRules(shows(Bid._2H, shape(4, 5), longerOrEqualTo(Suit.Spades)));
-        choices.addRules(shows(Bid._2S, shape(4, 5), longerThan(Suit.Hearts)));
+            shows(Bid._2D, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
+            shows(Bid._2H, shape(4, 5), longerOrEqualTo(Suit.Spades)),
+            shows(Bid._2S, shape(4, 5), longerThan(Suit.Hearts))
+        );
         return choices;
     }
 
     public PositionCalls respondTo2D(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Call.PASS, ntd.RR.lessThanInvite));
-        choices.addRules(properties(Bid._3H, (PositionCallsFactory) (p -> gameNewMajor(p, Suit.Hearts)), true));
-        choices.addRules(properties(Bid._3S, (PositionCallsFactory) (p -> gameNewMajor(p, Suit.Spades)), true));
-        choices.addRules(shows(Bid._3S, ntd.RR.gameOrBetter, shape(5)));
-        choices.addRules(shows(Bid._3H, ntd.RR.gameOrBetter, shape(5)));
-        choices.addRules(partnerBids(Bid._2H, (PositionCallsFactory) (p -> placeContractNewMajor(p, Suit.Hearts))));
-        choices.addRules(partnerBids(Bid._2S, (PositionCallsFactory) (p -> placeContractNewMajor(p, Suit.Spades))));
-        choices.addRules(shows(Bid._2H, ntd.RR.inviteGame, shape(5)));
-        choices.addRules(shows(Bid._2S, ntd.RR.inviteGame, shape(5)));
-        choices.addRules(properties(Bid._2NT, (PositionCallsFactory) this::placeContract2NTInvite));
-        choices.addRules(shows(Bid._2NT, ntd.RR.inviteGame));
-        choices.addRules(shows(Bid._3NT, ntd.RR.game));
-        choices.addRules(shows(Bid._4NT, pairPoints(30, 31)));
-        choices.addRules(Gerber::initiateConvention);
+        choices.addRules(
+            shows(Call.PASS, ntd.RR.lessThanInvite),
+            properties(Bid._3H, (PositionCallsFactory) (p -> gameNewMajor(p, Suit.Hearts)), true),
+            properties(Bid._3S, (PositionCallsFactory) (p -> gameNewMajor(p, Suit.Spades)), true),
+            shows(Bid._3S, ntd.RR.gameOrBetter, shape(5)),
+            shows(Bid._3H, ntd.RR.gameOrBetter, shape(5)),
+            partnerBids(Bid._2H, (PositionCallsFactory) (p -> placeContractNewMajor(p, Suit.Hearts))),
+            partnerBids(Bid._2S, (PositionCallsFactory) (p -> placeContractNewMajor(p, Suit.Spades))),
+            shows(Bid._2H, ntd.RR.inviteGame, shape(5)),
+            shows(Bid._2S, ntd.RR.inviteGame, shape(5)),
+            properties(Bid._2NT, (PositionCallsFactory) this::placeContract2NTInvite),
+            shows(Bid._2NT, ntd.RR.inviteGame),
+            shows(Bid._3NT, ntd.RR.game),
+            shows(Bid._4NT, pairPoints(30, 31)),
+            Gerber.initiateConvention(ps)
+        );
         return choices;
     }
 
     public PositionCalls respondTo2M(PositionState ps, Suit major) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Call.PASS, ntd.RR.lessThanInvite));
-        choices.addRules(shows(new Bid(7, major), shape(4, 5), ntd.RR.grandSlamAsDummy));
-        choices.addRules(shows(new Bid(6, major), shape(4, 5), ntd.RR.smallSlamAsDummy));
-        choices.addRules(shows(new Bid(4, major), shape(4, 5), ntd.RR.gameAsDummy));
-        choices.addRules(properties(new Bid(3, major), (PositionCallsFactory) (p -> placeContractMajorInvite(p, major))));
-        choices.addRules(shows(new Bid(3, major), shape(4, 5), ntd.RR.inviteAsDummy));
-        choices.addRules(partnerBids(Bid._3NT, (PositionCallsFactory) this::checkOpenerSpadeGame));
-        choices.addRules(shows(Bid._3NT, ntd.RR.game, shape(major, 0, 3)));
-        choices.addRules(partnerBids(Bid._2NT, (PositionCallsFactory) this::placeContract2NTInvite));
-        choices.addRules(shows(Bid._2NT, ntd.RR.inviteGame, shape(major, 0, 3)));
+        choices.addRules(
+            shows(Call.PASS, ntd.RR.lessThanInvite),
+            shows(new Bid(7, major), shape(4, 5), ntd.RR.grandSlamAsDummy),
+            shows(new Bid(6, major), shape(4, 5), ntd.RR.smallSlamAsDummy),
+            shows(new Bid(4, major), shape(4, 5), ntd.RR.gameAsDummy),
+            properties(new Bid(3, major), (PositionCallsFactory) (p -> placeContractMajorInvite(p, major))),
+            shows(new Bid(3, major), shape(4, 5), ntd.RR.inviteAsDummy),
+            partnerBids(Bid._3NT, (PositionCallsFactory) this::checkOpenerSpadeGame),
+            shows(Bid._3NT, ntd.RR.game, shape(major, 0, 3)),
+            partnerBids(Bid._2NT, (PositionCallsFactory) this::placeContract2NTInvite),
+            shows(Bid._2NT, ntd.RR.inviteGame, shape(major, 0, 3))
+        );
         return choices;
     }
 
     public PositionCalls checkOpenerSpadeGame(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._4S, FIT_8_PLUS));
-        choices.addRules(shows(Call.PASS));
+        choices.addRules(
+            shows(Bid._4S, FIT_8_PLUS),
+            shows(Call.PASS)
+        );
         return choices;
     }
 
     public PositionCalls gameNewMajor(PositionState ps, Suit major) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(new Bid(4, major), FIT_8_PLUS));
-        choices.addRules(shows(Bid._3NT));
+        choices.addRules(
+            shows(new Bid(4, major), FIT_8_PLUS),
+            shows(Bid._3NT)
+        );
         return choices;
     }
 
     public PositionCalls placeContractNewMajor(PositionState ps, Suit major) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite, fit(major)));
-        choices.addRules(shows(Bid._2NT, ntd.OR.dontAcceptInvite));
-        choices.addRules(shows(new Bid(4, major), FIT_8_PLUS, ntd.OR.acceptInvite));
-        choices.addRules(shows(Bid._3NT, ntd.OR.acceptInvite));
+        choices.addRules(
+            shows(Call.PASS, ntd.OR.dontAcceptInvite, fit(major)),
+            shows(Bid._2NT, ntd.OR.dontAcceptInvite),
+            shows(new Bid(4, major), FIT_8_PLUS, ntd.OR.acceptInvite),
+            shows(Bid._3NT, ntd.OR.acceptInvite)
+        );
         return choices;
     }
 
     public PositionCalls placeContract2NTInvite(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(properties(Bid._3S, (PositionCallsFactory) this::checkSpadeGame));
-        choices.addRules(shows(Bid._3S, ntd.OR.dontAcceptInvite, FIT_8_PLUS));
-        choices.addRules(shows(Bid._4S, ntd.OR.acceptInvite, FIT_8_PLUS));
-        choices.addRules(shows(Bid._3NT, ntd.OR.acceptInvite));
-        choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite));
+        choices.addRules(
+            properties(Bid._3S, (PositionCallsFactory) this::checkSpadeGame),
+            shows(Bid._3S, ntd.OR.dontAcceptInvite, FIT_8_PLUS),
+            shows(Bid._4S, ntd.OR.acceptInvite, FIT_8_PLUS),
+            shows(Bid._3NT, ntd.OR.acceptInvite),
+            shows(Call.PASS, ntd.OR.dontAcceptInvite)
+        );
         return choices;
     }
 
     public PositionCalls placeContractMajorInvite(PositionState ps, Suit major) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(new Bid(4, major), ntd.OR.acceptInvite, FIT_8_PLUS));
-        choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite));
+        choices.addRules(
+            shows(new Bid(4, major), ntd.OR.acceptInvite, FIT_8_PLUS),
+            shows(Call.PASS, ntd.OR.dontAcceptInvite)
+        );
         return choices;
     }
 
     public PositionCalls checkSpadeGame(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._4S, ntd.RR.gameAsDummy, shape(4, 5)));
-        choices.addRules(shows(Call.PASS));
+        choices.addRules(
+            shows(Bid._4S, ntd.RR.gameAsDummy, shape(4, 5)),
+            shows(Call.PASS)
+        );
         return choices;
     }
 
@@ -138,7 +156,7 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
 
         public Iterable<CallFeature> initiateConvention(PositionState ps) {
             Call call = Bid._3C;
-            if (ps.getRHO().getLastCall() != null && ps.getRHO().getLastCall().equals(call)) {
+            if (ps.getRHO().getBid() != null && ps.getRHO().getBid().equals(call)) {
                 call = Call.DOUBLE;
             }
             List<CallFeature> bids = new ArrayList<>();
@@ -152,10 +170,12 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
 
         public PositionCalls answer(PositionState ps) {
             PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(partnerBids((CallFeaturesFactory) Stayman2NT::responderRebid));
-            choices.addRules(shows(Bid._3D, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)));
-            choices.addRules(shows(Bid._3H, shape(4, 5), longerOrEqualTo(Suit.Spades)));
-            choices.addRules(shows(Bid._3S, shape(4, 5), longerThan(Suit.Hearts)));
+            choices.addRules(
+                partnerBids((CallFeaturesFactory) Stayman2NT::responderRebid),
+                shows(Bid._3D, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
+                shows(Bid._3H, shape(4, 5), longerOrEqualTo(Suit.Spades)),
+                shows(Bid._3S, shape(4, 5), longerThan(Suit.Hearts))
+            );
             return choices;
         }
 
@@ -172,9 +192,11 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
 
         public static PositionCalls openerRebid(PositionState ps) {
             PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(shows(Bid._4H, FIT_8_PLUS));
-            choices.addRules(shows(Bid._4S, FIT_8_PLUS));
-            choices.addRules(shows(Bid._3NT, fit(0, Suit.Hearts, false), fit(0, Suit.Spades, false)));
+            choices.addRules(
+                shows(Bid._4H, FIT_8_PLUS),
+                shows(Bid._4S, FIT_8_PLUS),
+                shows(Bid._3NT, fit(Suit.Hearts, false), fit(Suit.Spades, false))
+            );
             return choices;
         }
     }

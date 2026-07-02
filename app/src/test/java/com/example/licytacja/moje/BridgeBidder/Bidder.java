@@ -61,8 +61,20 @@ public abstract class Bidder {
         return group;
     }
 
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids) {
+        return properties(call, partnerBids, false, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention) {
         return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, StaticConstraint onlyIf) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, onlyIf);
     }
 
     public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String text, boolean isAnnounce) {
@@ -93,28 +105,16 @@ public abstract class Bidder {
         return properties(call, null, forcing1Round, false, false, null, null, null, convention, onlyIf);
     }
 
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids) {
-        return properties(call, partnerBids, false, false, false, null, null, null, null, null);
-    }
-
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
-        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
-    }
-
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
-        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    public static CallFeatureGroup properties(Call call, boolean forcing1Round) {
+        return properties(call, null, forcing1Round, false, false, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, boolean forcing1Round, String text, boolean isAnnounce) {
         return properties(call, null, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
     }
 
-    public static CallFeatureGroup properties(Call call, boolean forcing1Round) {
-        return properties(call, null, forcing1Round, false, false, null, null, null, null, null);
-    }
-
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, StaticConstraint onlyIf) {
-        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, onlyIf);
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, String alert) {
@@ -338,6 +338,10 @@ public abstract class Bidder {
 
     public static HandConstraint fit(Suit suit) {
         return fit(8, suit);
+    }
+
+    public static HandConstraint fit(Suit suit, boolean desiredValue) {
+        return fit(8, suit, desiredValue);
     }
 
     public static HandConstraint fit() {
