@@ -49,8 +49,7 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
     }
 
     public void createPlaceholderCall(Call call) {
-        // TODO: Port logic from Bidder.Shows
-        // addRules(Bidder.shows(call));
+        addRules(Bidder.shows(call));
     }
 
     public void logBidRule(BidRule rule) {

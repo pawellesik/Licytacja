@@ -21,7 +21,7 @@ public class FromString {
             }
         }
         if (gameText.length() > 0) {
-            gameTextList.Add(gameText.toString());
+            gameTextList.add(gameText.toString());
         }
 
         List<Game> games = new ArrayList<>();

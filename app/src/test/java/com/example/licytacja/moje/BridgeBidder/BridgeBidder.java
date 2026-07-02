@@ -25,7 +25,7 @@ public class BridgeBidder {
         if (!biddingState.getNextToAct().hasHand()) {
             throw new RuntimeException("Can not suggest next bid when position has no defined hand.");
         }
-        CallGroup choices = biddingState.getCallChoices();
+        PositionCalls choices = biddingState.getCallChoices();
         if (choices.getBestCall() != null) return choices.getBestCall();
         if (throwExceptionIfNoBestCall) {
             throw new RuntimeException("No suggested call given by bidding system.");
