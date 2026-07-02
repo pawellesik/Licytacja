@@ -200,19 +200,9 @@ public class NoTrump extends Bidder {
             PositionCalls choices = new PositionCalls(ps);
             choices.addRules(partnerBids((CallFeaturesFactory) this::responderRebid));
 
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._3NT))));
-            choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite, partner(isLastBid(Bid._2NT))));
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._2C))));
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._2D))));
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._2H))));
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._2S))));
-            
-            choices.addRules(properties(Bid._3H, true));
-            choices.addRules(properties(Bid._3S, true));
-            choices.addRules(shows(Bid._3H, partner(isLastBid(Bid._2NT)), ntd.OR.acceptInvite, shape(5)));
-            choices.addRules(shows(Bid._3S, partner(isLastBid(Bid._2NT)), ntd.OR.acceptInvite, shape(5)));
-
             choices.addRules(shows(Bid._3NT, ntd.OR.acceptInvite, partner(isLastBid(Bid._2NT))));
+            choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite, partner(isLastBid(Bid._2NT))));
+            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._3NT))));
             choices.addRules(shows(Bid._3NT, partner(isLastBid(Bid._3H)), shape(Suit.Hearts, 0, 2)));
             choices.addRules(shows(Bid._3NT, partner(isLastBid(Bid._3S)), shape(Suit.Spades, 0, 2)));
 

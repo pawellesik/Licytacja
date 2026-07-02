@@ -18,7 +18,7 @@ public class Jacoby2NT extends Bidder {
                 Suit suit = ((Bid) lastPartnerCall).getSuit();
                 if (suit != null && suit.isMajor()) {
                     List<CallFeature> bids = new ArrayList<>();
-                    bids.add(properties(Bid._2NT, (PositionCallsFactory) Jacoby2NT::openerRebid, false, true, true, suit, UserText.Jacoby2NTDescription, null, UserText.Jacoby2NT, null));
+                    bids.add(properties(Bid._2NT, Jacoby2NT::openerRebid, false, true, true, suit, UserText.Jacoby2NTDescription, null, UserText.Jacoby2NT, null));
                     bids.add(shows(Bid._2NT, fit(suit), shape(suit, 4, 10), dummyPoints(suit, RESPOND_POINTS)));
                     return bids;
                 }
@@ -30,7 +30,7 @@ public class Jacoby2NT extends Bidder {
     public static PositionCalls openerRebid(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
-                partnerBids((PositionCallsFactory) Jacoby2NT::placeContract),
+                partnerBids(Jacoby2NT::placeContract),
                 properties(Bid._3C, UserText.ShowsVoidOrSingleton),
                 properties(Bid._3D, UserText.ShowsVoidOrSingleton),
                 properties(Bid._3H, UserText.ShowsVoidOrSingleton, isOpeningBid(Bid._1S)),

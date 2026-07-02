@@ -58,7 +58,7 @@ public class RespondBid2 extends Respond {
             choices.addRules(shows(new Bid(4, trump), pairPoints(25, 27)));
         } else {
             choices.addRules(
-                propertiesAgreeTrump(new Call[]{Bid._2H, Bid._2S, Bid._3H, Bid._3S, Bid._4H, Bid._4S }, null, true), // onlyIf: IsPartnersSuit missing?
+                propertiesAgreeTrump(new Call[]{Bid._2H, Bid._2S, Bid._3H, Bid._3S, Bid._4H, Bid._4S }, null, true),
                 shows(Bid._4H, isPartnersSuit(), FIT_8_PLUS, dummyPoints(12, 13)),
                 shows(Bid._4S, isPartnersSuit(), FIT_8_PLUS, dummyPoints(12, 13)),
                 shows(Bid._2H, isPartnersSuit(), FIT_8_PLUS, dummyPoints(14, 40)),
@@ -67,7 +67,7 @@ public class RespondBid2 extends Respond {
                 shows(Bid._3S, isPartnersSuit(), IS_NON_JUMP, FIT_8_PLUS, dummyPoints(14, 40))
             );
         }
-        choices.addRules(Blackwood::initiateConvention);
+        choices.addRules(Blackwood.initiateConvention(ps));
         return choices;
     }
 }

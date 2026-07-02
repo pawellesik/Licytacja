@@ -1,0 +1,112 @@
+=== Uruchamiam testy przez JUnitCore ===
+
+Uruchamiam: TestHand
+  Wszystkie 1 testów OK.
+
+Uruchamiam: TestStrain
+  Wszystkie 1 testów OK.
+
+Uruchamiam: TestDirection
+  Wszystkie 4 testów OK.
+
+Uruchamiam: TestGame
+  Wszystkie 2 testów OK.
+
+Uruchamiam: BiddingTests
+  BŁĘDY: 12 na 628
+    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat N, Bid 2)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Basic.pbn: Unknown Event (Seat N, Bid 2)
+  Auction:  Pass Pass 1NT Pass 2NT Pass
+  Deal:     S:A873.KQ4.T98.972 K5.952.Q543.QT43 QT964.A76.AK2.A6 J2.JT83.J76.KJ85
+  Vulnerable: None
+  Expected: 3S
+  Actual:   3NT
+ expected:<3[S]> but was:<3[NT]>
+    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat S, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 3)
+  Auction:  Pass Pass 1NT Pass 2NT Pass 3S Pass
+  Deal:     S:A873.KQ4.T98.972 K5.952.Q543.QT43 QT964.A76.AK2.A6 J2.JT83.J76.KJ85
+  Vulnerable: None
+  Expected: 4S
+  Actual:   Pass
+ expected:<[4S]> but was:<[Pass]>
+    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat N, Bid 2)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Basic.pbn: Unknown Event (Seat N, Bid 2)
+  Auction:  1NT Pass 2NT Pass
+  Deal:     N:AK.J7643.KQ8.KT8 J975.K98.652.AJ5 832.AQ.JT93.Q764 QT64.T52.A74.932
+  Vulnerable: None
+  Expected: 3H
+  Actual:   3NT
+ expected:<3[H]> but was:<3[NT]>
+    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat S, Bid 2)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 2)
+  Auction:  1NT Pass 2NT Pass 3H Pass
+  Deal:     N:AK.J7643.KQ8.KT8 J975.K98.652.AJ5 832.AQ.JT93.Q764 QT64.T52.A74.932
+  Vulnerable: None
+  Expected: 3NT
+  Actual:   Pass
+ expected:<[3NT]> but was:<[Pass]>
+    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  1NT 2H
+  Deal:     N:AJ64.T42.KQ8.AQT Q.AQ8653.AJ5.J75 T75.KJ9.732.9862 K9832.7.T964.K43
+  Vulnerable: None
+  Expected: Pass
+  Actual:   2NT
+ expected:<[Pass]> but was:<[2NT]>
+    - testTwoOverOne[1NT Stayman.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Stayman.pbn: Unknown Event (Seat N, Bid 3)
+  Auction:  1NT Pass 2C Pass 2H Pass 3NT Pass
+  Deal:     N:J754.QT64.QJ.AKQ K962.A83.86.JT42 AQ83.J9.KT7532.3 T.K752.A94.98765
+  Vulnerable: None
+  Expected: 4S
+  Actual:   Pass
+ expected:<[4S]> but was:<[Pass]>
+    - testTwoOverOne[1NT Transfers.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 1NT Transfers.pbn: Unknown Event (Seat N, Bid 3)
+  Auction:  Pass Pass 1NT Pass 2H X Pass Pass 2NT Pass
+  Deal:     S:A8543.KJ.753.T62 - KJ.Q964.KQJ.A954 -
+  Vulnerable: None
+  Expected: 3NT
+  Actual:   Pass
+ expected:<[3NT]> but was:<[Pass]>
+    - testTwoOverOne[2NT Transfers.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: 2NT Transfers.pbn: Unknown Event (Seat N, Bid 3)
+  Auction:  2NT Pass 3D Pass 3H Pass 3NT Pass
+  Deal:     N:AJ2.KQJ.J986.AKJ Q863.862.KQT.543 KT4.AT943.53.876 975.75.A742.QT92
+  Vulnerable: None
+  Expected: 4H
+  Actual:   Pass
+ expected:<[4H]> but was:<[Pass]>
+    - testTwoOverOne[Forcing.pbn: Unknown Event (Seat S, Bid 2)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Forcing.pbn: Unknown Event (Seat S, Bid 2)
+  Auction:  Pass Pass 2C Pass 2D Pass
+  Deal:     N:6.QJ983.JT743.T2 J8.K7652.62.KJ97 AKQ93..AK9.AQ543 T7542.AT4.Q85.86
+  Vulnerable: NS
+  Expected: 2S
+  Actual:   Pass
+ expected:<[2S]> but was:<[Pass]>
+    - testTwoOverOne[Forcing.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Forcing.pbn: Unknown Event (Seat N, Bid 3)
+  Auction:  Pass Pass 2C Pass 2D Pass 2S Pass
+  Deal:     N:6.QJ983.JT743.T2 J8.K7652.62.KJ97 AKQ93..AK9.AQ543 T7542.AT4.Q85.86
+  Vulnerable: NS
+  Expected: 3H
+  Actual:   4S
+ expected:<[3H]> but was:<[4S]>
+    - testTwoOverOne[Forcing.pbn: Unknown Event (Seat N, Bid 4)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Forcing.pbn: Unknown Event (Seat N, Bid 4)
+  Auction:  Pass Pass 2C Pass 2D Pass 2S Pass 3H Pass 3NT Pass
+  Deal:     N:6.QJ983.JT743.T2 J8.K7652.62.KJ97 AKQ93..AK9.AQ543 T7542.AT4.Q85.86
+  Vulnerable: NS
+  Expected: Pass
+  Actual:   4S
+ expected:<[Pass]> but was:<[4S]>
+    - testTwoOverOne[Partscore 3S.pbn: Unknown Event (Seat S, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Partscore 3S.pbn: Unknown Event (Seat S, Bid 3)
+  Auction:  1S Pass 1NT Pass 2S Pass 3S Pass
+  Deal:     S:AJ9653.T5.K4.A72 KQ84.87.JT832.Q8 T7.KJ94.A97.KJ54 2.AQ632.Q65.T963
+  Vulnerable: NS
+  Expected: Pass
+  Actual:   3NT
+ expected:<[Pass]> but was:<[3NT]>

@@ -83,7 +83,7 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
             partnerBids(Bid._3NT, (PositionCallsFactory) this::checkOpenerSpadeGame),
             shows(Bid._3NT, ntd.RR.game, shape(major, 0, 3)),
             partnerBids(Bid._2NT, (PositionCallsFactory) this::placeContract2NTInvite),
-            shows(Bid._2NT, ntd.RR.inviteGame, shape(major, 0, 3))
+            shows(Bid._2NT, ntd.RR.inviteGame, shape(major, 0, 3), (major == Suit.Hearts ? shape(Suit.Spades, 4) : shape(Suit.Hearts, 4)))
         );
         return choices;
     }

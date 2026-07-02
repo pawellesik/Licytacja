@@ -17,11 +17,11 @@ public abstract class Bidder {
     }
 
     public static CallFeature convention(Call call, String text, StaticConstraint... constraints) {
-        return new CallAnnotation(call, CallAnnotation.AnnotationType.Convention, text, (StaticConstraint[]) constraints);
+        return new CallAnnotation(call, CallAnnotation.AnnotationType.Convention, text, constraints);
     }
 
     public static CallFeature convention(String text, StaticConstraint... constraints) {
-        return new CallAnnotation(null, CallAnnotation.AnnotationType.Convention, text, (StaticConstraint[]) constraints);
+        return new CallAnnotation(null, CallAnnotation.AnnotationType.Convention, text, constraints);
     }
 
     public static CallProperties partnerBids(Call call, PositionCallsFactory pcf) {
@@ -119,6 +119,10 @@ public abstract class Bidder {
 
     public static CallFeatureGroup properties(Call call, boolean forcing1Round, String text, boolean isAnnounce) {
         return properties(call, null, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round, boolean agreeTrump) {
+        return properties(calls, partnerBids, forcing1Round, false, agreeTrump, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, String alert) {
