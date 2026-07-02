@@ -13,7 +13,7 @@ Uruchamiam: TestGame
   Wszystkie 2 testów OK.
 
 Uruchamiam: BiddingTests
-  BŁĘDY: 5 na 628
+  BŁĘDY: 2 na 628
     - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
 FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 1)
   Auction:  1NT 2H
@@ -22,22 +22,6 @@ FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 1)
   Expected: Pass
   Actual:   2NT
  expected:<[Pass]> but was:<[2NT]>
-    - testTwoOverOne[1NT Transfers.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
-FAILURE: 1NT Transfers.pbn: Unknown Event (Seat N, Bid 3)
-  Auction:  Pass Pass 1NT Pass 2H X Pass Pass 2NT Pass
-  Deal:     S:A8543.KJ.753.T62 - KJ.Q964.KQJ.A954 -
-  Vulnerable: None
-  Expected: 3NT
-  Actual:   Pass
- expected:<[3NT]> but was:<[Pass]>
-    - testTwoOverOne[2NT Transfers.pbn: Unknown Event (Seat N, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
-FAILURE: 2NT Transfers.pbn: Unknown Event (Seat N, Bid 3)
-  Auction:  2NT Pass 3D Pass 3H Pass 3NT Pass
-  Deal:     N:AJ2.KQJ.J986.AKJ Q863.862.KQT.543 KT4.AT943.53.876 975.75.A742.QT92
-  Vulnerable: None
-  Expected: 4H
-  Actual:   Pass
- expected:<[4H]> but was:<[Pass]>
     - testTwoOverOne[Forcing.pbn: Unknown Event (Seat S, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
 FAILURE: Forcing.pbn: Unknown Event (Seat S, Bid 3)
   Auction:  Pass Pass 2C Pass 2D Pass 2S Pass 3H Pass
@@ -46,11 +30,3 @@ FAILURE: Forcing.pbn: Unknown Event (Seat S, Bid 3)
   Expected: 3NT
   Actual:   Pass
  expected:<[3NT]> but was:<[Pass]>
-    - testTwoOverOne[Partscore 3S.pbn: Unknown Event (Seat S, Bid 3)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
-FAILURE: Partscore 3S.pbn: Unknown Event (Seat S, Bid 3)
-  Auction:  1S Pass 1NT Pass 2S Pass 3S Pass
-  Deal:     S:AJ9653.T5.K4.A72 KQ84.87.JT832.Q8 T7.KJ94.A97.KJ54 2.AQ632.Q65.T963
-  Vulnerable: NS
-  Expected: Pass
-  Actual:   3NT
- expected:<[Pass]> but was:<[3NT]>

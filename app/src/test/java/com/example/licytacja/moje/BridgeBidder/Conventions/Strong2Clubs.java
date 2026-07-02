@@ -76,7 +76,7 @@ public class Strong2Clubs extends Bidder {
             shows(Bid._3D, shape(5, 11)),
             shows(Bid._4H, FIT_8_PLUS),
             shows(Bid._4S, FIT_8_PLUS),
-            shows(Bid._3NT, pairPoints(25, 40)),
+            shows(Bid._3NT, points(8, 18)),
             shows(Call.PASS)
         );
         return choices;
