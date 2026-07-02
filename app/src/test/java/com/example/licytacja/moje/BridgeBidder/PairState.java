@@ -23,6 +23,10 @@ public class PairState {
                 (vulnerable == Vulnerable.EW && pair == Pair.EW));
     }
 
+    public Set<Suit> getShownSuits() {
+        return firstToShow.keySet();
+    }
+
     public Suit getLastShownSuit() {
         return lastShownSuit;
     }

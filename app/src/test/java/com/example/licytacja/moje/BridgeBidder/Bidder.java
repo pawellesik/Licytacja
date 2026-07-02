@@ -69,6 +69,10 @@ public abstract class Bidder {
         return properties(call, null, false, false, false, null, alert, null, null, null);
     }
 
+    public static CallFeatureGroup properties(Call call, String alert, StaticConstraint onlyIf) {
+        return properties(call, null, false, false, false, null, alert, null, null, onlyIf);
+    }
+
     // Static Constraints
     public static StaticConstraint isSeat(int... seats) {
         return new SimpleStaticConstraint(
@@ -98,14 +102,15 @@ public abstract class Bidder {
         return new SimpleStaticConstraint((call, ps) -> ps.getBiddingState().getOpeningBid().equals(bid));
     }
 
+    public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
+    public static final StaticConstraint IS_NOT_CUE_BID = not(IS_CUE_BID);
+
     public static final StaticConstraint IS_REBID = new BidHistory(0, null);
     public static final StaticConstraint IS_NOT_REBID = not(IS_REBID);
 
     public static StaticConstraint id(String id) {
         return new LogID(id);
     }
-    public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
-    public static final StaticConstraint IS_NOT_CUE_BID = not(IS_CUE_BID);
 
     public static StaticConstraint staticAnd(StaticConstraint... constraints) {
         return new ConstraintGroup(constraints);
@@ -243,12 +248,71 @@ public abstract class Bidder {
         return new PairPoints.PairShowsPoints(min, max);
     }
 
-    public static final StaticConstraint CONTRACT_IS_AGREED_STRAIN = new SimpleStaticConstraint(
-            (call, ps) -> {
-                ContractState contract = ps.getBiddingState().getContract();
-                return contract.getBid() != null &&
-                        contract.isOurs(ps.getDirection()) &&
-                        contract.getBid().getSuit() == ps.getPairState().getLastShownSuit();
-            }
-    );
+    public static HandConstraint passIn4thSeat() {
+        return new PassIn4thSeat();
+    }
+
+    public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
+
+    public static HandConstraint quality(SuitQuality min, SuitQuality max) {
+        return new HasQuality.ShowsQuality(null, min, max);
+    }
+
+    public static HandConstraint quality(Suit suit, SuitQuality min, SuitQuality max) {
+        return new HasQuality.ShowsQuality(suit, min, max);
+    }
+
+    public static final HandConstraint DECENT_PLUS_SUIT = quality(SuitQuality.Decent, SuitQuality.Solid);
+    public static final HandConstraint GOOD_PLUS_SUIT = quality(SuitQuality.Good, SuitQuality.Solid);
+    public static final HandConstraint EXCELLENT_PLUS_SUIT = quality(SuitQuality.Excellent, SuitQuality.Solid);
+
+    public static HandConstraint suitLosers(int min, int max, Suit suit) {
+        return new Losers.ShowsLosers(false, suit, min, max);
+    }
+
+    public static HandConstraint suitLosers(int min, int max) {
+        return suitLosers(min, max, null);
+    }
+
+    public static Constraint takeoutSuit(Suit suit) {
+        return and(new TakeoutSuit(suit), IS_NOT_CUE_BID);
+    }
+
+    public static Constraint takeoutSuit() {
+        return takeoutSuit(null);
+    }
+
+    public static Constraint ruleOf17(Suit suit) {
+        return new RuleOf17(suit);
+    }
+
+    public static Constraint ruleOf17() {
+        return ruleOf17(null);
+    }
+
+    public static HandConstraint betterMinor(Suit suit) {
+        return new BetterMinor(suit);
+    }
+
+    public static HandConstraint betterMinor() {
+        return betterMinor(null);
+    }
+
+    public static HandConstraint ruleOf9() {
+        return new RuleOf9();
+    }
+
+    public static final HandConstraint OPPS_STOPPED = new OppsStopped.ShowsOppsStopped(true);
+    public static final HandConstraint OPPS_NOT_STOPPED = new OppsStopped.ShowsOppsStopped(false);
+
+    public static final HandConstraint REVERSE_SHAPE = new ReverseShape.ShowsReverseShape();
+
+    public static Constraint breakConstraint(boolean isStatic, String name) {
+        if (isStatic) return new Break.StaticBreak(name);
+        return new Break.HandBreak(name);
+    }
+
+    public static Constraint agreedStrain(Strain... strains) {
+        return new AgreedStrain(strains);
+    }
 }
