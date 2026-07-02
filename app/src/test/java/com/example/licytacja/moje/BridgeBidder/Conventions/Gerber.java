@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gerber extends Bidder {
+    private static final Range SLAM_OR_BETTER = new Range(31, 100);
+    private static final Range GRAND_SLAM = new Range(36, 100);
+
     public static final StaticConstraint APPLIES = new SimpleStaticConstraint((call, ps) -> {
         Call partnerLast = ps.getPartner().getBidHistory(0);
         if (partnerLast instanceof Bid) {
@@ -17,25 +20,30 @@ public class Gerber extends Bidder {
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.add(properties(Bid._4C, Gerber::respondAces, true, UserText.Gerber));
-        bids.add(shows(Bid._4C, APPLIES, pairPoints(31, 100)));
+        bids.add(properties(Bid._4C, Gerber::respondAces, true, UserText.Gerber, APPLIES));
+        bids.add(shows(Bid._4C, APPLIES, pairPoints(SLAM_OR_BETTER)));
         return bids;
     }
 
-    private static PositionCalls respondAces(PositionState ps) {
+    public static PositionCalls respondAces(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(propertiesForcingToGame(new Call[]{Bid._4D, Bid._4H, Bid._4S, Bid._4NT}, Gerber::placeContract, true));
-        choices.addRules(shows(Bid._4D, aces(0, 4)));
-        choices.addRules(shows(Bid._4H, aces(1)));
-        choices.addRules(shows(Bid._4S, aces(2)));
-        choices.addRules(shows(Bid._4NT, aces(3)));
+        choices.addRules(
+            properties(new Call[]{Bid._4D, Bid._4H, Bid._4S, Bid._4NT}, Gerber::placeContract, true),
+            shows(Bid._4D, aces(0, 4)),
+            shows(Bid._4H, aces(1)),
+            shows(Bid._4S, aces(2)),
+            shows(Bid._4NT, aces(3))
+        );
         return choices;
     }
 
-    private static PositionCalls placeContract(PositionState ps) {
+    public static PositionCalls placeContract(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._7NT, pairPoints(36, 100))); // Simplified
-        choices.addRules(shows(Bid._6NT));
+        choices.addRules(
+            shows(Bid._7NT, pairPoints(GRAND_SLAM), pairAces(4)),
+            shows(Bid._6NT, pairAces(3, 4)),
+            shows(Bid._4NT, pairAces(0, 1, 2))
+        );
         return choices;
     }
 }

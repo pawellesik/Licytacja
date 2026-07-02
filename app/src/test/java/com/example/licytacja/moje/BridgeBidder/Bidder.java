@@ -113,6 +113,10 @@ public abstract class Bidder {
         return properties(call, null, forcing1Round, false, false, null, null, null, convention, onlyIf);
     }
 
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention, StaticConstraint onlyIf) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, onlyIf);
+    }
+
     public static CallFeatureGroup properties(Call call, boolean forcing1Round) {
         return properties(call, null, forcing1Round, false, false, null, null, null, null, null);
     }
@@ -176,6 +180,16 @@ public abstract class Bidder {
 
     public static final StaticConstraint IS_OPPS_CONTRACT = new SimpleStaticConstraint((call, ps) -> ps.isOpponentsContract(), "opps contract");
     public static final StaticConstraint IS_OUR_CONTRACT = new SimpleStaticConstraint((call, ps) -> ps.isOurContract(), "our contract");
+
+    public static final StaticConstraint CONTRACT_IS_AGREED_STRAIN = new SimpleStaticConstraint((call, ps) -> {
+        Call contractBid = ps.getBiddingState().getContract().getBid();
+        if (contractBid instanceof Bid) {
+            Bid bid = (Bid) contractBid;
+            return ps.getBiddingState().getContract().isOurs(ps.getDirection()) &&
+                    bid.getSuit() == ps.getPairState().getLastShownSuit();
+        }
+        return false;
+    });
 
     public static StaticConstraint id(String id) {
         return new LogID(id);
@@ -328,8 +342,20 @@ public abstract class Bidder {
         return new PairKeyCards(suit, hasQueen, count);
     }
 
+    public static HandConstraint keyCards(Suit suit, int... count) {
+        return new KeyCards(suit, null, count);
+    }
+
+    public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) {
+        return new KeyCards(suit, hasQueen, count);
+    }
+
     public static Constraint aces(int... count) {
         return new KeyCards(null, null, count);
+    }
+
+    public static Constraint pairAces(int... count) {
+        return new PairKeyCards(null, null, count);
     }
 
     public static Constraint kings(int... count) {
