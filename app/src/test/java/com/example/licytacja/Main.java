@@ -28,15 +28,23 @@ public class Main {
     }
 
     private static void simpleTest(){
-        Result result = JUnitCore.runClasses(TestHand.class);
-        result = JUnitCore.runClasses(TestStrain.class);
-        result = JUnitCore.runClasses(TestStrain.class);
-        result = JUnitCore.runClasses(TestDirection.class);
-        result = JUnitCore.runClasses(TestGame.class);
-        result = JUnitCore.runClasses(RandomStress.class);
-        result = JUnitCore.runClasses(PBNUtils.class);
-        result = JUnitCore.runClasses(PBNTest.class);
-        result = JUnitCore.runClasses(InvalidArguments.class);
-        result = JUnitCore.runClasses(BiddingTests.class);
+        runAndPrint(TestHand.class);
+        runAndPrint(TestStrain.class);
+        runAndPrint(TestDirection.class);
+        runAndPrint(TestGame.class);
+        runAndPrint(BiddingTests.class);
+    }
+
+    private static void runAndPrint(Class<?> clazz) {
+        System.out.println("\nUruchamiam: " + clazz.getSimpleName());
+        Result result = JUnitCore.runClasses(clazz);
+        if (result.wasSuccessful()) {
+            System.out.println("  Wszystkie " + result.getRunCount() + " testów OK.");
+        } else {
+            System.out.println("  BŁĘDY: " + result.getFailureCount() + " na " + result.getRunCount());
+            for (Failure f : result.getFailures()) {
+                System.out.println("    - " + f.getTestHeader() + ": " + f.getMessage());
+            }
+        }
     }
 }
