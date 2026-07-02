@@ -1,6 +1,15 @@
 package com.example.licytacja;
 
+import com.example.licytacja.moje.TestBridgeBidder.BiddingTests;
+import com.example.licytacja.moje.TestBridgeBidder.InvalidArguments;
+import com.example.licytacja.moje.TestBridgeBidder.PBNTest;
+import com.example.licytacja.moje.TestBridgeBidder.PBNUtils;
+import com.example.licytacja.moje.TestBridgeBidder.RandomStress;
+import com.example.licytacja.moje.TestBridgeBidder.TestDirection;
+import com.example.licytacja.moje.TestBridgeBidder.TestGame;
 import com.example.licytacja.moje.TestBridgeBidder.TestHand;
+import com.example.licytacja.moje.TestBridgeBidder.TestStrain;
+
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -9,33 +18,25 @@ import org.junit.runner.notification.Failure;
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== Uruchamiam testy z TestHand przez JUnitCore ===");
-        
-        // Sposób 1: Przez JUnitCore (zalecane)
-        Result result = JUnitCore.runClasses(TestHand.class);
-        
-        for (Failure failure : result.getFailures()) {
-            System.out.println("BŁĄD w " + failure.getTestHeader() + ": " + failure.getMessage());
-        }
-        
-        if (result.wasSuccessful()) {
-            System.out.println("SUKCES: Wszystkie testy w TestHand przeszły (Liczba: " + result.getRunCount() + ")");
-        } else {
-            System.out.println("PORAŻKA: Niektóre testy nie przeszły.");
-        }
+        simpleTest();
 
-        System.out.println("\n=== Ręczne wywołanie logiki testu ===");
-        // Sposób 2: Ręczne utworzenie instancji i wywołanie metody
-        try {
-            TestHand test = new TestHand();
-            test.basic();
-            System.out.println("Metoda basic() wykonana pomyślnie (ręcznie).");
-        } catch (Throwable e) {
-            System.err.println("Błąd podczas ręcznego wywołania: " + e.getMessage());
-        }
     }
 
     @Test
     public void runMain() {
         main(new String[]{});
+    }
+
+    private static void simpleTest(){
+        Result result = JUnitCore.runClasses(TestHand.class);
+        result = JUnitCore.runClasses(TestStrain.class);
+        result = JUnitCore.runClasses(TestStrain.class);
+        result = JUnitCore.runClasses(TestDirection.class);
+        result = JUnitCore.runClasses(TestGame.class);
+        result = JUnitCore.runClasses(RandomStress.class);
+        result = JUnitCore.runClasses(PBNUtils.class);
+        result = JUnitCore.runClasses(PBNTest.class);
+        result = JUnitCore.runClasses(InvalidArguments.class);
+        result = JUnitCore.runClasses(BiddingTests.class);
     }
 }
