@@ -81,6 +81,14 @@ public abstract class Bidder {
         return properties(call, partnerBids, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
     }
 
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids) {
+        return properties(calls, partnerBids, false, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+
     public static CallFeatureGroup properties(Call[] calls, boolean forcing1Round, StaticConstraint onlyIf) {
         return properties(calls, null, forcing1Round, false, false, null, null, null, null, onlyIf);
     }
@@ -111,10 +119,6 @@ public abstract class Bidder {
 
     public static CallFeatureGroup properties(Call call, boolean forcing1Round, String text, boolean isAnnounce) {
         return properties(call, null, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
-    }
-
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
-        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
     }
 
     public static CallFeatureGroup properties(Call call, String alert) {
@@ -219,8 +223,12 @@ public abstract class Bidder {
         return new PositionProxy(PositionProxy.RelativePosition.RHO, constraint);
     }
 
+    public static StaticConstraint hasShownSuit(Suit suit, boolean eitherPartner) {
+        return new HasShownSuit(suit, eitherPartner);
+    }
+
     public static StaticConstraint isPartnersSuit() {
-        return partner(new HasShownSuit(null, false));
+        return partner(hasShownSuit(null, false));
     }
 
     // Hand Constraints
@@ -434,7 +442,7 @@ public abstract class Bidder {
     }
 
     public static Constraint raisePartner(Suit suit, int jump, int fit) {
-        return and(partner(new HasShownSuit(suit, false)), fit(fit, suit), isJump(jump));
+        return and(partner(hasShownSuit(suit, false)), fit(fit, suit), isJump(jump));
     }
 
     public static Constraint raisePartner() {

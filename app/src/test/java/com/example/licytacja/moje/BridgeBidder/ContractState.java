@@ -107,6 +107,18 @@ public class ContractState extends Contract {
         return (this.bid == null) ? bid.getLevel() - 1 : bid.jumpOver(this.bid);
     }
 
+    public Call nextAvailableBid(Suit suit) {
+        if (suit == null) return null;
+        Strain strain = suit.toStrain();
+        if (this.bid == null) return new Bid(1, strain);
+        Bid nextBid = new Bid(this.bid.getLevel(), strain);
+        if (nextBid.compareTo(this.bid) <= 0) {
+            if (this.bid.getLevel() == 7) return null;
+            nextBid = new Bid(this.bid.getLevel() + 1, strain);
+        }
+        return nextBid;
+    }
+
     public static ContractState fromCalls(Direction dealer, Iterable<Call> calls) {
         ContractState contract = new ContractState();
         Direction d = dealer;

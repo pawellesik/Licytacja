@@ -16,6 +16,7 @@ public class Respond extends LCStandard {
     protected static final Range MINIMUM_HAND = new Range(6, 10);
     protected static final Range MEDIUM_HAND = new Range(11, 13);
     protected static final Range RAISE_TO_3NT = new Range(13, 16);
+    protected static final Range RAISE_TO_4M = new Range(13, 16);
     protected static final Range LIMIT_RAISE_OR_BETTER = new Range(11, 40);
     protected static final Range WEAK_4_LEVEL = new Range(0, 10);
     protected static final Range WEAK_5_LEVEL = new Range(0, 10);
@@ -74,7 +75,7 @@ public class Respond extends LCStandard {
         choices.addRules(SolidSuit.BIDS(ps));
         choices.addRules(
             propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2::responderRaisedMinor, true),
-            properties(Bid._2C, (PositionCallsFactory) OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
+            properties(Bid._2C, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
             properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true),
             shows(Bid._2C, points(GAME_OR_BETTER), longestMajor(4)),
             shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
@@ -113,7 +114,7 @@ public class Respond extends LCStandard {
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
                 partnerBids(OpenBid2::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D}, (PositionCallsFactory) OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
+                properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
                 shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
@@ -126,7 +127,7 @@ public class Respond extends LCStandard {
                 shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
                 properties(Bid._1S, true),
                 shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), shape(Suit.Hearts, 0, 3)),
-                properties(Bid._1NT, (PositionCallsFactory) OpenBid2::semiForcingNT, false, UserText.SemiForcing, true),
+                properties(Bid._1NT, OpenBid2::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
                 shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
                 shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
@@ -158,7 +159,7 @@ public class Respond extends LCStandard {
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
                 partnerBids(OpenBid2::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, (PositionCallsFactory) OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
+                properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
                 shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
@@ -170,7 +171,7 @@ public class Respond extends LCStandard {
                 shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),
                 shows(Bid._3S, dummyPoints(MEDIUM_HAND), shape(4, 5)),
                 shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
-                properties(Bid._1NT, (PositionCallsFactory) OpenBid2::semiForcingNT, false, UserText.SemiForcing, true),
+                properties(Bid._1NT, OpenBid2::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
                 shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Spades, 0, 3)),
                 shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
@@ -249,13 +250,13 @@ public class Respond extends LCStandard {
                 shows(Bid._1S, points(RESPOND_X_1_LEVEL), shape(5, 11), longerOrEqualTo(Suit.Hearts)),
                 shows(Bid._1D, shape(4, 11), points(RESPOND_X_1_LEVEL)),
                 shows(new Bid(3, openSuit), fit(9), points(RESPOND_X_JUMP)),
-                shows(Bid._2C, partner(new HasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
+                shows(Bid._2C, partner(hasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
                 shows(Bid._2C, shape(5, 11), points(RESPOND_X_1_LEVEL)),
-                shows(Bid._2D, partner(new HasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
+                shows(Bid._2D, partner(hasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
                 shows(Bid._2D, IS_NON_JUMP, shape(5, 11), points(RESPOND_X_1_LEVEL)),
-                shows(Bid._2H, partner(new HasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
+                shows(Bid._2H, partner(hasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
                 shows(Bid._2H, IS_NON_JUMP, shape(5, 11), points(RESPOND_X_1_LEVEL)),
-                shows(Bid._2S, partner(new HasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
+                shows(Bid._2S, partner(hasShownSuit(null, false)), fit(8), points(RESPOND_X_1_LEVEL)),
                 shows(Bid._1NT, points(RESPOND_X_1_LEVEL)),
                 shows(Call.PASS, points(RESPOND_PASS))
         );
