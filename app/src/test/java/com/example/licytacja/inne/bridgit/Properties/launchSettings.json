@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "bridgit": {
+      "commandName": "Project",
+      "commandLineArgs": ""
+
+    }
+  }
+}
