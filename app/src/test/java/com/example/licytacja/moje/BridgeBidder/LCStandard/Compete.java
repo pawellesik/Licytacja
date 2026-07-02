@@ -32,8 +32,8 @@ public class Compete extends Bidder {
         bids.add(shows(Bid._3H, FIT_8_PLUS, pairPoints(23, 25)));
         bids.add(shows(Bid._3S, FIT_8_PLUS, pairPoints(23, 25)));
 
-        bids.add(shows(Bid._3NT, OPPS_STOPPED, pairPoints(26, 31)));
-        bids.add(shows(Bid._2NT, IS_OPPS_CONTRACT, OPPS_STOPPED, pairPoints(24, 25)));
+        bids.add(shows(Bid._3NT, OPPS_STOPPED, pairHighCardPoints(25, 31)));
+        bids.add(shows(Bid._2NT, IS_OPPS_CONTRACT, OPPS_STOPPED, pairPoints(20, 24)));
 
         for (CallFeature cf : ForcedBid.bids(ps)) {
             bids.add(cf);

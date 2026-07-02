@@ -13,12 +13,4 @@ Uruchamiam: TestGame
   Wszystkie 2 testów OK.
 
 Uruchamiam: BiddingTests
-  BŁĘDY: 1 na 628
-    - testTwoOverOne[1NT Basic.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
-FAILURE: 1NT Basic.pbn: Unknown Event (Seat S, Bid 1)
-  Auction:  1NT 2H
-  Deal:     N:AJ64.T42.KQ8.AQT Q.AQ8653.AJ5.J75 T75.KJ9.732.9862 K9832.7.T964.K43
-  Vulnerable: None
-  Expected: Pass
-  Actual:   2NT
- expected:<[Pass]> but was:<[2NT]>
+  Wszystkie 628 testów OK.

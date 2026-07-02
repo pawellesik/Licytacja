@@ -32,10 +32,10 @@ public class PairPoints {
         return Constraint.getSuit(this.suit, call);
     }
 
-    public Range getPoints(Call call, PositionState ps, HandSummary hs) {
-        Range points = hs.getStartingPoints();
+    public Range getPoints(Call call, PositionState ps, HandSummary hs, boolean highCard) {
+        Range points = highCard ? hs.getHighCardPoints() : hs.getStartingPoints();
         Suit s = getSuit(ps, call);
-        if (!useStartingPoints && s != null) {
+        if (!highCard && !useStartingPoints && s != null) {
             PositionState firstToShow = ps.getPairState().firstToShow(s);
             if (firstToShow == ps) {
                 points = hs.getSuits().get(s).getLongHandPoints();
@@ -44,24 +44,28 @@ public class PairPoints {
             }
         }
         if (points == null) {
-            points = hs.getPoints();
-            if (!useStartingPoints && points != null) {
+            points = highCard ? hs.getHighCardPoints() : hs.getPoints();
+            if (!highCard && !useStartingPoints && points != null) {
                 points = new Range(points.getMin(), points.getMax() + 8);
             }
         }
         return points != null ? points : new Range(0, 100);
     }
 
-    public boolean dynamicallyConforms(Call call, PositionState ps, HandSummary hs) {
-        Range posPoints = getPoints(call, ps, hs);
-        Range partnerPoints = getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary());
+    public boolean dynamicallyConforms(Call call, PositionState ps, HandSummary hs, boolean highCard) {
+        Range posPoints = getPoints(call, ps, hs, highCard);
+        Range partnerPoints = getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary(), highCard);
         return (posPoints.getMax() + partnerPoints.getMin() >= min && posPoints.getMin() + partnerPoints.getMin() <= max);
     }
 
-    public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand) {
-        Range pointsPartner = getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary());
+    public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand, boolean highCard) {
+        Range pointsPartner = getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary(), highCard);
         int showMin = Math.max(min - pointsPartner.getMin(), 0);
         int showMax = Math.max(max - pointsPartner.getMin(), 0);
+        if (highCard) {
+            showHand.showHighCardPoints(showMin, showMax);
+            return;
+        }
         Suit s = getSuit(ps, call);
         PositionState firstToShow = s == null ? null : ps.getPairState().firstToShow(s);
         if (useStartingPoints || firstToShow == null) {
@@ -75,13 +79,17 @@ public class PairPoints {
 
     public static class PairHasShownPoints extends StaticConstraint {
         private final PairPoints pairPoints;
-        public PairHasShownPoints(Suit suit, int min, int max) {
+        private final boolean highCard;
+
+        public PairHasShownPoints(Suit suit, int min, int max, boolean highCard) {
             this.pairPoints = new PairPoints(suit, min, max);
+            this.highCard = highCard;
         }
+
         @Override
         public boolean conforms(Call call, PositionState ps) {
-            Range posPoints = pairPoints.getPoints(call, ps, ps.getPublicHandSummary());
-            Range partnerPoints = pairPoints.getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary());
+            Range posPoints = pairPoints.getPoints(call, ps, ps.getPublicHandSummary(), highCard);
+            Range partnerPoints = pairPoints.getPoints(call, ps.getPartner(), ps.getPartner().getPublicHandSummary(), highCard);
             int minP = posPoints.getMin() + partnerPoints.getMin();
             return (minP >= pairPoints.min && minP <= pairPoints.max);
         }
@@ -89,23 +97,31 @@ public class PairPoints {
 
     public static class PairShowsPoints extends HandConstraint implements IShowsHand, IDescribeConstraint {
         private final PairPoints pairPoints;
-        public PairShowsPoints(Suit suit, int min, int max) {
+        private final boolean highCard;
+
+        public PairShowsPoints(Suit suit, int min, int max, boolean highCard) {
             this.pairPoints = new PairPoints(suit, min, max);
+            this.highCard = highCard;
         }
-        public PairShowsPoints(int min, int max) {
+
+        public PairShowsPoints(int min, int max, boolean highCard) {
             this.pairPoints = new PairPoints(min, max);
+            this.highCard = highCard;
         }
+
         @Override
         public boolean conforms(Call call, PositionState ps, HandSummary hs) {
-            return pairPoints.dynamicallyConforms(call, ps, hs);
+            return pairPoints.dynamicallyConforms(call, ps, hs, highCard);
         }
+
         @Override
         public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand) {
-            pairPoints.showHand(call, ps, showHand);
+            pairPoints.showHand(call, ps, showHand, highCard);
         }
+
         @Override
         public String describe(Call call, PositionState ps) {
-            return pairPoints.min + (pairPoints.min == pairPoints.max ? "" : "-" + pairPoints.max) + " pair points";
+            return pairPoints.min + (pairPoints.min == pairPoints.max ? "" : "-" + pairPoints.max) + " pair " + (highCard ? "HCP" : "points");
         }
     }
 }

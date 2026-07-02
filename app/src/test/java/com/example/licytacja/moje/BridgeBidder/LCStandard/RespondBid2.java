@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RespondBid2 extends Respond {
+
     public static Iterable<CallFeature> secondBid(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(OpenBid3::thirdBid));
 
-        // Opener could have bid 1S.  Support at the right level...
         bids.add(shows(Bid._2S, raisePartner(), points(MINIMUM_HAND)));
         bids.add(shows(Bid._3S, raisePartner(null, 1, 8), points(MEDIUM_HAND)));
         bids.add(shows(Bid._4S, raisePartner(null, 1, 8), points(RAISE_TO_4M)));
@@ -58,13 +58,13 @@ public class RespondBid2 extends Respond {
             choices.addRules(shows(new Bid(4, trump), pairPoints(25, 27)));
         } else {
             choices.addRules(
-                propertiesAgreeTrump(new Call[]{Bid._2H, Bid._2S, Bid._3H, Bid._3S, Bid._4H, Bid._4S }, null, true),
-                shows(Bid._4H, isPartnersSuit(), FIT_8_PLUS, dummyPoints(12, 13)),
-                shows(Bid._4S, isPartnersSuit(), FIT_8_PLUS, dummyPoints(12, 13)),
-                shows(Bid._2H, isPartnersSuit(), FIT_8_PLUS, dummyPoints(14, 40)),
-                shows(Bid._2S, isPartnersSuit(), FIT_8_PLUS, dummyPoints(14, 40)),
-                shows(Bid._3H, isPartnersSuit(), IS_NON_JUMP, FIT_8_PLUS, dummyPoints(14, 40)),
-                shows(Bid._3S, isPartnersSuit(), IS_NON_JUMP, FIT_8_PLUS, dummyPoints(14, 40))
+                properties(new Call[]{Bid._2H, Bid._2S, Bid._3H, Bid._3S, Bid._4H, Bid._4S}, true, IS_PARTNERS_SUIT),
+                shows(Bid._4H, IS_PARTNERS_SUIT, FIT_8_PLUS, dummyPoints(12, 13)),
+                shows(Bid._4S, IS_PARTNERS_SUIT, FIT_8_PLUS, dummyPoints(12, 13)),
+                shows(Bid._2H, IS_PARTNERS_SUIT, FIT_8_PLUS, dummyPoints(14, 40)),
+                shows(Bid._2S, IS_PARTNERS_SUIT, FIT_8_PLUS, dummyPoints(14, 40)),
+                shows(Bid._3H, IS_PARTNERS_SUIT, IS_NON_JUMP, FIT_8_PLUS, dummyPoints(14, 40)),
+                shows(Bid._3S, IS_PARTNERS_SUIT, IS_NON_JUMP, FIT_8_PLUS, dummyPoints(14, 40))
             );
         }
         choices.addRules(Blackwood.initiateConvention(ps));

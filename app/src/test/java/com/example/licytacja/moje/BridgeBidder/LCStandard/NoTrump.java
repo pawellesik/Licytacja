@@ -132,7 +132,7 @@ public class NoTrump extends Bidder {
         public Iterable<CallFeature> bids(PositionState ps) {
             List<CallFeature> bids = new ArrayList<>();
             if (ps.getRole() == PositionRole.Opener && ps.getRoleRound() == 1) {
-                bids.add(properties(Bid._1NT, (PositionCallsFactory) this::conventionalResponses, true, UserText.OneNoTrumpRange, true));
+                bids.add(properties(Bid._1NT, (PositionCallsFactory) this::conventionalResponses, false, UserText.OneNoTrumpRange, true));
                 bids.add(shows(Bid._1NT, ntd.OR.open, BALANCED));
             } else if (ps.getRole() == PositionRole.Overcaller && ps.getRoleRound() == 1) {
                 if (ps.getBiddingState().getContract().isPassEndsAuction() && ntd.openType.equals("Balancing1NT")) {
@@ -173,10 +173,12 @@ public class NoTrump extends Bidder {
             bids.add(partnerBids((PositionCallsFactory) this::openerRebid));
             bids.add(partnerBids(Bid._4NT, Compete::compBids));
 
-            bids.add(shows(Bid._2C, shape(5, 11), ntd.RR.lessThanInvite));
-            bids.add(shows(Bid._2D, shape(5, 11), ntd.RR.lessThanInvite));
-            bids.add(shows(Bid._2H, shape(5, 11), ntd.RR.lessThanInvite));
-            bids.add(shows(Bid._2S, shape(5, 11), ntd.RR.lessThanInvite));
+            if (!ntd.openType.equals("Balancing1NT")) {
+                bids.add(shows(Bid._2C, shape(5, 11), ntd.RR.lessThanInvite));
+                bids.add(shows(Bid._2D, shape(5, 11), ntd.RR.lessThanInvite));
+                bids.add(shows(Bid._2H, shape(5, 11), ntd.RR.lessThanInvite));
+                bids.add(shows(Bid._2S, shape(5, 11), ntd.RR.lessThanInvite));
+            }
 
             bids.add(shows(Bid._2NT, ntd.RR.inviteGame, longestMajor(4)));
 

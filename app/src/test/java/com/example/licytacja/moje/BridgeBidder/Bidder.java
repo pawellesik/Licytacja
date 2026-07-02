@@ -367,11 +367,15 @@ public abstract class Bidder {
     public static final HandConstraint FIT_8_PLUS = fit(8);
 
     public static HandConstraint pairPoints(Suit suit, int min, int max) {
-        return new PairPoints.PairShowsPoints(suit, min, max);
+        return new PairPoints.PairShowsPoints(suit, min, max, false);
     }
 
     public static HandConstraint pairPoints(int min, int max) {
-        return new PairPoints.PairShowsPoints(min, max);
+        return new PairPoints.PairShowsPoints(min, max, false);
+    }
+
+    public static HandConstraint pairHighCardPoints(int min, int max) {
+        return new PairPoints.PairShowsPoints(min, max, true);
     }
 
     public static HandConstraint pairPoints(Range range) {
@@ -444,6 +448,8 @@ public abstract class Bidder {
     public static Constraint agreedStrain(Strain... strains) {
         return new AgreedStrain(strains);
     }
+
+    public static final StaticConstraint IS_PARTNERS_SUIT = partner(hasShownSuit(null, false));
 
     public static Constraint raisePartner(Suit suit, int jump, int fit) {
         return and(partner(hasShownSuit(suit, false)), fit(fit, suit), isJump(jump));

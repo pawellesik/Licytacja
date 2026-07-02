@@ -27,17 +27,14 @@ public class PairMinShape {
         public boolean conforms(Call call, PositionState ps, HandSummary hs) {
             Suit s = null;
             if (useContractSuit) {
-                Suit trump = ps.getPairState().getTrumpSuit();
-                if (trump != null) {
-                    s = trump;
-                } else {
+                if (ps.getBiddingState().getContract().isOurs(ps.getDirection())) {
                     Call contractBid = ps.getBiddingState().getContract().getBid();
                     if (contractBid instanceof Bid) {
                         s = ((Bid) contractBid).getSuit();
                     }
                 }
-            }
-            if (s == null) {
+                if (s == null) return false;
+            } else {
                 s = getSuit(this.suit, call);
             }
             if (s != null) {
@@ -52,6 +49,10 @@ public class PairMinShape {
     public static class PairShowsMinShape extends PairHasMinShape implements IShowsHand, IDescribeConstraint {
         public PairShowsMinShape(Suit suit, int min, boolean desiredValue) {
             super(suit, min, desiredValue);
+        }
+
+        public PairShowsMinShape(int min, boolean desiredValue) {
+            super(min, desiredValue);
         }
 
         @Override

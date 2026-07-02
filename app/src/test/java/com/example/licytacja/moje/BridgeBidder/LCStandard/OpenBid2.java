@@ -87,7 +87,7 @@ public class OpenBid2 extends Open {
             // TODO: Need to implement 3NT bid if long running minor.  Suits stopped????
 
             // Lowest priority if nothing else fits is bid NT
-            shows(Bid._1NT, BALANCED, points(Rebid1NT))
+            shows(Bid._1NT, BALANCED, highCardPoints(12, 14), points(Rebid1NT))
         );
         return choices;
     }
