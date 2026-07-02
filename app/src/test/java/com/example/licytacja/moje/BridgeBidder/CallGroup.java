@@ -1,11 +1,11 @@
 package com.example.licytacja.moje.BridgeBidder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CallGroup extends HashMap<Call, CallDetails> {
+public class CallGroup extends LinkedHashMap<Call, CallDetails> {
     private final PositionCalls positionCalls;
     private final List<CallAnnotation> annotations;
     private CallProperties partnerCalls = null;
@@ -69,12 +69,14 @@ public class CallGroup extends HashMap<Call, CallDetails> {
                 }
                 if (getPositionState().isValidNextCall(feature.getCall()) && !positionCalls.containsKey(feature.getCall())) {
                     if (feature.satisfiesStaticConstraints(getPositionState())) {
-                        if (!this.containsKey(feature.getCall())) {
-                            this.put(feature.getCall(), new CallDetails(this, feature.getCall()));
+                        CallDetails details = this.get(feature.getCall());
+                        if (details == null) {
+                            details = new CallDetails(this, feature.getCall());
+                            this.put(feature.getCall(), details);
                         }
-                        this.get(feature.getCall()).add(feature);
+                        details.add(feature);
                         if (bestCall == null && feature instanceof BidRule && getPositionState().privateHandConforms((BidRule) feature)) {
-                            bestCall = this.get(feature.getCall());
+                            bestCall = details;
                         }
                     }
                 }
