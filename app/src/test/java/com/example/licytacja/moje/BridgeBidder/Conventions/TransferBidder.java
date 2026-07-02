@@ -67,7 +67,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
     private PositionCalls openerShowsTwo(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = ps.getBidHistory(0).equals(Bid._2D) ? Suit.Hearts : Suit.Spades;
-        choices.addRules(partnerBids((PositionCallsFactory) this::openerRebidFactory));
+        choices.addRules(partnerBids(this::openerRebidFactory));
         choices.addRules(shows(new Bid(4, suit), ntd.RR.gameOrBetter, OPPS_NOT_STOPPED));
         choices.addRules(shows(new Bid(4, suit), shape(6, 10), ntd.RR.gameOrBetter));
         choices.addRules(shows(Bid._3NT, ntd.RR.gameOrBetter, OPPS_STOPPED));
@@ -86,7 +86,7 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
 
     private Iterable<CallFeature> explainTransfer(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.add(partnerBids((PositionCallsFactory) this::openerRebidFactory));
+        bids.add(partnerBids(this::openerRebidFactory));
         bids.add(shows(Bid._2S, ntd.RR.inviteGame, shape(5, 11)));
         bids.add(properties(Bid._3H, true));
         bids.add(shows(Bid._3H, ntd.RR.gameOrBetter, partner(isLastBid(Bid._2S)), shape(5)));
