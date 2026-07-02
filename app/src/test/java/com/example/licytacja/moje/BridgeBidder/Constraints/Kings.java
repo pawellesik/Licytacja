@@ -1,0 +1,36 @@
+package com.example.licytacja.moje.BridgeBidder.Constraints;
+
+import com.example.licytacja.moje.BridgeBidder.*;
+import java.util.*;
+
+public class Kings extends HandConstraint implements IShowsHand, IDescribeConstraint {
+    private final Set<Integer> count;
+
+    public Kings(int... count) {
+        this.count = new HashSet<>();
+        for (int c : count) {
+            this.count.add(c);
+        }
+    }
+
+    @Override
+    public boolean conforms(Call call, PositionState ps, HandSummary hs) {
+        Set<Integer> countKings = hs.getCountKings();
+        if (countKings == null) return true;
+        for (int c : count) {
+            if (countKings.contains(c)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand) {
+        showHand.showCountKings(count);
+    }
+
+    @Override
+    public String describe(Call call, PositionState ps) {
+        String s = (count.size() == 1 && count.contains(1)) ? "" : "s";
+        return count.toString().replace("[", "").replace("]", "").replace(",", " or") + " King" + s;
+    }
+}

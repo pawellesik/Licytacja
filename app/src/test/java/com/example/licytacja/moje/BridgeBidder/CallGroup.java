@@ -8,6 +8,7 @@ import java.util.Map;
 public class CallGroup extends HashMap<Call, CallDetails> {
     private final PositionCalls positionCalls;
     private final List<CallAnnotation> annotations;
+    private CallProperties partnerCalls = null;
     private CallDetails bestCall = null;
 
     public CallGroup(PositionCalls positionCalls) {
@@ -46,12 +47,18 @@ public class CallGroup extends HashMap<Call, CallDetails> {
         }
     }
 
+    public CallProperties getPartnerCalls() {
+        return partnerCalls;
+    }
+
     private void recurseAddRules(Iterable<CallFeature> features) {
         for (CallFeature feature : features) {
             // TODO: Port full logic from C#
             if (feature.getCall() == null) {
                 if (feature.satisfiesStaticConstraints(getPositionState())) {
-                    if (feature instanceof CallAnnotation) {
+                    if (feature instanceof CallProperties) {
+                        this.partnerCalls = (CallProperties) feature;
+                    } else if (feature instanceof CallAnnotation) {
                         annotations.add((CallAnnotation) feature);
                     }
                 }

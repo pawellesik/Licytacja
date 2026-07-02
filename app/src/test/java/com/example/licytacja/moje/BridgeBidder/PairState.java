@@ -23,6 +23,14 @@ public class PairState {
                 (vulnerable == Vulnerable.EW && pair == Pair.EW));
     }
 
+    public Suit getLastShownSuit() {
+        return lastShownSuit;
+    }
+
+    public boolean haveShownSuit(Suit suit) {
+        return firstToShow.containsKey(suit);
+    }
+
     public boolean areVulnerable() {
         return areVulnerable;
     }
@@ -66,21 +74,19 @@ public class PairState {
     }
 
     public void updatePairProperties(CallDetails callDetails) {
-        // TODO: Port logic from CallProperties when available
-        /*
         if (callDetails.getProperties() != null) {
-            if (callDetails.getProperties().isForcingToGame()) {
+            CallProperties props = callDetails.getProperties();
+            if (props.isForcingToGame()) {
                 forcedToGame = true;
             }
-            if (callDetails.getProperties().isForcing1Round()) {
+            if (props.isForcing1Round()) {
                 forcedPosition = callDetails.getPositionState().getPartner();
                 forcedThroughRound = callDetails.getPositionState().getPartner().getBidRound();
             }
-            if (callDetails.getProperties().getTrumpSuit() != null) {
-                trumpSuit = callDetails.getProperties().getTrumpSuit();
+            if (props.getTrumpSuit() != null) {
+                trumpSuit = props.getTrumpSuit();
             }
         }
-        */
     }
 
     public boolean isForcedToGame() {

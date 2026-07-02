@@ -10,6 +10,17 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
         this.positionState = ps;
     }
 
+    public static PositionCallsFactory fromCallFeaturesFactory(CallFeaturesFactory callFeatures) {
+        return (ps) -> {
+            if (ps.getRHO().isPassed() || ps.getRHO().isDoubled()) {
+                PositionCalls calls = new PositionCalls(ps);
+                calls.addRules(callFeatures.apply(ps));
+                return calls;
+            }
+            return ps.getPairState().getBiddingSystem().getPositionCalls(ps);
+        };
+    }
+
     public PositionState getPositionState() {
         return positionState;
     }
@@ -30,6 +41,11 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
 
     public void addRules(CallFeature... rules) {
         addRules(Arrays.asList(rules));
+    }
+
+    public PositionCalls addPassRule(Constraint... constraints) {
+        addRules(Bidder.shows(Call.PASS, constraints));
+        return this;
     }
 
     public void createPlaceholderCall(Call call) {

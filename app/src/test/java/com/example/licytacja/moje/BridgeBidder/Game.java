@@ -45,13 +45,34 @@ public class Game {
     public static Game parse(String dealStr, String vulnerableStr) {
         Game game = new Game();
         game.parseDeal(dealStr, true);
-        if (vulnerableStr == null) {
-            throw new NullPointerException("vulnerable");
-        } else {
+        if (vulnerableStr != null) {
             try {
                 game.vulnerable = Vulnerable.valueOf(vulnerableStr);
             } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Vulnerable value " + vulnerableStr + " is invalid.");
+                // Handle different names for Vulnerable if necessary
+            }
+        }
+        return game;
+    }
+
+    public static Game parse(String pbnGame) {
+        Game game = new Game();
+        List<com.example.licytacja.moje.BridgeBidder.PBN.FromString.PBNTag> tags = com.example.licytacja.moje.BridgeBidder.PBN.FromString.tokenizeTags(pbnGame);
+        for (com.example.licytacja.moje.BridgeBidder.PBN.FromString.PBNTag tag : tags) {
+            switch (tag.name) {
+                case "Dealer":
+                    game.dealer = Direction.valueOf(tag.value);
+                    break;
+                case "Vulnerable":
+                    game.vulnerable = Vulnerable.valueOf(tag.value);
+                    break;
+                case "Deal":
+                    game.parseDeal(tag.value, false);
+                    break;
+                case "Auction":
+                    game.parseAuction(String.join(" ", tag.data));
+                    break;
+                // Add more tags as needed
             }
         }
         return game;

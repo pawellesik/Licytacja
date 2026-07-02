@@ -24,12 +24,31 @@ public class PositionState {
         
         if (hand != null) {
             HandSummary.ShowState showHand = new HandSummary.ShowState();
-            // TODO: Evaluation logic
-            // StandardHandEvaluator.evaluate(hand, showHand);
+            HandEvaluator.StandardHandEvaluator.evaluate(hand, showHand);
             this.privateHandSummary = showHand.getHandSummary();
         } else {
             this.privateHandSummary = null;
         }
+    }
+
+    public BiddingState getBiddingState() {
+        return biddingState;
+    }
+
+    public boolean isPassed() {
+        return bids.isEmpty() || bids.get(bids.size() - 1).getCall().equals(Call.PASS);
+    }
+
+    public boolean isDoubled() {
+        return !bids.isEmpty() && bids.get(bids.size() - 1).getCall().equals(Call.DOUBLE);
+    }
+
+    public PairState getOppsPairState() {
+        return getRHO().getPairState();
+    }
+
+    public boolean isPassedHand() {
+        return !bids.isEmpty() && bids.get(0).getCall().equals(Call.PASS);
     }
 
     public boolean hasHand() {
@@ -77,7 +96,14 @@ public class PositionState {
     }
 
     public PositionCalls getPositionCalls() {
-        // TODO: Port logic for bidFactory
+        PositionState partner = getPartner();
+        PositionCallsFactory bidFactory = null;
+        if (partner.bids.size() > 0) {
+            bidFactory = partner.bids.get(partner.bids.size() - 1).getBidsFactory();
+        }
+        if (bidFactory != null) {
+            return bidFactory.apply(this);
+        }
         return pairState.getBiddingSystem().getPositionCalls(this);
     }
 
@@ -152,6 +178,13 @@ public class PositionState {
     public boolean isReverse(Call call) {
         // TODO
         return false;
+    }
+
+    public Call getBidHistory(int historyLevel) {
+        if (bids.size() <= historyLevel) {
+            return null;
+        }
+        return bids.get(bids.size() - 1 - historyLevel).getCall();
     }
 
     public int getCallCount() {

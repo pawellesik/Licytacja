@@ -84,6 +84,10 @@ public class BiddingState {
         return nextToAct;
     }
 
+    public ContractState getContract() {
+        return contract;
+    }
+
     public void updateStateFromFirstBid() {
         // TODO: Port logic
     }

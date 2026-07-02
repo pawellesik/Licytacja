@@ -7,6 +7,7 @@ public class CallDetails {
     private final Call call;
     private final List<CallAnnotation> annotations = new ArrayList<>();
     private final List<BidRule> rules = new ArrayList<>();
+    private CallProperties properties = null;
     private final CallGroup group;
 
     public CallDetails(CallGroup group, Call call) {
@@ -30,17 +31,32 @@ public class CallDetails {
         return !rules.isEmpty();
     }
 
+    public CallProperties getProperties() {
+        return properties;
+    }
+
     public void add(CallFeature feature) {
         if (feature instanceof BidRule) {
             rules.add((BidRule) feature);
         } else if (feature instanceof CallAnnotation) {
             annotations.add((CallAnnotation) feature);
+        } else if (feature instanceof CallProperties) {
+            this.properties = (CallProperties) feature;
         }
-        // TODO: Handle CallProperties if needed
     }
 
     public PositionState getPositionState() {
         return group.getPositionState();
+    }
+
+    public PositionCallsFactory getBidsFactory() {
+        if (properties != null && properties.getPartnerBids() != null) {
+            return properties.getPartnerBids();
+        }
+        if (!this.call.equals(Call.PASS) && group.getPartnerCalls() != null) {
+            return group.getPartnerCalls().getPartnerBids();
+        }
+        return null;
     }
 
     public boolean pruneRules(PositionState ps) {
