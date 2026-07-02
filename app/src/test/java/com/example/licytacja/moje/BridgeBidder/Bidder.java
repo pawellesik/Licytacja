@@ -203,6 +203,10 @@ public abstract class Bidder {
 
     public static final StaticConstraint IS_VUL = new SimpleStaticConstraint((call, ps) -> ps.isVulnerable(), "vul");
     public static final StaticConstraint IS_NOT_VUL = new SimpleStaticConstraint((call, ps) -> !ps.isVulnerable(), "not vul");
+    public static final StaticConstraint IS_FAV_VUL = new SimpleStaticConstraint((call, ps) -> !ps.isVulnerable() && ps.getRHO().isVulnerable(), "favorable vul");
+    public static final StaticConstraint IS_UNFAV_VUL = new SimpleStaticConstraint((call, ps) -> ps.isVulnerable() && !ps.getRHO().isVulnerable(), "unfavorable vul");
+    public static final StaticConstraint BOTH_VUL = new SimpleStaticConstraint((call, ps) -> ps.isVulnerable() && ps.getRHO().isVulnerable(), "all vul");
+    public static final StaticConstraint BOTH_NOT_VUL = new SimpleStaticConstraint((call, ps) -> !ps.isVulnerable() && !ps.getRHO().isVulnerable(), "none vul");
 
     public static final StaticConstraint IS_FINAL_CALL = new SimpleStaticConstraint((call, ps) -> ps.getBiddingState().getContract().isPassEndsAuction(), "pass ends auction");
     public static final StaticConstraint IS_NOT_FINAL_CALL = not(IS_FINAL_CALL);
@@ -373,6 +377,11 @@ public abstract class Bidder {
     public static final HandConstraint DECENT_PLUS_SUIT = quality(SuitQuality.Decent, SuitQuality.Solid);
     public static final HandConstraint GOOD_PLUS_SUIT = quality(SuitQuality.Good, SuitQuality.Solid);
     public static final HandConstraint EXCELLENT_PLUS_SUIT = quality(SuitQuality.Excellent, SuitQuality.Solid);
+    public static final HandConstraint BAD_SUIT = quality(SuitQuality.Poor, SuitQuality.Poor);
+
+    public static HandConstraint showsBadSuit(Suit suit) {
+        return quality(suit, SuitQuality.Poor, SuitQuality.Poor);
+    }
 
     public static HandConstraint suitLosers(int min, int max, Suit suit) {
         return new Losers.ShowsLosers(false, suit, min, max);
