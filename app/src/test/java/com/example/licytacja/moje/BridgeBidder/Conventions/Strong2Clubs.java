@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Strong2Clubs extends Bidder {
     protected static final Range STRONG_OPEN_RANGE = new Range(22, 40);
-    protected static final Range GAME_IN_HAND = new Range(25, 40);
     protected static final Range POSITIVE_RESPONSE = new Range(8, 18);
     protected static final Range WAITING = new Range(0, 18);
 
@@ -42,11 +41,13 @@ public class Strong2Clubs extends Bidder {
     private static PositionCalls openerRebidWaiting(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
+            partnerBids(Strong2Clubs::responder2ndBid),
             propertiesForcingToGame(new Call[]{Bid._2H, Bid._2S, Bid._3C, Bid._3D}, Strong2Clubs::responder2ndBid, true),
             shows(Bid._2H, shape(5, 11)),
             shows(Bid._2S, shape(5, 11)),
             shows(Bid._3C, shape(5, 11)),
             shows(Bid._3D, shape(5, 11)),
+            shows(Bid._3NT, pairPoints(25, 40)),
             shows(Bid._2NT, BALANCED)
         );
         return choices;
@@ -67,10 +68,12 @@ public class Strong2Clubs extends Bidder {
     private static PositionCalls responder2ndBid(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
+            partnerBids(Strong2Clubs::openerRebidWaiting), 
+            shows(Bid._3H, shape(5, 11)),
+            shows(Bid._3S, shape(5, 11)),
             shows(Bid._2S, shape(5, 11)),
             shows(Bid._3C, shape(5, 11)),
             shows(Bid._3D, shape(5, 11)),
-            shows(Bid._3H, shape(5, 11)),
             shows(Bid._4H, FIT_8_PLUS),
             shows(Bid._4S, FIT_8_PLUS),
             shows(Bid._3NT),
