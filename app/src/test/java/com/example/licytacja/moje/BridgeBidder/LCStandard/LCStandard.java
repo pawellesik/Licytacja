@@ -11,7 +11,7 @@ public class LCStandard extends Bidder implements IBiddingSystem {
             return Overcall.getOvercallPositionCalls(ps);
         } else {
             PositionCalls calls = new PositionCalls(ps);
-            calls.addRules(Compete.COMP_BIDS);
+            calls.addRules(Compete::compBids);
             return calls;
         }
     }

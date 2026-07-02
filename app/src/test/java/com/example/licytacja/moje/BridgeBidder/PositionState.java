@@ -35,6 +35,10 @@ public class PositionState {
         return biddingState;
     }
 
+    public boolean isForcedToBid() {
+        return pairState.isForcedToBid(this) && !getRHO().isPassed(); // C# says !RightHandOpponent._bids.Last().Equals(Call.Pass)
+    }
+
     public boolean isPassed() {
         return bids.isEmpty() || bids.get(bids.size() - 1).getCall().equals(Call.PASS);
     }
@@ -171,13 +175,20 @@ public class PositionState {
     }
 
     public boolean isOpponentsContract() {
-        // TODO
-        return false;
+        return biddingState.getContract().isOpponents(this.direction);
+    }
+
+    public boolean isOurContract() {
+        return biddingState.getContract().isOurs(this.direction);
     }
 
     public boolean isReverse(Call call) {
         // TODO
         return false;
+    }
+
+    public Call getLastCall() {
+        return getBidHistory(0);
     }
 
     public Call getBidHistory(int historyLevel) {

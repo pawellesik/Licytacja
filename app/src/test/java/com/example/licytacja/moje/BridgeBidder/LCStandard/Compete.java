@@ -1,16 +1,43 @@
 package com.example.licytacja.moje.BridgeBidder.LCStandard;
 
 import com.example.licytacja.moje.BridgeBidder.*;
+import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
+import com.example.licytacja.moje.BridgeBidder.Conventions.Gerber;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Compete extends Bidder {
-    public static final Iterable<CallFeature> COMP_BIDS = compBids(null); // Simple placeholder
 
     public static Iterable<CallFeature> compBids(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
+        bids.addAll((List<CallFeature>) Blackwood.initiateConvention(ps));
+        bids.addAll((List<CallFeature>) Gerber.initiateConvention(ps));
+
+        bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(26, 28)));
+        bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(26, 28)));
+
+        bids.add(shows(Bid._4H, IS_FORCED_TO_GAME, FIT_8_PLUS, pairPoints(23, 25)));
+        bids.add(shows(Bid._4S, IS_FORCED_TO_GAME, FIT_8_PLUS, pairPoints(23, 25)));
+
+        bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(29, 32)));
+        bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(29, 32)));
+
+        bids.add(shows(Bid._2C, FIT_8_PLUS, pairPoints(20, 22)));
+        bids.add(shows(Bid._2D, FIT_8_PLUS, pairPoints(20, 22)));
         bids.add(shows(Bid._2H, FIT_8_PLUS, pairPoints(20, 22)));
         bids.add(shows(Bid._2S, FIT_8_PLUS, pairPoints(20, 22)));
+
+        bids.add(shows(Bid._3C, FIT_8_PLUS, pairPoints(23, 25)));
+        bids.add(shows(Bid._3D, FIT_8_PLUS, pairPoints(23, 25)));
+        bids.add(shows(Bid._3H, FIT_8_PLUS, pairPoints(23, 25)));
+        bids.add(shows(Bid._3S, FIT_8_PLUS, pairPoints(23, 25)));
+
+        bids.add(shows(Bid._3NT, OPPS_STOPPED, pairPoints(25, 31)));
+        bids.add(shows(Bid._2NT, IS_OPPS_CONTRACT, OPPS_STOPPED, pairPoints(20, 24)));
+
+        for (CallFeature cf : ForcedBid.bids(ps)) {
+            bids.add(cf);
+        }
         bids.add(shows(Call.PASS));
         return bids;
     }
