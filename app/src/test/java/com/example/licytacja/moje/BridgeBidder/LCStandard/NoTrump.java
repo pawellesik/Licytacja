@@ -198,16 +198,25 @@ public class NoTrump extends Bidder {
 
         private PositionCalls openerRebid(PositionState ps) {
             PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(partnerBids((CallFeaturesFactory) this::responderRebid));
+            choices.addRules(
+                partnerBids((CallFeaturesFactory) this::responderRebid),
 
-            choices.addRules(shows(Bid._3NT, ntd.OR.acceptInvite, partner(isLastBid(Bid._2NT))));
-            choices.addRules(shows(Call.PASS, ntd.OR.dontAcceptInvite, partner(isLastBid(Bid._2NT))));
-            choices.addRules(shows(Call.PASS, partner(isLastBid(Bid._3NT))));
-            choices.addRules(shows(Bid._3NT, partner(isLastBid(Bid._3H)), shape(Suit.Hearts, 0, 2)));
-            choices.addRules(shows(Bid._3NT, partner(isLastBid(Bid._3S)), shape(Suit.Spades, 0, 2)));
+                shows(Bid._3H, partner(isLastBid(Bid._2NT)), ntd.OR.acceptInvite, shape(5)),
+                shows(Bid._3S, partner(isLastBid(Bid._2NT)), ntd.OR.acceptInvite, shape(5)),
 
-            choices.addRules(shows(Bid._4H, partner(isLastBid(Bid._3H)), shape(3, 5)));
-            choices.addRules(shows(Bid._4S, partner(isLastBid(Bid._3S)), shape(3, 5)));
+                shows(Bid._3NT, ntd.OR.acceptInvite, partner(isLastBid(Bid._2NT))),
+
+                shows(Call.PASS, ntd.OR.dontAcceptInvite, partner(isLastBid(Bid._2NT))),
+                shows(Call.PASS, partner(isLastBid(Bid._3NT))),
+                
+                shows(Bid._3NT, partner(isLastBid(Bid._3H)), shape(Suit.Hearts, 0, 2)),
+                shows(Bid._3NT, partner(isLastBid(Bid._3S)), shape(Suit.Spades, 0, 2)),
+
+                shows(Bid._4H, partner(isLastBid(Bid._3H)), shape(3, 5)),
+                shows(Bid._4S, partner(isLastBid(Bid._3S)), shape(3, 5)),
+
+                shows(Call.PASS)
+            );
             return choices;
         }
 
@@ -262,12 +271,12 @@ public class NoTrump extends Bidder {
 
         public Iterable<CallFeature> response(PositionState ps) {
             List<CallFeature> bids = new ArrayList<>();
+            bids.add(shows(Call.PASS, ntb.respondNoGame));
+            
             bids.add(shows(Bid._3C, ntb.respondNoGame, shape(5, 11), longestMajor(4)));
             bids.add(shows(Bid._3D, ntb.respondNoGame, shape(5, 11), longestMajor(4)));
             bids.add(shows(Bid._3H, ntb.respondNoGame, shape(5, 11)));
             bids.add(shows(Bid._3S, ntb.respondNoGame, shape(5, 11)));
-
-            bids.add(shows(Call.PASS, ntb.respondNoGame));
 
             bids.add(shows(Bid._3NT, ntb.respondGame, longestMajor(4)));
 

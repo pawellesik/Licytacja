@@ -22,9 +22,9 @@ public class Respond extends LCStandard {
     public static final Range WEAK_5_LEVEL = new Range(0, 10);
     public static final Range GAME_OR_BETTER = new Range(13, 40);
     public static final Range MAX_PASSED = new Range(10, 11);
-    protected static final Range RESPOND_REDOUBLE = new Range(10, 40);
-    protected static final Range RESPOND_X_1_LEVEL = new Range(6, 9);
-    protected static final Range RESPOND_X_JUMP = new Range(0, 6);
+    public static final Range RESPOND_REDOUBLE = new Range(10, 40);
+    public static final Range RESPOND_X_1_LEVEL = new Range(6, 9);
+    public static final Range RESPOND_X_JUMP = new Range(0, 6);
     protected static final Range WEAK_JUMP_SHIFT_POINTS = new Range(0, 5);
 
     protected static final Range RESPOND_1NT_OVER_MINOR = new Range(6, 10);

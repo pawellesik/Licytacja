@@ -11,6 +11,10 @@ public class OpenBid3 extends Open {
         bids.add(shows(Bid._1NT, BALANCED, points(Rebid1NT)));
         bids.add(shows(Bid._2NT, BALANCED, points(Rebid2NT)));
 
+        // In constructive auction, if opener has already shown a minimum hand
+        // and responder makes an invitational raise, opener should pass if minimum.
+        bids.add(shows(Call.PASS, partner(isJump(1)), Minimum));
+
         for (CallFeature cf : Compete.compBids(ps)) {
             bids.add(cf);
         }

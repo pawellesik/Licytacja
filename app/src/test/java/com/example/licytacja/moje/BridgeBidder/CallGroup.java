@@ -67,14 +67,19 @@ public class CallGroup extends HashMap<Call, CallDetails> {
                 if (feature instanceof BidRule) {
                     positionCalls.logBidRule((BidRule) feature);
                 }
-                if (getPositionState().isValidNextCall(feature.getCall()) && !positionCalls.containsKey(feature.getCall())) {
+                if (getPositionState().isValidNextCall(feature.getCall())) {
                     if (feature.satisfiesStaticConstraints(getPositionState())) {
-                        if (!this.containsKey(feature.getCall())) {
-                            this.put(feature.getCall(), new CallDetails(this, feature.getCall()));
+                        CallDetails details = positionCalls.get(feature.getCall());
+                        if (details == null) {
+                            details = this.get(feature.getCall());
                         }
-                        this.get(feature.getCall()).add(feature);
+                        if (details == null) {
+                            details = new CallDetails(this, feature.getCall());
+                            this.put(feature.getCall(), details);
+                        }
+                        details.add(feature);
                         if (bestCall == null && feature instanceof BidRule && getPositionState().privateHandConforms((BidRule) feature)) {
-                            bestCall = this.get(feature.getCall());
+                            bestCall = details;
                         }
                     }
                 }

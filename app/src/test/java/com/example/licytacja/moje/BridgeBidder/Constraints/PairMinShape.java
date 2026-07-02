@@ -27,17 +27,23 @@ public class PairMinShape {
         public boolean conforms(Call call, PositionState ps, HandSummary hs) {
             Suit s = null;
             if (useContractSuit) {
-                // if (ps.getBiddingState().getContract().isOurs(ps.getDirection())) {
-                //    s = ps.getBiddingState().getContract().getBid().getSuit();
-                // }
-                // Need to fix this once ContractState is ready
-            } else {
+                Suit trump = ps.getPairState().getTrumpSuit();
+                if (trump != null) {
+                    s = trump;
+                } else {
+                    Call contractBid = ps.getBiddingState().getContract().getBid();
+                    if (contractBid instanceof Bid) {
+                        s = ((Bid) contractBid).getSuit();
+                    }
+                }
+            }
+            if (s == null) {
                 s = getSuit(this.suit, call);
             }
             if (s != null) {
                 Range shape = hs.getSuits().get(s).getShape();
                 Range partnerShape = ps.getPartner().getPublicHandSummary().getSuits().get(s).getShape();
-                return (shape.getMax() + partnerShape.getMin() >= min) ? desiredValue : !desiredValue;
+                return (shape.getMax() + partnerShape.getMin() >= min) == desiredValue;
             }
             return false;
         }
