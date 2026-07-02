@@ -6,19 +6,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Open extends LCStandard {
-    public static final HandConstraint ONE_LEVEL = points(12, 21);
-    public static final HandConstraint MINIMUM = points(12, 16);
-    public static final HandConstraint MEDIUM_OR_BETTER = points(17, 21);
-    public static final HandConstraint DONT_OPEN = points(0, 11);
+
+    public static final HandConstraint OneLevel = points(12, 21);
+    public static final HandConstraint Minimum = points(12, 16);
+    public static final HandConstraint CantJumpShift = points(12, 18);
+    public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
+    public static final HandConstraint Medium = points(17, 18);
+    public static final HandConstraint DummyMedium = dummyPoints(17, 18);
+    public static final HandConstraint Maximum = points(19, 21);
+    public static final HandConstraint DummyMaximum = dummyPoints(19, 26);
+    public static final HandConstraint MediumOrBetter = points(17, 21);
+
+    public static final HandConstraint Weak = points(5, 11);
+    public static final HandConstraint VeryWeak = points(3, 11);
+    public static final HandConstraint DontOpen = points(0, 11);
+
+    public static final Range Rebid1NT = new Range(12, 15);
+    public static final Range Rebid2NT = new Range(18, 20);
+
+    public static final Range LessThanJumpShift = new Range(12, 18);
+    public static final Range JumpShift = new Range(19, 21);
 
     public static PositionCalls getOpenPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
+
         choices.addRules(SolidSuit.BIDS(ps));
         choices.addRules(Strong2Clubs.open(ps));
-        // choices.addRules(NoTrump.open(ps));
+        choices.addRules(NoTrump.open(ps));
+        choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
+
         if (ps.getSeat() != 4) {
-            choices.addPassRule(DONT_OPEN);
+            choices.addPassRule(DontOpen);
         }
         return choices;
     }
@@ -26,7 +45,111 @@ public class Open extends LCStandard {
     public static Iterable<CallFeature> openSuit(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(Bid._1C, Respond::oneClub));
-        // More bids...
+        bids.add(partnerBids(Bid._1D, Respond::oneDiamond));
+        bids.add(partnerBids(Bid._1H, Respond::oneHeart));
+        bids.add(partnerBids(Bid._1S, Respond::oneSpade));
+
+        bids.add(shows(Call.PASS, isSeat(4), passIn4thSeat()));
+
+        if (ps.getSeat() == 3) {
+            bids.addAll(thirdSeat4CardMajor(and(IS_VUL, not(BALANCED), points(11, 13))));
+            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, BALANCED, points(11, 13))));
+            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, not(BALANCED), points(10, 13))));
+        }
+
+        // Medium+ hands - longest suit first
+        bids.add(shows(Bid._1C, MediumOrBetter, shape(4, 10), LONGEST_SUIT));
+        bids.add(shows(Bid._1D, MediumOrBetter, shape(4, 10), LONGEST_SUIT));
+
+        // Special cases for minors with minimum hand
+        bids.add(shows(Bid._1D, Minimum, shape(Suit.Clubs, 5), shape(Suit.Diamonds, 4)));
+        bids.add(shows(Bid._1D, Minimum, shape(Suit.Clubs, 6), shape(Suit.Diamonds, 5)));
+
+        bids.add(shows(Bid._1C, OneLevel, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
+        bids.add(shows(Bid._1C, OneLevel, shape(3), shape(Suit.Diamonds, 0, 3), longestMajor(4)));
+        bids.add(shows(Bid._1C, OneLevel, shape(4, 11), longerThan(Suit.Diamonds), longestMajor(4)));
+
+        bids.add(shows(Bid._1D, OneLevel, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
+        bids.add(shows(Bid._1D, OneLevel, shape(3), shape(Suit.Clubs, 0, 2), longestMajor(4)));
+        bids.add(shows(Bid._1D, OneLevel, shape(4, 10), longerOrEqual(Suit.Diamonds, Suit.Clubs), longestMajor(4)));
+
+        // Special case longer hearts than spades, but not enough to reverse
+        bids.add(shows(Bid._1S, Minimum, shape(5, 10), longer(Suit.Hearts, Suit.Spades)));
+        bids.add(shows(Bid._1H, OneLevel, shape(5, 10), longerThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, OneLevel, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
+
+        if (ps.getSeat() == 3) {
+            bids.addAll(thirdSeatWeak(and(IS_VUL, not(BALANCED), points(11, 11))));
+            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, BALANCED, DECENT_PLUS_SUIT, points(11, 11))));
+            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, not(BALANCED), points(10, 11))));
+        }
+
+        bids.add(shows(Call.PASS, isSeat(4), DontOpen));
         return bids;
+    }
+
+    private static List<CallFeature> thirdSeat4CardMajor(Constraint range) {
+        List<CallFeature> bids = new ArrayList<>();
+        bids.add(shows(Bid._1S, range, GOOD_PLUS_SUIT, shape(4), betterOrEqualTo(Suit.Hearts)));
+        bids.add(shows(Bid._1H, range, GOOD_PLUS_SUIT, shape(4), betterThan(Suit.Spades)));
+        return bids;
+    }
+
+    private static List<CallFeature> thirdSeatWeak(Constraint range) {
+        List<CallFeature> bids = new ArrayList<>();
+        bids.add(shows(Bid._1C, range, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
+        bids.add(shows(Bid._1C, range, shape(4, 11), longerThan(Suit.Diamonds), longestMajor(4)));
+        bids.add(shows(Bid._1D, range, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
+        bids.add(shows(Bid._1D, range, shape(4, 10), longerOrEqual(Suit.Diamonds, Suit.Clubs), longestMajor(4)));
+        bids.add(shows(Bid._1H, range, shape(5, 10), longerThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, range, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
+        return bids;
+    }
+
+    private static List<CallFeature> openSuitWeak(PositionState ps) {
+        List<CallFeature> rules = new ArrayList<>();
+        rules.add(partnerBids(Respond::weakOpen));
+        // Simplified weak opening logic
+        switch (ps.getSeat()) {
+            case 1:
+            case 2:
+                addWeakRules(rules, and(points(8, 11), GOOD_PLUS_SUIT));
+                break;
+            case 3:
+                addWeakRules(rules, and(points(4, 13), DECENT_PLUS_SUIT));
+                break;
+            case 4:
+                addWeakRules(rules, and(points(10, 15), DECENT_PLUS_SUIT));
+                break;
+        }
+        return rules;
+    }
+
+    public static void addWeakRules(List<CallFeature> rules, Constraint constraint) {
+        for (int level = 2; level <= 4; level++) {
+            Constraint levelConstraint = and(constraint, shape(level + 4));
+            for (Suit suit : Suit.values()) {
+                Bid bid = new Bid(level, suit);
+                if (!bid.equals(Bid._2C)) {
+                    addWeakBid(rules, bid, levelConstraint);
+                }
+            }
+        }
+    }
+
+    private static void addWeakBid(List<CallFeature> rules, Bid bid, Constraint constraint) {
+        if (!bid.getSuit().isMajor()) {
+            rules.add(shows(bid, constraint, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)));
+        }
+        if (bid.getSuit() == Suit.Hearts) {
+            rules.add(shows(bid, constraint, shape(Suit.Spades, 0, 3)));
+        } else {
+            rules.add(shows(bid, constraint, shape(Suit.Hearts, 4, 5))); // Simplified BadSuit check
+        }
+        if (bid.getSuit() == Suit.Spades) {
+            rules.add(shows(bid, constraint, shape(Suit.Hearts, 0, 3)));
+        } else {
+            rules.add(shows(bid, constraint, shape(Suit.Spades, 4, 5)));
+        }
     }
 }

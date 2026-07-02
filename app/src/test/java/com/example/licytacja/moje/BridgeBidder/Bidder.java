@@ -187,6 +187,7 @@ public abstract class Bidder {
     }
 
     public static final HandConstraint BALANCED = new Balanced.ShowsBalanced(true);
+    public static final HandConstraint NOT_BALANCED = new Balanced.ShowsBalanced(false);
     
     public static HandConstraint longerThan(Suit worse) {
         return new BetterSuit.ShowsBetterSuit(null, worse, worse, true);
@@ -261,6 +262,7 @@ public abstract class Bidder {
     }
 
     public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
+    public static final HandConstraint NOT_FLAT = new Flat.ShowsFlat(false);
 
     public static HandConstraint quality(SuitQuality min, SuitQuality max) {
         return new HasQuality.ShowsQuality(null, min, max);
