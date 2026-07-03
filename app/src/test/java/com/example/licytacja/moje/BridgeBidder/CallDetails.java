@@ -75,8 +75,18 @@ public class CallDetails {
     public String getDescription(PositionState ps) {
         List<String> descriptions = new ArrayList<>();
         for (BidRule rule : rules) {
-            String d = rule.getDescription(ps);
-            if (!d.isEmpty()) descriptions.add(d);
+            // SPRAWDZAMY: Czy ta konkretna zasada pasuje do mojej prywatnej ręki?
+            if (ps.privateHandConforms(rule)) {
+                String d = rule.getDescription(ps);
+                if (!d.isEmpty()) descriptions.add(d);
+            }
+        }
+        // Jeśli żadna nie pasuje (np. badamy odzywki partnera), pokaż wszystkie możliwe znaczenia
+        if (descriptions.isEmpty()) {
+            for (BidRule rule : rules) {
+                String d = rule.getDescription(ps);
+                if (!d.isEmpty()) descriptions.add(d);
+            }
         }
         return String.join("; ", descriptions);
     }
