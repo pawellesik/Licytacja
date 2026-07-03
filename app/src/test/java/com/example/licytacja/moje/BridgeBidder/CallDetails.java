@@ -72,6 +72,15 @@ public class CallDetails {
         return true;
     }
 
+    public String getDescription(PositionState ps) {
+        List<String> descriptions = new ArrayList<>();
+        for (BidRule rule : rules) {
+            String d = rule.getDescription(ps);
+            if (!d.isEmpty()) descriptions.add(d);
+        }
+        return String.join("; ", descriptions);
+    }
+
     public HandSummary showHand() {
         if (!hasRules()) return getPositionState().getPublicHandSummary();
         HandSummary.ShowState showHand = new HandSummary.ShowState();
