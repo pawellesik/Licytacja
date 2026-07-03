@@ -1,7 +1,8 @@
 package com.example.licytacja.moje.BridgeBidder.Conventions;
 
 import com.example.licytacja.moje.BridgeBidder.*;
-import com.example.licytacja.moje.BridgeBidder.LCStandard.NoTrump;
+import com.example.licytacja.moje.BridgeBidder.LCStandard.TwoNoTrump;
+import com.example.licytacja.moje.BridgeBidder.LCStandard.ThreeNoTrump;
 import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,8 @@ public class Strong2Clubs extends Bidder {
 
     private static PositionCalls openerRebidWaiting(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(NoTrump.TwoNoTrump.AFTER_2C_OPEN.bids(ps));
-        choices.addRules(NoTrump.ThreeNoTrump.AFTER_2C_OPEN.bids(ps));
+        choices.addRules(TwoNoTrump.AFTER_2C_OPEN.bids(ps));
+        choices.addRules(ThreeNoTrump.AFTER_2C_OPEN.bids(ps));
         choices.addRules(
             properties(new Call[]{Bid._2H, Bid._2S, Bid._3C, Bid._3D}, Strong2Clubs::responder2ndBid, true),
             shows(Bid._2H, shape(5, 11)),

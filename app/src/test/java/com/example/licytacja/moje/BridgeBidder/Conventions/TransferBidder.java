@@ -142,9 +142,9 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
     }
 
     public static class Transfer2NT extends Bidder {
-        private final NoTrump.TwoNoTrump ntb;
+        private final com.example.licytacja.moje.BridgeBidder.LCStandard.TwoNoTrump ntb;
 
-        public Transfer2NT(NoTrump.TwoNoTrump ntb) {
+        public Transfer2NT(com.example.licytacja.moje.BridgeBidder.LCStandard.TwoNoTrump ntb) {
             this.ntb = ntb;
         }
 
@@ -189,9 +189,9 @@ public class TransferBidder extends NoTrump.OneNoTrumpBidder {
     }
 
     public static class Transfer3NT extends Bidder {
-        private final NoTrump.ThreeNoTrump ntb;
+        private final com.example.licytacja.moje.BridgeBidder.LCStandard.ThreeNoTrump ntb;
 
-        public Transfer3NT(NoTrump.ThreeNoTrump ntb) {
+        public Transfer3NT(com.example.licytacja.moje.BridgeBidder.LCStandard.ThreeNoTrump ntb) {
             this.ntb = ntb;
         }
 

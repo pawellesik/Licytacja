@@ -148,9 +148,9 @@ public class StaymanBidder extends NoTrump.OneNoTrumpBidder {
     }
 
     public static class Stayman2NT extends Bidder {
-        private final NoTrump.TwoNoTrump ntb;
+        private final com.example.licytacja.moje.BridgeBidder.LCStandard.TwoNoTrump ntb;
 
-        public Stayman2NT(NoTrump.TwoNoTrump ntb) {
+        public Stayman2NT(com.example.licytacja.moje.BridgeBidder.LCStandard.TwoNoTrump ntb) {
             this.ntb = ntb;
         }
 

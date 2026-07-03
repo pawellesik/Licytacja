@@ -58,7 +58,7 @@ public class NoTrump extends Bidder {
             RR.inviteSlam = points(16, 17);
             RR.smallSlam = points(18, 19);
             RR.grandSlam = points(20, 40);
-            
+
             RR.inviteAsDummy = dummyPoints(8, 9);
             RR.gameAsDummy = dummyPoints(10, 16);
             RR.smallSlamAsDummy = dummyPoints(17, 20);
@@ -231,97 +231,6 @@ public class NoTrump extends Bidder {
             bids.add(shows(Bid._4S, partner(isLastBid(Bid._3S)), shape(3, 4)));
 
             bids.add(shows(Call.PASS));
-            return bids;
-        }
-    }
-
-    public static class TwoNoTrump extends Bidder {
-        public final Constraint openPoints;
-        public final Constraint respondNoGame;
-        public final Constraint respondGame;
-
-        public static final TwoNoTrump OPEN = new TwoNoTrump(20, 21);
-        public static final TwoNoTrump AFTER_2C_OPEN = new TwoNoTrump(22, 24);
-
-        private TwoNoTrump(int min, int max) {
-            this.openPoints = and(highCardPoints(min, max), points(min, max + 1));
-            this.respondNoGame = points(0, Math.max(0, 25 - min - 1));
-            this.respondGame = points(Math.max(0, 25 - min), 31 - min);
-        }
-
-        public Iterable<CallFeature> bids(PositionState ps) {
-            List<CallFeature> bids = new ArrayList<>();
-            bids.add(partnerBids(Bid._2NT, (PositionCallsFactory) this::respond));
-            bids.add(shows(Bid._2NT, openPoints, BALANCED));
-            return bids;
-        }
-
-        private PositionCalls respond(PositionState ps) {
-            PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(new StaymanBidder.Stayman2NT(this)::initiateConvention);
-            choices.addRules(new TransferBidder.Transfer2NT(this)::initiateConvention);
-            choices.addRules(new Natural2NT(this)::response);
-            return choices;
-        }
-    }
-
-    public static class Natural2NT extends Bidder {
-        private final TwoNoTrump ntb;
-        public Natural2NT(TwoNoTrump ntb) {
-            this.ntb = ntb;
-        }
-
-        public Iterable<CallFeature> response(PositionState ps) {
-            List<CallFeature> bids = new ArrayList<>();
-            bids.add(shows(Call.PASS, ntb.respondNoGame));
-            
-            bids.add(shows(Bid._3C, ntb.respondNoGame, shape(5, 11), longestMajor(4)));
-            bids.add(shows(Bid._3D, ntb.respondNoGame, shape(5, 11), longestMajor(4)));
-            bids.add(shows(Bid._3H, ntb.respondNoGame, shape(5, 11)));
-            bids.add(shows(Bid._3S, ntb.respondNoGame, shape(5, 11)));
-
-            bids.add(shows(Bid._3NT, ntb.respondGame, longestMajor(4)));
-
-            bids.add(shows(Bid._4H, ntb.respondGame, shape(5, 11), betterThan(Suit.Spades)));
-            bids.add(shows(Bid._4S, ntb.respondGame, shape(5, 11), betterOrEqualTo(Suit.Hearts)));
-            return bids;
-        }
-    }
-
-    public static class ThreeNoTrump extends Bidder {
-        public final Constraint openPoints = and(highCardPoints(25, 27), points(25, 28));
-        public final Constraint respondNoSlam = points(0, 5);
-
-        public static final ThreeNoTrump OPEN = new ThreeNoTrump();
-        public static final ThreeNoTrump AFTER_2C_OPEN = new ThreeNoTrump();
-
-        public Iterable<CallFeature> bids(PositionState ps) {
-            List<CallFeature> bids = new ArrayList<>();
-            bids.add(partnerBids(Bid._3NT, (PositionCallsFactory) this::respond));
-            bids.add(shows(Bid._3NT, openPoints, BALANCED));
-            return bids;
-        }
-
-        private PositionCalls respond(PositionState ps) {
-            PositionCalls choices = new PositionCalls(ps);
-            choices.addRules(Gerber::initiateConvention);
-            choices.addRules(new TransferBidder.Transfer3NT(this)::initiateConvention);
-            choices.addRules(new Natural3NT(this)::response);
-            return choices;
-        }
-    }
-
-    public static class Natural3NT extends Bidder {
-        private final ThreeNoTrump ntb;
-        public Natural3NT(ThreeNoTrump ntb) {
-            this.ntb = ntb;
-        }
-
-        public Iterable<CallFeature> response(PositionState ps) {
-            List<CallFeature> bids = new ArrayList<>();
-            bids.add(shows(Bid._4H, ntb.respondNoSlam, shape(5, 11)));
-            bids.add(shows(Bid._4S, ntb.respondNoSlam, shape(5, 11)));
-            bids.add(shows(Call.PASS, ntb.respondNoSlam));
             return bids;
         }
     }

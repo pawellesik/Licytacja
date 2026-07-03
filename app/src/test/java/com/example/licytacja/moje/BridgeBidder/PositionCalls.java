@@ -2,7 +2,7 @@ package com.example.licytacja.moje.BridgeBidder;
 
 import java.util.*;
 
-public class PositionCalls extends HashMap<Call, CallDetails> {
+public class PositionCalls extends LinkedHashMap<Call, CallDetails> {
     private final PositionState positionState;
     private CallDetails bestCall = null;
 
