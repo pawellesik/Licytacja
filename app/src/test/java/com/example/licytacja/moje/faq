@@ -106,3 +106,53 @@ DOSTĘPNE OGRANICZENIA (CONSTRAINTS)
   Odzywka jest przeskokiem.
 • isNonJump()
   Odzywka została zgłoszona na najniższym możliwym poziomie.
+
+  9. PUNKTY PARY
+  --------------
+   • pairPoints(min, max)
+    Sprawdza sumę punktów Twoich (prywatnych) i partnera
+    (pokazanych publicznie).
+     Przykład:
+    shows(Bid._3NT, pairPoints(25, 31))
+  • pairHighCardPoints(min, max)
+    Suma tylko punktów honorowych (HCP) obu partnerów.
+
+
+  10. FIT I WSPÓLNE KOLORY
+  ------------------------
+  • fit()
+    Sprawdza, czy masz co najmniej 8 kart w kolorze, który licytujesz
+    (Twoje + obiecane przez partnera).
+  • fit(Suit suit)
+    Sprawdza fit (8+ kart) w konkretnym kolorze.
+  • fit(8)
+  • fit(9)
+    Pozwala określić minimalną liczbę wspólnych kart.
+    Np. fit na 9 kartach jest silniejszy niż fit na 8.
+  • FIT_8_PLUS
+    Stała oznaczająca fit co najmniej 8-kartowy
+    w kolorze odzywki.
+
+
+  11. ZAAWANSOWANE RELACJE (INFERENCES)
+  -------------------------------------
+  • isPartnersSuit()
+    Sprawdza, czy kolor, który chcesz zalicytować,
+    został wcześniej zgłoszony przez partnera.
+  • hasShownSuit(Suit suit)
+    Sprawdza, czy dany gracz (Ty lub partner)
+    pokazał już w licytacji minimum 4-5 kart w tym kolorze.
+  • stopped(Suit suit)
+    Sprawdza, czy para posiada zatrzymanie
+    (As, Król lub Dama z obstawą)
+    w podanym kolorze.
+
+
+  12. WARUNKI DOTYCZĄCE PARTNERA
+  ------------------------------
+  • partner(isLastBid(Call))
+    Sprawdza, czy partner przed chwilą zalicytował
+    dokładnie wskazaną odzywkę.
+  • partner(showsShape(Suit, min, max))
+    Sprawdza, czy partner swoją dotychczasową licytacją
+    obiecał podany skład w wybranym kolorze.
