@@ -1,0 +1,108 @@
+DOSTĘPNE OGRANICZENIA (CONSTRAINTS)
+==================================
+
+1. PUNKTY I SIŁA RĘKI
+--------------------
+• points(min, max)
+  Całkowita siła ręki (HCP + punkty za długość).
+• highCardPoints(min, max)
+  Punkty za figury (A = 4, K = 3, Q = 2, J = 1).
+• dummyPoints(min, max)
+  Punkty dla dziadka (HCP + punkty za krótkości przy uzgodnionym kolorze).
+• points(Range)
+  Użycie predefiniowanego zakresu, np. Minimum, Maximum.
+
+2. SKŁAD RĘKI (SHAPE)
+---------------------
+• shape(count)
+  Dokładna liczba kart w kolorze odzywki.
+• shape(min, max)
+  Zakres liczby kart w kolorze odzywki.
+• shape(Suit, count)
+  Dokładna liczba kart w wybranym kolorze.
+• shape(Suit, min, max)
+  Zakres liczby kart w wybranym kolorze.
+• BALANCED
+  Ręka zrównoważona (np. 4-3-3-3, 4-4-3-2, 5-3-3-2).
+• NOT_BALANCED
+  Ręka niezrównoważona (z singlem lub renonsem).
+• FLAT
+  Idealnie zrównoważona ręka (wyłącznie układ 4-3-3-3).
+
+
+3. RELACJE MIĘDZY KOLORAMI
+--------------------------
+• LONGEST_SUIT
+  Licytowany kolor jest najdłuższym (lub jednym z najdłuższych).
+• longer(Suit1, Suit2)
+  Suit1 jest dłuższy od Suit2.
+• longerOrEqual(Suit1, Suit2)
+  Suit1 jest dłuższy lub równy Suit2.
+• betterThan(Suit)
+  Licytowany kolor jest lepszy (dłuższy lub silniejszy) od wskazanego.
+• betterOrEqualTo(Suit)
+  Licytowany kolor jest lepszy lub równy wskazanemu.
+• longestMajor(maxCards)
+  Najdłuższy kolor starszy ma maksymalnie maxCards kart.
+
+
+4. JAKOŚĆ KOLORU (SUIT QUALITY)
+-------------------------------
+• quality(SuitQuality.Decent, SuitQuality.Solid)
+  Wymagana jakość figur w kolorze.
+• DECENT_PLUS_SUIT
+  Co najmniej przyzwoity kolor (minimum 1-2 figury).
+• GOOD_PLUS_SUIT
+  Dobry kolor z silnymi figurami.
+• EXCELLENT_PLUS_SUIT
+  Bardzo mocny kolor (np. AKQ).
+
+
+5. SYTUACJA PRZY STOLE (STATIC CONSTRAINTS)
+-------------------------------------------
+• IS_VUL
+  Twoja para jest po partii.
+• IS_NOT_VUL
+  Twoja para jest przed partią.
+• IS_FAV_VUL
+  Korzystne założenia (Twoja para przed partią, przeciwnicy po partii).
+• isSeat(position)
+  Licytujesz na określonej pozycji (1, 2, 3 lub 4).
+• isPassedHand()
+  Wcześniej spasowałeś.
+
+
+6. RELACJE Z PARTNEREM I PRZECIWNIKAMI
+--------------------------------------
+• partner(Constraint)
+  Partner spełnia podany warunek (na podstawie jego licytacji).
+• rho(Constraint)
+  Warunek dla przeciwnika z prawej strony.
+• lho(Constraint)
+  Warunek dla przeciwnika z lewej strony.
+• fit(Suit)
+  Para posiada uzgodniony kolor (łącznie minimum 8 kart).
+• FIT_8_PLUS
+  Fit w kolorze odzywki.
+• OPPS_STOPPED
+  Zatrzymanie w kolorze przeciwnika (istotne przy kontraktach bezatutowych).
+
+
+7. OPERATORY LOGICZNE
+---------------------
+• and(Constraint...)
+  Wszystkie warunki muszą być spełnione.
+• or(Constraint...)
+  Wystarczy spełnienie jednego z warunków.
+• not(Constraint)
+  Negacja podanego warunku.
+
+
+8. ODZYWKI I SEKWENCJE LICYTACYJNE
+---------------------------------
+• isLastBid(Bid)
+  Ostatnią odzywką przy stole jest wskazany Bid.
+• isJump()
+  Odzywka jest przeskokiem.
+• isNonJump()
+  Odzywka została zgłoszona na najniższym możliwym poziomie.
