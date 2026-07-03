@@ -40,6 +40,9 @@ public class BiddingState {
         if (bidSystem == null || bidSystem.isEmpty() || bidSystem.equals("TwoOverOneGameForce") || bidSystem.equals("LC-Basic")) {
             return new com.example.licytacja.moje.BridgeBidder.LCStandard.LCStandard();
         }
+        else if (bidSystem.equals("NatC")){
+            return new com.example.licytacja.moje.BridgeBidder.NatC.NatC();
+        }
         throw new IllegalArgumentException("Unknown bidding system " + bidSystem);
     }
 
