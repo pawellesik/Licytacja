@@ -14,17 +14,17 @@ public class Plesik {
         Game game = new Game();
 
         // 2. Podajemy karty tylko dla N (North).
-        game.getDeal().put(Direction.N, Hand.parse("AKJT9.AKJ8.J872."));
+        game.getDeal().put(Direction.N, Hand.parse("AKJT9.AKJ.J872.8"));
 
         // 3. Ustawiamy rozdającego i inicjujemy stan licytacji
-        game.dealer = Direction.S;
+        game.dealer = Direction.N;
         game.bidSystemNS = "NatC";
         game.bidSystemEW = "NatC";
 
         BiddingState state = new BiddingState(game);
 
-        state.makeCall(Call.PASS);
-        state.makeCall(Call.PASS);
+        //state.makeCall(Call.PASS);
+        //state.makeCall(Call.PASS);
         //state.makeCall(Call.parse("2NT")); // North otwiera
         //state.makeCall(Call.parse("4NT")); // South (partner) licytuje 1 Pik
         //state.makeCall(Call.PASS);        // West pasuje
