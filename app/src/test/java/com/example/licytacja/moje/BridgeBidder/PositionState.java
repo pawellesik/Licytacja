@@ -116,7 +116,7 @@ public class PositionState {
     }
 
     public void makeCall(CallDetails callDetails) {
-        // TODO: Port logic for updating role, pairState, etc.
+        biddingState.getContract().validateCall(callDetails.getCall(), this.direction);
         if (!callDetails.getCall().equals(Call.PASS) && !this.roleAssigned) {
             if (role == PositionRole.Opener) {
                 assignRole(PositionRole.Opener);
@@ -130,7 +130,9 @@ public class PositionState {
         }
         bids.add(callDetails);
         pairState.updatePairProperties(callDetails);
-        repeatUpdatesUntilStable(callDetails);
+        if (repeatUpdatesUntilStable(callDetails)) {
+            biddingState.updateStateFromFirstBid();
+        }
         pairState.updateLastShownSuit(callDetails.getCall(), this, callDetails.showHand());
     }
 

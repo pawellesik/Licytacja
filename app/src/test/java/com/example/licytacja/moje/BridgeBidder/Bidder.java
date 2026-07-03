@@ -220,6 +220,7 @@ public abstract class Bidder {
 
     public static final StaticConstraint IS_NON_JUMP = isJump(0);
     public static final StaticConstraint IS_SINGLE_JUMP = isJump(1);
+    public static final StaticConstraint IS_DOUBLE_JUMP = isJump(2);
 
     public static final StaticConstraint IS_JUMP_SHIFT = staticAnd(IS_SINGLE_JUMP, IS_NEW_SUIT);
 
@@ -473,6 +474,10 @@ public abstract class Bidder {
 
     public static Constraint agreedStrain(Strain... strains) {
         return new AgreedStrain(strains);
+    }
+
+    public static StaticConstraint isBidAvailable(int level, Suit suit) {
+        return new SimpleStaticConstraint((call, ps) -> ps.isValidNextCall(new Bid(level, suit)));
     }
 
     public static final StaticConstraint IS_PARTNERS_SUIT = partner(hasShownSuit(null, false));

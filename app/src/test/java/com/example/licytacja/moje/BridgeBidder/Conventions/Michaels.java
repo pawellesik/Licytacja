@@ -9,15 +9,15 @@ public class Michaels extends Bidder {
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         Call[] cueMinors = {Bid._2C, Bid._2D};
-        bids.add(properties(cueMinors, Michaels::respondMajors, false, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
+        bids.add(properties(cueMinors, Michaels::respondMajors, true, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
         bids.add(shows(Bid._2C, IS_CUE_BID, shape(Suit.Hearts, 5), shape(Suit.Spades, 5)));
         bids.add(shows(Bid._2D, IS_CUE_BID, shape(Suit.Hearts, 5), shape(Suit.Spades, 5)));
 
-        bids.add(properties(Bid._2H, p -> respondMajorMinor(p, Suit.Spades), false, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
+        bids.add(properties(Bid._2H, p -> respondMajorMinor(p, Suit.Spades), true, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
         bids.add(shows(Bid._2H, IS_CUE_BID, shape(Suit.Spades, 5), shape(Suit.Clubs, 5)));
         bids.add(shows(Bid._2H, IS_CUE_BID, shape(Suit.Spades, 5), shape(Suit.Diamonds, 5)));
 
-        bids.add(properties(Bid._2S, p -> respondMajorMinor(p, Suit.Spades), false, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
+        bids.add(properties(Bid._2S, p -> respondMajorMinor(p, Suit.Spades), true, false, false, null, null, null, UserText.Michaels, IS_CUE_BID));
         bids.add(shows(Bid._2S, IS_CUE_BID, shape(Suit.Hearts, 5), shape(Suit.Clubs, 5)));
         bids.add(shows(Bid._2S, IS_CUE_BID, shape(Suit.Hearts, 5), shape(Suit.Diamonds, 5)));
         return bids;

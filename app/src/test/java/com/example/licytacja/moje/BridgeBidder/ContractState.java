@@ -108,9 +108,8 @@ public class ContractState extends Contract {
     }
 
     public Call nextAvailableBid(Suit suit) {
-        if (suit == null) return null;
+        if (suit == null || isAuctionComplete() || this.bid == null) return null;
         Strain strain = suit.toStrain();
-        if (this.bid == null) return new Bid(1, strain);
         Bid nextBid = new Bid(this.bid.getLevel(), strain);
         if (nextBid.compareTo(this.bid) <= 0) {
             if (this.bid.getLevel() == 7) return null;

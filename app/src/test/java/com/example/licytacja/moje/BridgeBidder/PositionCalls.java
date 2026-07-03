@@ -48,6 +48,8 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
         for (Object r : rules) {
             if (r instanceof CallFeature) {
                 list.add((CallFeature) r);
+            } else if (r instanceof CallFeature[]) {
+                list.addAll(Arrays.asList((CallFeature[]) r));
             } else if (r instanceof Iterable) {
                 for (Object item : (Iterable<?>) r) {
                     if (item instanceof CallFeature) {
@@ -60,8 +62,6 @@ public class PositionCalls extends HashMap<Call, CallDetails> {
                 }
             } else if (r instanceof PositionCallsFactory) {
                 // If it's a PositionCallsFactory, we can't easily extract CallFeatures without a PositionState
-                // But we can wrap it in a CallProperties or handle it differently if needed.
-                // For now, let's assume it was intended to be CallFeaturesFactory if used here.
             }
         }
         addRules(list);

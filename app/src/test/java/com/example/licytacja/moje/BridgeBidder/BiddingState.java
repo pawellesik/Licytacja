@@ -95,6 +95,22 @@ public class BiddingState {
     }
 
     public void updateStateFromFirstBid() {
-        // TODO: Port logic
+        for (int i = 0; i < 50; i++) {
+            PositionState position = dealer;
+            int bidIndex = 0;
+            boolean someStateChanged = false;
+            boolean[] posStateChanged = new boolean[1];
+            while (position.updateBidIndex(bidIndex, posStateChanged)) {
+                someStateChanged |= posStateChanged[0];
+                position = position.getLHO();
+                if (position == dealer) {
+                    bidIndex++;
+                }
+            }
+            if (!someStateChanged) {
+                return;
+            }
+        }
+        throw new RuntimeException("Unable to resolve to a stable state. Giving up");
     }
 }
