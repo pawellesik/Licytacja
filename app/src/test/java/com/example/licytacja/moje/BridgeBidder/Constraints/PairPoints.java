@@ -33,9 +33,14 @@ public class PairPoints {
     }
 
     public Range getPoints(Call call, PositionState ps, HandSummary hs, boolean highCard) {
-        Range points = highCard ? hs.getHighCardPoints() : hs.getStartingPoints();
+        if (highCard) {
+            Range hcp = hs.getHighCardPoints();
+            return hcp != null ? hcp : new Range(0, 40);
+        }
+        
+        Range points = hs.getStartingPoints();
         Suit s = getSuit(ps, call);
-        if (!highCard && !useStartingPoints && s != null) {
+        if (!useStartingPoints && s != null) {
             PositionState firstToShow = ps.getPairState().firstToShow(s);
             if (firstToShow == ps) {
                 points = hs.getSuits().get(s).getLongHandPoints();
@@ -44,8 +49,8 @@ public class PairPoints {
             }
         }
         if (points == null) {
-            points = highCard ? hs.getHighCardPoints() : hs.getPoints();
-            if (!highCard && !useStartingPoints && points != null) {
+            points = hs.getPoints();
+            if (!useStartingPoints && points != null) {
                 points = new Range(points.getMin(), points.getMax() + 8);
             }
         }

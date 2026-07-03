@@ -20,8 +20,13 @@ public class AgreedStrain extends StaticConstraint {
                 return false;
             }
         }
-        for (Suit suit : Suit.values()) {
-            if (ps.getPairState().getLastShownSuit() == suit) return true;
+        
+        Suit lastShown = ps.getPairState().getLastShownSuit();
+        if (lastShown == null) return false;
+        
+        Strain agreedStrain = lastShown.toStrain();
+        for (Strain s : sList) {
+            if (s == agreedStrain) return true;
         }
         return false;
     }

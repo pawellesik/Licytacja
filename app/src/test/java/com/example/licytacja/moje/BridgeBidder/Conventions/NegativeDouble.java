@@ -16,7 +16,7 @@ public class NegativeDouble extends Respond {
                 Call partnerCall = ps.getPartner().getLastCall();
                 if (partnerCall instanceof Bid) {
                     Suit openSuit = ((Bid) partnerCall).getSuit();
-                    bids.add(properties(Call.DOUBLE, null, true, UserText.NegativeDouble));
+                    bids.add(convention(Call.DOUBLE, UserText.NegativeDouble));
                     if (overcallSuit == Suit.Diamonds) {
                         bids.add(shows(Call.DOUBLE, points(RESPOND_1_LEVEL), shape(Suit.Hearts, 4), shape(Suit.Spades, 4)));
                     } else if (overcallSuit == Suit.Hearts) {
