@@ -61,10 +61,8 @@ public class OpenNatC extends NatC {
         bids.add(partnerBids(Bid._1H, RespondNatC::oneHeart));
         bids.add(partnerBids(Bid._1S, RespondNatC::oneSpade));
 
-        bids.add(shows(Call.PASS, isSeat(4), passIn4thSeat()));
-
         if (ps.getSeat() == 3) {
-            bids.addAll(thirdSeat4CardMajor(and(IS_VUL, NOT_BALANCED, points(11, 13))));
+            bids.addAll(thirdSeat4CardMajor(and(points(11, 11))));
             bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, BALANCED, points(11, 13))));
             bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, NOT_BALANCED, points(10, 13))));
         }
@@ -87,8 +85,8 @@ public class OpenNatC extends NatC {
 
         // Special case longer hearts than spades, but not enough to reverse
         bids.add(shows(Bid._1S, Minimum, shape(5, 10), longer(Suit.Hearts, Suit.Spades)));
-        bids.add(shows(Bid._1H, OneLevel, shape(5, 10), longerThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, OneLevel, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
+        bids.add(shows(Bid._1H, Minimum, shape(5, 10), longerThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, Minimum, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
 
         if (ps.getSeat() == 3) {
             bids.addAll(thirdSeatWeak(and(IS_VUL, NOT_BALANCED, points(11, 11))));
