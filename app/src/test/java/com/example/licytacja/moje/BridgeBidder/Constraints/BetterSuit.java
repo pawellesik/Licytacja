@@ -21,16 +21,30 @@ public class BetterSuit {
             Suit b = getSuit(this.better, call);
             Suit w = getSuit(this.worse, call);
             Suit d = getSuit(this.defaultIfEqual, call);
+            
             if (b != null && w != null) {
                 Range bShape = hs.getSuits().get(b).getShape();
                 Range wShape = hs.getSuits().get(w).getShape();
+                
+                // 1. Jeśli lepszy kolor jest ewidentnie krótszy niż gorszy -> FALSE
                 if (bShape.getMax() < wShape.getMin()) return false;
-                if (bShape.getMax() == wShape.getMin() && w == d) return false;
-                if (!lengthOnly && bShape.getMax() == wShape.getMin()) {
-                    int bq = hs.getSuits().get(b).getQuality().getMin();
-                    int wq = hs.getSuits().get(w).getQuality().getMin();
-                    if (bq > wq) return true;
-                    if (wq > bq) return false;
+                
+                // 2. Logika dla równych długości
+                if (bShape.getMax() == wShape.getMin()) {
+                    // Jeśli interesuje nas TYLKO długość, a domyślnym przy remisie jest kolor "gorszy" -> FALSE
+                    if (lengthOnly && w == d) return false;
+                    
+                    // Jeśli sprawdzamy też JAKOŚĆ (to jest Twój przypadek!)
+                    if (!lengthOnly) {
+                        int bq = hs.getSuits().get(b).getQuality().getMin();
+                        int wq = hs.getSuits().get(w).getQuality().getMin();
+                        
+                        if (bq > wq) return true;  // Kiery (8 pkt) > Piki (4 pkt) -> TRUE
+                        if (wq > bq) return false; // Piki silniejsze -> FALSE
+                        
+                        // Jeśli jakość też jest identyczna, decyduje defaultIfEqual
+                        if (w == d) return false;
+                    }
                 }
                 return true;
             }
