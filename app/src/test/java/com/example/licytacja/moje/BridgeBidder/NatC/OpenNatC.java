@@ -63,7 +63,7 @@ public class OpenNatC extends NatC {
             bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, NOT_BALANCED, points(10, 11))));
         }
 
-        bids.add(shows(Call.PASS, isSeat(4), DontOpen));
+        bids.add(shows(Call.PASS));
         return bids;
     }
 
