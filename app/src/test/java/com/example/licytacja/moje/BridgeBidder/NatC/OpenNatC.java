@@ -40,6 +40,9 @@ public class OpenNatC extends NatC {
 
     public static Iterable<CallFeature> openSuit(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
+
+        bids.add(properties(Bid._1C, true));
+
         bids.add(partnerBids(Bid._1C, RespondNatC::oneClub));
         bids.add(partnerBids(Bid._1D, RespondNatC::oneDiamond));
         bids.add(partnerBids(Bid._1H, RespondNatC::oneHeart));
