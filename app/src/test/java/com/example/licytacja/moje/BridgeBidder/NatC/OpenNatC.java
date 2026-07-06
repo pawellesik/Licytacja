@@ -21,16 +21,7 @@ public class OpenNatC extends NatC {
 
     public static final HandConstraint OneLevel = points(12, 17);
     public static final HandConstraint Strong = points(18, 40);
-    public static final HandConstraint CantJumpShift = points(12, 18);
-    public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
-    public static final HandConstraint Medium = points(17, 18);
-    public static final HandConstraint DummyMedium = dummyPoints(17, 18);
-    public static final HandConstraint Maximum = points(19, 21);
-    public static final HandConstraint DummyMaximum = dummyPoints(19, 26);
-    public static final HandConstraint MediumOrBetter = points(17, 21);
-
-    public static final HandConstraint Weak = points(5, 11);
-    public static final HandConstraint VeryWeak = points(3, 11);
+    public static final HandConstraint Weak = points(7, 11);
     public static final HandConstraint DontOpen = points(0, 11);
 
     public static final Range Rebid1NT = new Range(12, 15);
@@ -42,10 +33,9 @@ public class OpenNatC extends NatC {
     public static PositionCalls getOpenPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
 
-        //choices.addRules(SolidSuit.BIDS(ps));
-        //choices.addRules(Strong2Clubs.open(ps));
+        choices.addRules(SolidSuit.BIDS(ps));
         //choices.addRules(NoTrump.open(ps));
-        //choices.addRules(openSuitWeak(ps));
+        choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
 
         return choices;
@@ -59,9 +49,16 @@ public class OpenNatC extends NatC {
         bids.add(partnerBids(Bid._1S, RespondNatC::oneSpade));
 
         bids.add(shows(Bid._1C, Strong));
-        bids.add(shows(Bid._1H, OneLevel, shape(5, 10), betterThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, OneLevel, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
 
+        bids.add(shows(Bid._3S, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3H, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3D, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3C, Weak, shape(8, 10)));
+
+        bids.add(shows(Bid._1H, OneLevel, shape(5, 8), betterThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, OneLevel, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
+
+        bids.add(shows(Bid._1D, OneLevel, shape(5, 10)));
 
         bids.add(shows(Bid._1C, OneLevel, note("Otwarcie naturalne z piątką")));
 
