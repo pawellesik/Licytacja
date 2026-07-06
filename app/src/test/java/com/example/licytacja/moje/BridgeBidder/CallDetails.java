@@ -77,18 +77,22 @@ public class CallDetails {
         for (BidRule rule : rules) {
             // SPRAWDZAMY: Czy ta konkretna zasada pasuje do mojej prywatnej ręki?
             if (ps.privateHandConforms(rule)) {
-                String d = rule.getDescription(ps);
-                if (!d.isEmpty()) descriptions.add(d);
+                List<String> ruleDescs = rule.constraintDescriptions(ps);
+                if (ruleDescs != null) {
+                    descriptions.addAll(ruleDescs);
+                }
             }
         }
         // Jeśli żadna nie pasuje (np. badamy odzywki partnera), pokaż wszystkie możliwe znaczenia
         if (descriptions.isEmpty()) {
             for (BidRule rule : rules) {
-                String d = rule.getDescription(ps);
-                if (!d.isEmpty()) descriptions.add(d);
+                List<String> ruleDescs = rule.constraintDescriptions(ps);
+                if (ruleDescs != null) {
+                    descriptions.addAll(ruleDescs);
+                }
             }
         }
-        return String.join("; ", descriptions);
+        return String.join(", ", descriptions);
     }
 
     public HandSummary showHand() {

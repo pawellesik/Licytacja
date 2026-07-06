@@ -195,6 +195,17 @@ public abstract class Bidder {
         return new LogID(id);
     }
 
+    public static class Note extends StaticConstraint implements IDescribeConstraint {
+        private final String text;
+        public Note(String text) { this.text = text; }
+        @Override public boolean conforms(Call call, PositionState ps) { return true; }
+        @Override public String describe(Call call, PositionState ps) { return text; }
+    }
+
+    public static Constraint note(String text) {
+        return new Note(text);
+    }
+
     public static StaticConstraint staticAnd(StaticConstraint... constraints) {
         return new ConstraintGroup(constraints);
     }
