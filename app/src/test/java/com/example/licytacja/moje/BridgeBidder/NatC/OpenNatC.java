@@ -86,81 +86,15 @@ public class OpenNatC extends NatC {
     }
 
     private static List<CallFeature> openSuitWeak(PositionState ps) {
-        List<CallFeature> rules = new ArrayList<>();
-        rules.add(partnerBids(RespondNatC::weakOpen));
+        List<CallFeature> bids = new ArrayList<>();
+        bids.add(partnerBids(RespondNatC::weakOpen));
 
-        //bids.add(shows(Bid._3S, Weak, shape(8, 10)));
-        //bids.add(shows(Bid._3H, Weak, shape(8, 10)));
-        //bids.add(shows(Bid._3D, Weak, shape(8, 10)));
-        //bids.add(shows(Bid._3C, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3S, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3H, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3D, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3C, Weak, shape(8, 10)));
 
-        switch (ps.getSeat()) {
-            case 1:
-                addWeakRules(rules, and(IS_FAV_VUL, points(4, 11)));
-                addWeakRules(rules, and(IS_FAV_VUL, points(8, 11), shape(5), EXCELLENT_PLUS_SUIT), 2);
-                addWeakRules(rules, and(BOTH_NOT_VUL, points(5, 11), DECENT_PLUS_SUIT));
-                addWeakRules(rules, and(IS_VUL, points(7, 11), GOOD_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_NOT_VUL, shape(6), points(5, 11), GOOD_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_VUL, shape(6), points(7, 11), GOOD_PLUS_SUIT));
-                break;
-            case 2:
-                addWeakRules(rules, and(IS_NOT_VUL, points(6, 11), DECENT_PLUS_SUIT));
-                addWeakRules(rules, and(IS_VUL, points(8, 11), GOOD_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_NOT_VUL, shape(6), points(6, 11), GOOD_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_VUL, shape(6), points(8, 11), EXCELLENT_PLUS_SUIT));
-                break;
-            case 3:
-                addWeakRules(rules, and(IS_FAV_VUL, points(2, 13)));
-                addWeakRules(rules, and(IS_FAV_VUL, points(2, 13), shape(5), GOOD_PLUS_SUIT), 2);
-                addWeakRules(rules, and(BOTH_NOT_VUL, points(4, 13), DECENT_PLUS_SUIT));
-                addWeakRules(rules, and(BOTH_NOT_VUL, points(4, 13), shape(5), EXCELLENT_PLUS_SUIT), 2);
-                addWeakRules(rules, and(IS_VUL, points(6, 13), GOOD_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_FAV_VUL, shape(6), points(2, 13)));
-                addWeakBid(rules, Bid._3C, and(BOTH_NOT_VUL, shape(6), points(4, 13), DECENT_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(IS_VUL, shape(6), points(6, 13), GOOD_PLUS_SUIT));
-                break;
-            case 4:
-                addWeakRules(rules, and(points(10, 15), DECENT_PLUS_SUIT));
-                addWeakBid(rules, Bid._3C, and(shape(6), points(10, 15), EXCELLENT_PLUS_SUIT));
-                break;
-        }
-        return rules;
+        return bids;
     }
 
-    public static void addWeakRules(List<CallFeature> rules, Constraint constraint) {
-        addWeakRules(rules, constraint, 0);
-    }
-
-    public static void addWeakRules(List<CallFeature> rules, Constraint constraint, int onlyLevel) {
-        int minLevel = onlyLevel == 0 ? 2 : onlyLevel;
-        int maxLevel = onlyLevel == 0 ? 4 : onlyLevel;
-        for (int lv = minLevel; lv <= maxLevel; lv++) {
-            Constraint levelConstraint = constraint;
-            if (onlyLevel == 0) {
-                levelConstraint = and(constraint, shape(lv + 4));
-            }
-            for (Suit suit : Suit.values()) {
-                Bid bid = new Bid(lv, suit);
-                if (!bid.equals(Bid._2C)) {
-                    addWeakBid(rules, bid, levelConstraint);
-                }
-            }
-        }
-    }
-
-    private static void addWeakBid(List<CallFeature> rules, Bid bid, Constraint constraint) {
-        if (bid.getSuit() != Suit.Hearts && bid.getSuit() != Suit.Spades) {
-            rules.add(shows(bid, constraint, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)));
-        }
-        if (bid.getSuit() == Suit.Hearts) {
-            rules.add(shows(bid, constraint, shape(Suit.Spades, 0, 3)));
-        } else {
-            rules.add(shows(bid, constraint, shape(Suit.Hearts, 4, 5), showsBadSuit(Suit.Hearts)));
-        }
-        if (bid.getSuit() == Suit.Spades) {
-            rules.add(shows(bid, constraint, shape(Suit.Hearts, 0, 3)));
-        } else {
-            rules.add(shows(bid, constraint, shape(Suit.Spades, 4, 5), showsBadSuit(Suit.Spades)));
-        }
-    }
 }
