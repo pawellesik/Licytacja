@@ -64,7 +64,7 @@ public class OpenNatC extends NatC {
 
 
         bids.add(shows(Bid._1C, OneLevel, note("Otwarcie naturalne z piątką")));
-        //note("Otwarcie naturalne z piątką")
+
         if (ps.getSeat() == 3) {
             bids.addAll(thirdSeatWeak(and(IS_VUL, NOT_BALANCED, points(11, 11))));
             bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, BALANCED, DECENT_PLUS_SUIT, points(11, 11))));
