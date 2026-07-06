@@ -14,7 +14,7 @@ public class Plesik {
         Game game = new Game();
 
         // 2. Podajemy karty tylko dla N (North).
-        game.getDeal().put(Direction.N, Hand.parse("A9876.AKJT8.75.2"));
+        game.getDeal().put(Direction.N, Hand.parse("A98765.AKJT8.5.2"));
 
         // 3. Ustawiamy rozdającego i inicjujemy stan licytacji
         game.dealer = Direction.N;
