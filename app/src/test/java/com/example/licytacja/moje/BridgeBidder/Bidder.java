@@ -493,4 +493,6 @@ public abstract class Bidder {
     public static HandConstraint passIn4thSeat() {
         return new PassIn4thSeat();
     }
+
+
 }

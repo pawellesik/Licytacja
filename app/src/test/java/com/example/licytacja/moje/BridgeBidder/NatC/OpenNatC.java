@@ -19,8 +19,8 @@ import java.util.List;
 
 public class OpenNatC extends NatC {
 
-    public static final HandConstraint OneLevel = points(12, 40);
-    public static final HandConstraint Minimum = points(12, 17);
+    public static final HandConstraint OneLevel = points(12, 17);
+    public static final HandConstraint Strong = points(18, 40);
     public static final HandConstraint CantJumpShift = points(12, 18);
     public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
     public static final HandConstraint Medium = points(17, 18);
@@ -48,9 +48,6 @@ public class OpenNatC extends NatC {
         //choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
 
-        if (ps.getSeat() != 4) {
-            choices.addPassRule(DontOpen);
-        }
         return choices;
     }
 
@@ -61,25 +58,12 @@ public class OpenNatC extends NatC {
         bids.add(partnerBids(Bid._1H, RespondNatC::oneHeart));
         bids.add(partnerBids(Bid._1S, RespondNatC::oneSpade));
 
-        bids.add(shows(Bid._1H, Minimum, shape(5, 10), betterThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, Minimum, shape(4, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
+        bids.add(shows(Bid._1C, Strong));
+        bids.add(shows(Bid._1H, OneLevel, shape(5, 10), betterThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, OneLevel, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
+
+
         bids.add(shows(Bid._1C, OneLevel));
-
-
-        bids.add(shows(Bid._1D, Minimum, shape(5, 10), LONGEST_SUIT));
-
-        // Special cases for minors with minimum hand
-        bids.add(shows(Bid._1D, Minimum, shape(Suit.Clubs, 5), shape(Suit.Diamonds, 4)));
-        bids.add(shows(Bid._1D, Minimum, shape(Suit.Clubs, 6), shape(Suit.Diamonds, 5)));
-
-        bids.add(shows(Bid._1C, OneLevel, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
-        bids.add(shows(Bid._1C, OneLevel, shape(3), shape(Suit.Diamonds, 0, 3), longestMajor(4)));
-        bids.add(shows(Bid._1C, OneLevel, shape(4, 11), longerThan(Suit.Diamonds), longestMajor(4)));
-
-        bids.add(shows(Bid._1D, OneLevel, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
-        bids.add(shows(Bid._1D, OneLevel, shape(3), shape(Suit.Clubs, 0, 2), longestMajor(4)));
-        bids.add(shows(Bid._1D, OneLevel, shape(4, 10), longerOrEqual(Suit.Diamonds, Suit.Clubs), longestMajor(4)));
-
 
         if (ps.getSeat() == 3) {
             bids.addAll(thirdSeatWeak(and(IS_VUL, NOT_BALANCED, points(11, 11))));
