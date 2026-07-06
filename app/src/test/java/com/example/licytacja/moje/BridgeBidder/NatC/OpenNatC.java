@@ -50,11 +50,6 @@ public class OpenNatC extends NatC {
 
         bids.add(shows(Bid._1C, Strong));
 
-        bids.add(shows(Bid._3S, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3H, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3D, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3C, Weak, shape(8, 10)));
-
         bids.add(shows(Bid._1H, OneLevel, shape(5, 8), betterThan(Suit.Spades)));
         bids.add(shows(Bid._1S, OneLevel, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
 
@@ -93,6 +88,12 @@ public class OpenNatC extends NatC {
     private static List<CallFeature> openSuitWeak(PositionState ps) {
         List<CallFeature> rules = new ArrayList<>();
         rules.add(partnerBids(RespondNatC::weakOpen));
+
+        //bids.add(shows(Bid._3S, Weak, shape(8, 10)));
+        //bids.add(shows(Bid._3H, Weak, shape(8, 10)));
+        //bids.add(shows(Bid._3D, Weak, shape(8, 10)));
+        //bids.add(shows(Bid._3C, Weak, shape(8, 10)));
+
         switch (ps.getSeat()) {
             case 1:
                 addWeakRules(rules, and(IS_FAV_VUL, points(4, 11)));

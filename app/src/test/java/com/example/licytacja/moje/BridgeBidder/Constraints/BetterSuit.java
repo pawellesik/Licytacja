@@ -33,7 +33,7 @@ public class BetterSuit {
                 if (bShape.getMax() == wShape.getMin()) {
                     // Jeśli interesuje nas TYLKO długość, a domyślnym przy remisie jest kolor "gorszy" -> FALSE
                     if (lengthOnly && w == d) return false;
-                    
+
                     // Jeśli sprawdzamy też JAKOŚĆ (to jest Twój przypadek!)
                     if (!lengthOnly) {
                         int bq = hs.getSuits().get(b).getQuality().getMin();
