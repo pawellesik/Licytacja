@@ -19,13 +19,10 @@ import java.util.List;
 
 public class OpenNatC extends NatC {
 
-    public static final HandConstraint OneLevel = points(12, 17);
-    public static final HandConstraint Strong = points(18, 40);
-    public static final HandConstraint Weak = points(7, 11);
-    public static final HandConstraint DontOpen = points(0, 11);
-
-    public static final Range Rebid1NT = new Range(12, 15);
-    public static final Range Rebid2NT = new Range(18, 20);
+    public static final HandConstraint OneLevel = highCardPoints(12, 17);
+    public static final HandConstraint Strong = highCardPoints(18, 40);
+    public static final HandConstraint Weak = highCardPoints(7, 11);
+    public static final HandConstraint DontOpen = highCardPoints(0, 11);
 
     public static final Range LessThanJumpShift = new Range(12, 18);
     public static final Range JumpShift = new Range(19, 21);
@@ -89,10 +86,10 @@ public class OpenNatC extends NatC {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(RespondNatC::weakOpen));
 
-        bids.add(shows(Bid._3S, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3H, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3D, Weak, shape(8, 10)));
-        bids.add(shows(Bid._3C, Weak, shape(8, 10)));
+        bids.add(shows(Bid._3S, Weak, shape(7, 10)));
+        bids.add(shows(Bid._3H, Weak, shape(7, 10)));
+        bids.add(shows(Bid._3D, Weak, shape(7, 10)));
+        bids.add(shows(Bid._3C, Weak, shape(7, 10)));
 
         return bids;
     }
