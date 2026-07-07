@@ -52,40 +52,30 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-            // 1. Definiujemy odzywki, które są PYTANIEM o Króle
-            // Szukamy kolejnych 4 dostępnych mian w kolejności brydżowej, pomijając uzgodniony atut
+            // 1. Znajdujemy kolejne 4 odzywki (sztafeta), pomijając nasz uzgodniony atut
             List<Call> kingAskBids = new ArrayList<>();
-            Call lastBid = ps.getBiddingState().getContract().getBid();
-            int startVal = (lastBid == null) ? 3 : lastBid.getRawValue() + 1;
+            int currentVal = ps.getBiddingState().getContract().getBid().getRawValue();
 
-            for (int v = startVal; v <= 37; v++) {
-                Call c = Call.fromRawValue(v);
-                if (c instanceof Bid) {
-                    Bid b = (Bid) c;
-                    // Jeśli to miano to nasz uzgodniony atut -> pomijamy (to będzie zakończenie)
-                    if (b.getSuit() == suit) continue;
-
-                    kingAskBids.add(b);
-                    if (kingAskBids.size() >= 4) break;
+            while (kingAskBids.size() < 4 && currentVal < 37) {
+                Call next = Call.fromRawValue(++currentVal);
+                if (next instanceof Bid && ((Bid) next).getSuit() != suit) {
+                    kingAskBids.add(next);
                 }
             }
 
-            // 2. Jeśli licytujemy dowolny inny kolor lub NT -> Pytamy o Króle
+            // 2. Jeśli licytujemy którąś z tych odzywek -> Pytamy o Króle
             Call[] bidsArray = kingAskBids.toArray(new Call[0]);
             choices.addRules(properties(bidsArray, AcesAsk::respondKings, true));
             for (Call c : bidsArray) {
                 choices.addRules(shows(c, pairPoints(GRAND_SLAM)));
             }
 
-
-            // 4. Licytacja uzgodnionego koloru = ZAKOŃCZENIE (Gramy szlemika lub końcówkę)
+            // 3. Licytacja uzgodnionego koloru = ZAKOŃCZENIE
             choices.addRules(
                     shows(new Bid(6, suit), pairPoints(SLAM_OR_BETTER), pairKeyCards(suit, null, 4, 5)),
-                    shows(new Bid(5, suit), pairKeyCards(suit, null, 0, 1, 2, 3))
+                    shows(new Bid(5, suit), pairKeyCards(suit, null, 0, 1, 2, 3)),
+                    shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN)
             );
-
-
-            choices.addRules(shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN));
 
             return choices;
         }
