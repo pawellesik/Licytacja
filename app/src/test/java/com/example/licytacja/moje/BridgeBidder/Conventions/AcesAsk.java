@@ -52,15 +52,12 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-
-            List<Call> kingAskBids = new ArrayList<>();
-            int currentVal = ps.getBiddingState().getContract().getBid().getRawValue();
-
-            while (kingAskBids.size() < 4 && currentVal < 37) {
-                Call next = Call.fromRawValue(++currentVal);
-                if (next instanceof Bid && ((Bid) next).getSuit() != suit) {
-                    kingAskBids.add(next);
-                }
+            if (suit.isMinor()){
+                shows(new Bid(5, suit), pairAces(1));
+                shows(new Bid(5, suit), pairAces(2));
+            }else if(suit.isMajor()){
+                shows(new Bid(4, suit), pairAces(1));
+                shows(new Bid(4, suit), pairAces(2));
             }
 
 
