@@ -20,8 +20,7 @@ public class AcesAsk extends Bidder {
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        System.out.println("plesik ostatnia "+ps.getPairState().getLastShownSuit().toString());
-        bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, true, ps.getPairState().getLastShownSuit(), null, null, UserText.AcesAsc, null));
+        bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, ps.getPairState().getLastShownSuit(), null, null, UserText.AcesAsc, null));
         bids.add(shows(Bid._4C, fit(ps.getPairState().getLastShownSuit()), pairPoints(SLAM_OR_BETTER)));
         return bids;
     }
@@ -52,17 +51,22 @@ public class AcesAsk extends Bidder {
     public static PositionCalls askKing(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
-        System.out.println("plesik "+suit.toString());
         if (suit != null) {
-            // 1. Definiujemy odzywki, które są PYTANIEM o Króle (wszystkie poza uzgodnionym atutem)
+            // 1. Definiujemy odzywki, które są PYTANIEM o Króle
+            // Szukamy kolejnych 4 dostępnych mian w kolejności brydżowej, pomijając uzgodniony atut
             List<Call> kingAskBids = new ArrayList<>();
-            for (Strain strain : Strain.values()) {
-                // Jeśli to jest nasz uzgodniony atut - pomijamy (to będzie zakończenie)
-                if (strain.toSuit() == suit) continue;
+            Call lastBid = ps.getBiddingState().getContract().getBid();
+            int startVal = (lastBid == null) ? 3 : lastBid.getRawValue() + 1;
 
-                Call nextBid = ps.getBiddingState().getContract().nextAvailableBid(strain);
-                if (nextBid instanceof Bid && ((Bid) nextBid).getLevel() < 7) {
-                    kingAskBids.add(nextBid);
+            for (int v = startVal; v <= 37; v++) {
+                Call c = Call.fromRawValue(v);
+                if (c instanceof Bid) {
+                    Bid b = (Bid) c;
+                    // Jeśli to miano to nasz uzgodniony atut -> pomijamy (to będzie zakończenie)
+                    if (b.getSuit() == suit) continue;
+
+                    kingAskBids.add(b);
+                    if (kingAskBids.size() >= 4) break;
                 }
             }
 
@@ -71,7 +75,6 @@ public class AcesAsk extends Bidder {
             choices.addRules(properties(bidsArray, AcesAsk::respondKings, true));
             for (Call c : bidsArray) {
                 choices.addRules(shows(c, pairPoints(GRAND_SLAM)));
-               // choices.addRules(shows(c, aces(4)));
             }
 
 

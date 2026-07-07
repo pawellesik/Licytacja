@@ -64,7 +64,11 @@ public class Plesik {
     private void printPublicKnowledge(BiddingState state) {
         System.out.println("   --- WIEDZA PUBLICZNA ---");
         for (Direction d : Direction.values()) {
-            HandSummary summary = state.getPositions().get(d).getPublicHandSummary();
+            PositionState pos = state.getPositions().get(d);
+            if (pos == null) continue;
+            HandSummary summary = pos.getPublicHandSummary();
+            if (summary == null) continue;
+            
             StringBuilder sb = new StringBuilder();
             
             Range p = summary.getPoints();
@@ -73,9 +77,12 @@ public class Plesik {
             }
             
             for (Suit s : Suit.values()) {
-                Range shape = summary.getSuits().get(s).getShape();
-                if (shape.getMin() > 0) {
-                    sb.append(s.toSymbol()).append(":").append(shape.getMin()).append("+ ");
+                HandSummary.SuitSummary suitSum = summary.getSuits().get(s);
+                if (suitSum != null) {
+                    Range shape = suitSum.getShape();
+                    if (shape != null && shape.getMin() > 0) {
+                        sb.append(s.toSymbol()).append(":").append(shape.getMin()).append("+ ");
+                    }
                 }
             }
             
@@ -87,8 +94,14 @@ public class Plesik {
                 System.out.println("   " + d + ": " + sb.toString());
             }
         }
-        Suit trump = state.getNextToAct().getPairState().getTrumpSuit();
-        if (trump != null) System.out.println("   UZGODNIONY ATUT: " + trump.toSymbol());
+        
+        // Wyświetlamy uzgodnione atuty dla obu par (NS i EW)
+        Suit nsTrump = state.getPositions().get(Direction.N).getPairState().getTrumpSuit();
+        Suit ewTrump = state.getPositions().get(Direction.E).getPairState().getTrumpSuit();
+        
+        if (nsTrump != null) System.out.println("   UZGODNIONY ATUT NS: " + nsTrump.toSymbol());
+        if (ewTrump != null) System.out.println("   UZGODNIONY ATUT EW: " + ewTrump.toSymbol());
+
         System.out.println("   ------------------------");
     }
 }

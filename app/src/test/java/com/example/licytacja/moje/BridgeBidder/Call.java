@@ -32,6 +32,18 @@ public abstract class Call implements Comparable<Call> {
         return Integer.compare(this.rawValue, other.rawValue);
     }
 
+    public static Call fromRawValue(int rawValue) {
+        if (rawValue == 0) return PASS;
+        if (rawValue == 1) return DOUBLE;
+        if (rawValue == 2) return REDOUBLE;
+        if (rawValue >= 3 && rawValue <= 37) {
+            int level = (rawValue - 3) / 5 + 1;
+            int strainIndex = (rawValue - 3) % 5;
+            return new Bid(level, Strain.values()[strainIndex]);
+        }
+        throw new IllegalArgumentException("Invalid raw value " + rawValue);
+    }
+
     public static final Call PASS = new Pass();
     public static final Call DOUBLE = new DoubleCall();
     public static final Call REDOUBLE = new Redouble();
