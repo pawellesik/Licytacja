@@ -261,7 +261,13 @@ public abstract class Bidder {
         return partner(hasShownSuit(null, false));
     }
 
-    // Hand Constraints
+    // --- HAND CONSTRAINTS (Wycena i skład ręki) ---
+
+    /**
+     * Sprawdza punkty honorowe (HCP) - As=4, K=3, D=2, W=1.
+     * <p>Przykład: highCardPoints(15, 17)
+     * <p>Efekt: Używane do otwarć 1NT lub innych odzywek opartych tylko na figurach.
+     */
     public static HandConstraint highCardPoints(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.HighCard);
     }
@@ -270,6 +276,12 @@ public abstract class Bidder {
         return highCardPoints(range.getMin(), range.getMax());
     }
 
+    /**
+     * Sprawdza punkty licytacyjne (HCP + punkty za długość koloru).
+     * <p>Standardowo: 1 pkt za każdą kartę powyżej czwartej w kolorze.
+     * <p>Przykład: points(12, 17)
+     * <p>Efekt: Standardowe sprawdzenie siły na otwarcie lub wejście.
+     */
     public static HandConstraint points(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.Starting);
     }
@@ -278,6 +290,11 @@ public abstract class Bidder {
         return points(range.getMin(), range.getMax());
     }
 
+    /**
+     * Sprawdza punkty "Dziadka" (HCP + bonusy za krótkości przy ficie).
+     * <p>Przykład: dummyPoints(13, 15)
+     * <p>Efekt: Pozwala licytować wyżej, gdy mamy fitt i krótkość boczną.
+     */
     public static HandConstraint dummyPoints(int min, int max) {
         return new Points.ShowsPoints(null, min, max, Points.PointType.Dummy);
     }
@@ -302,6 +319,11 @@ public abstract class Bidder {
         return new Shape.ShowsShape(null, count, count);
     }
 
+    /**
+     * Sprawdza liczbę kart w licytowanym kolorze.
+     * <p>Przykład: shape(5, 10)
+     * <p>Efekt: Gwarantuje, że AI licytuje kolor o odpowiedniej długości.
+     */
     public static HandConstraint shape(int min, int max) {
         return new Shape.ShowsShape(null, min, max);
     }
@@ -310,7 +332,10 @@ public abstract class Bidder {
         return new Shape.ShowsShape(suit, min, max);
     }
 
+    /** Sprawdza, czy ręka jest zrównoważona (brak singli/renonsów). */
     public static final HandConstraint BALANCED = new Balanced.ShowsBalanced(true);
+
+    /** Sprawdza, czy ręka jest układowa (posiada singla lub renons). */
     public static final HandConstraint NOT_BALANCED = new Balanced.ShowsBalanced(false);
 
     public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
@@ -328,10 +353,12 @@ public abstract class Bidder {
         return new BetterSuit.ShowsBetterSuit(better, worse, worse, true);
     }
 
+    /** Sprawdza, czy kolor pierwszy jest co najmniej tak długi jak drugi. */
     public static HandConstraint longerOrEqual(Suit better, Suit worse) {
         return new BetterSuit.ShowsBetterSuit(better, worse, better, true);
     }
 
+    /** Sprawdza, czy kolor licytowany jest dłuższy lub silniejszy od wskazanego. */
     public static HandConstraint betterThan(Suit worse) {
         return new BetterSuit.ShowsBetterSuit(null, worse, worse, false);
     }
@@ -348,6 +375,7 @@ public abstract class Bidder {
         return and(shape(Suit.Hearts, 0, max), shape(Suit.Spades, 0, max));
     }
 
+    /** Sprawdza, czy licytowany kolor jest najdłuższy w ręce. */
     public static final HandConstraint LONGEST_SUIT = new LongestSuit.ShowsLongestSuit(null);
 
     public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) {
@@ -386,6 +414,7 @@ public abstract class Bidder {
         return fit(count, suit, true);
     }
 
+    /** Sprawdza, czy para posiada łącznie min. 'count' kart w kolorze (fitt). */
     public static HandConstraint fit(int count) {
         return fit(count, null, true);
     }
@@ -408,6 +437,11 @@ public abstract class Bidder {
         return new PairPoints.PairShowsPoints(suit, min, max, false);
     }
 
+    /**
+     * Oblicza sumę punktów Twoich i punktów obiecanych przez partnera.
+     * <p>Przykład: pairPoints(25, 31)
+     * <p>Efekt: Pozwala na decyzję o końcówce lub szlemie na podstawie wspólnej siły.
+     */
     public static HandConstraint pairPoints(int min, int max) {
         return new PairPoints.PairShowsPoints(min, max, false);
     }
