@@ -238,6 +238,8 @@ public abstract class Bidder {
     public static final StaticConstraint IS_SINGLE_JUMP = new JumpBid(1);
     public static final StaticConstraint IS_NON_JUMP = new JumpBid(0);
     public static final StaticConstraint IS_DOUBLE_JUMP = new JumpBid(2);
+    /** Sprawdza, czy licytujemy z dowolnym przeskokiem (min. 1 poziom). */
+    public static final StaticConstraint IS_ANY_JUMP = new JumpBid(1, 2, 3);
 
     public static StaticConstraint isPassedHand() {
         return new SimpleStaticConstraint((call, ps) -> ps.isPassedHand(), "passed hand");
