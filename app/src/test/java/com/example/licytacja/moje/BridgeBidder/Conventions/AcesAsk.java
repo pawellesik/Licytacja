@@ -20,6 +20,7 @@ public class AcesAsk extends Bidder {
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
+        System.out.println("plesik ostatnia "+ps.getPairState().getLastShownSuit().toString());
         bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, true, ps.getPairState().getLastShownSuit(), null, null, UserText.AcesAsc, null));
         bids.add(shows(Bid._4C, fit(ps.getPairState().getLastShownSuit()), pairPoints(SLAM_OR_BETTER)));
         return bids;
@@ -51,6 +52,7 @@ public class AcesAsk extends Bidder {
     public static PositionCalls askKing(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
+        System.out.println("plesik "+suit.toString());
         if (suit != null) {
             // 1. Definiujemy odzywki, które są PYTANIEM o Króle (wszystkie poza uzgodnionym atutem)
             List<Call> kingAskBids = new ArrayList<>();

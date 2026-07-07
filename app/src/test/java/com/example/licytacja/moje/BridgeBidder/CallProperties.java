@@ -12,12 +12,13 @@ public class CallProperties extends CallFeature {
         this.partnerBids = partnerBids;
         this.forcing1Round = forcing1Round;
         this.forcingToGame = forcingToGame;
-        if (agreeTrump) {
-            if (call instanceof Bid) {
-                this.trumpSuit = ((Bid) call).getSuit();
-            }
-        } else if (trump != null) {
+        
+        // Priorytet ma jawnie przekazany kolor 'trump'. 
+        // Jeśli go nie ma, a agreeTrump jest true, bierzemy kolor z samej odzywki.
+        if (trump != null) {
             this.trumpSuit = trump;
+        } else if (agreeTrump && call instanceof Bid) {
+            this.trumpSuit = ((Bid) call).getSuit();
         }
     }
 
