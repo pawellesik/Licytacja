@@ -1,27 +1,13 @@
 package com.example.licytacja.moje.BridgeBidder.NatC;
 
-import com.example.licytacja.moje.BridgeBidder.Bid;
-import com.example.licytacja.moje.BridgeBidder.BidRule;
-import com.example.licytacja.moje.BridgeBidder.Call;
-import com.example.licytacja.moje.BridgeBidder.CallFeature;
+import com.example.licytacja.moje.BridgeBidder.*;
 import com.example.licytacja.moje.BridgeBidder.Conventions.Jacoby2NT;
 import com.example.licytacja.moje.BridgeBidder.Conventions.NegativeDouble;
-import com.example.licytacja.moje.BridgeBidder.HandConstraint;
-import com.example.licytacja.moje.BridgeBidder.LCStandard.LCStandard;
-import com.example.licytacja.moje.BridgeBidder.LCStandard.OpenBid2;
-import com.example.licytacja.moje.BridgeBidder.LCStandard.SolidSuit;
 import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
-import com.example.licytacja.moje.BridgeBidder.PositionCalls;
-import com.example.licytacja.moje.BridgeBidder.PositionCallsFactory;
-import com.example.licytacja.moje.BridgeBidder.PositionState;
-import com.example.licytacja.moje.BridgeBidder.Range;
-import com.example.licytacja.moje.BridgeBidder.Strain;
-import com.example.licytacja.moje.BridgeBidder.Suit;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class RespondNatC extends LCStandard {
+public class RespondNatC extends NatC {
     public static final Range RESPOND_PASS = new Range(0, 5);
     public static final Range RESPOND_1_LEVEL = new Range(6, 40);
     public static final Range RAISE_1 = new Range(6, 10);
@@ -51,27 +37,27 @@ public class RespondNatC extends LCStandard {
         PositionCalls choices = new PositionCalls(ps);
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
                 shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
                 shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2::responderRaisedMinor, true),
+                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
                 shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
                 shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
                 shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
                 shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         } else {
-            choices.addRules(SolidSuit.BIDS(ps));
+            choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
-                properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true),
+                properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
                 shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
                 shows(Bid._1D, points(LIMIT_RAISE_OR_BETTER), shape(5, 10), longerThan(Suit.Hearts), longerThan(Suit.Spades)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
                 shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2::responderRaisedMinor, true),
+                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
                 shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
                 shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
                 shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
@@ -87,11 +73,11 @@ public class RespondNatC extends LCStandard {
     public static PositionCalls oneDiamond(PositionState ps) {
         if (!ps.getRHO().isPassed()) return oppsInterferred(ps, Suit.Diamonds);
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
+        choices.addRules(SolidSuitNatC.BIDS(ps));
         choices.addRules(
-            propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2::responderRaisedMinor, true),
-            properties(Bid._2C, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
-            properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2::responderChangedSuits, true),
+            propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2NatC::responderRaisedMinor, true),
+            properties(Bid._2C, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
+            properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
             shows(Bid._2C, points(GAME_OR_BETTER), longestMajor(4)),
             shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
             shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
@@ -113,8 +99,8 @@ public class RespondNatC extends LCStandard {
         Call[] raises = new Call[]{Bid._2H, Bid._3H, Bid._4H};
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
-                propertiesAgreeTrump(raises, OpenBid2::responderRaisedMajor, true),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
                 shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
                 shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(3, 5)),
                 shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
@@ -125,24 +111,24 @@ public class RespondNatC extends LCStandard {
                 shows(Bid._2NT, points(11, 12), shape(Suit.Hearts, 0, 2), shape(Suit.Spades, 0, 3))
             );
         } else {
-            choices.addRules(SolidSuit.BIDS(ps));
+            choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                 shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
                 shows(Bid._2D, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
-                propertiesAgreeTrump(raises, OpenBid2::responderRaisedMajor, true),
+                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
                 shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
                 shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(4, 5)),
                 shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
                 properties(Bid._1S, true),
                 shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), shape(Suit.Hearts, 0, 3)),
-                properties(Bid._1NT, OpenBid2::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
+                properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
                 shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
                 shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
@@ -158,8 +144,8 @@ public class RespondNatC extends LCStandard {
         Call[] raises = new Call[]{Bid._2S, Bid._3S, Bid._4S};
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
-                propertiesAgreeTrump(raises, OpenBid2::responderRaisedMajor, true),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
                 shows(Bid._2S, dummyPoints(6, 10), shape(3, 5)),
                 shows(Bid._3S, dummyPoints(11, 12), shape(3, 5)),
                 shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
@@ -170,11 +156,11 @@ public class RespondNatC extends LCStandard {
                 shows(Bid._2NT, points(11, 12), shape(Suit.Spades, 0, 2))
             );
         } else {
-            choices.addRules(SolidSuit.BIDS(ps));
+            choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2::twoOverOne, false, true, false, null, null, null, null, null),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                 shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
@@ -182,11 +168,11 @@ public class RespondNatC extends LCStandard {
                 shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2D, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
                 shows(Bid._2H, shape(5, 10), points(GAME_OR_BETTER)),
-                propertiesAgreeTrump(raises, OpenBid2::responderRaisedMajor, true),
+                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
                 shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),
                 shows(Bid._3S, dummyPoints(MEDIUM_HAND), shape(4, 5)),
                 shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
-                properties(Bid._1NT, OpenBid2::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
+                properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
                 shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Spades, 0, 3)),
                 shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
@@ -210,7 +196,7 @@ public class RespondNatC extends LCStandard {
 
     public static PositionCalls oppsOvercalledSuit(PositionState ps, Suit openSuit, int rhoBidLevel, Suit rhoBidSuit) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
+        choices.addRules(SolidSuitNatC.BIDS(ps));
         choices.addRules(NegativeDouble.initiateConvention(ps));
         choices.addRules(weakJumpShift(openSuit));
 
@@ -218,7 +204,7 @@ public class RespondNatC extends LCStandard {
         Bid cueBidRaise = new Bid(rhoBidLevel + 1, rhoBidSuit);
         Bid weakRaise = new Bid(raisePartner instanceof Bid ? ((Bid) raisePartner).getLevel() + 1 : 3, openSuit);
         HandConstraint weakFit = openSuit.isMinor() ? fit(8) : fit(9);
-        PositionCallsFactory raiseHandler = openSuit.isMinor() ? OpenBid2::responderRaisedMinor : OpenBid2::responderRaisedMajor;
+        PositionCallsFactory raiseHandler = openSuit.isMinor() ? OpenBid2NatC::responderRaisedMinor : OpenBid2NatC::responderRaisedMajor;
 
         List<Suit> suits = new ArrayList<>(List.of(Suit.values()));
         suits.remove(openSuit);
@@ -230,8 +216,8 @@ public class RespondNatC extends LCStandard {
         boolean newSuitForcing = !ps.isPassedHand();
 
         choices.addRules(
-                partnerBids(OpenBid2::responderChangedSuits),
-                properties(new Call[]{Bid._1NT, Bid._2NT, Bid._3NT}, OpenBid2::responderBidNT),
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                properties(new Call[]{Bid._1NT, Bid._2NT, Bid._3NT}, OpenBid2NatC::responderBidNT),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), longerOrEqualTo(Suit.Spades)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 11), longerThan(Suit.Spades)),
                 shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Hearts, 0, 3)),
@@ -243,11 +229,11 @@ public class RespondNatC extends LCStandard {
                 shows(weakRaise, weakFit, dummyPoints(0, 8)),
                 shows(Bid._1NT, OPPS_STOPPED, points(RAISE_1)),
                 shows(Bid._2NT, OPPS_STOPPED, points(11, 12)),
-                properties(new Call[]{bidNew1, bidNew2}, OpenBid2::responderChangedSuits, newSuitForcing),
+                properties(new Call[]{bidNew1, bidNew2}, OpenBid2NatC::responderChangedSuits, newSuitForcing),
                 shows(bidNew1, shape(4), shape(higherUnbid, 0, 4), points(NEW_SUIT_2_LEVEL)),
                 shows(bidNew2, shape(5, 10), longerThan(higherUnbid), points(NEW_SUIT_2_LEVEL)),
                 shows(bidNew2, shape(4, 10), shape(lowerUnbid, 0, 3), points(NEW_SUIT_2_LEVEL)),
-                partnerBids(Call.PASS, OpenBid2::responderPassedInCompetition),
+                partnerBids(Call.PASS, OpenBid2NatC::responderPassedInCompetition),
                 shows(Call.PASS)
         );
         return choices;
@@ -255,7 +241,7 @@ public class RespondNatC extends LCStandard {
 
     public static PositionCalls oppsDoubled(PositionState ps, Suit openSuit) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuit.BIDS(ps));
+        choices.addRules(SolidSuitNatC.BIDS(ps));
         choices.addRules(
                 properties(Call.REDOUBLE, true),
                 shows(Call.REDOUBLE, points(RESPOND_REDOUBLE)),
@@ -304,10 +290,10 @@ public class RespondNatC extends LCStandard {
 
     private static Iterable<CallFeature> noTrumpResponsesToMinor(Suit minor) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.addAll(ntResponseToMinor(minor, 1, RESPOND_1NT_OVER_MINOR, OpenBid2::oneNTOverMinorOpen));
-        bids.addAll(ntResponseToMinor(minor, 2, RESPOND_2NT_OVER_MINOR, OpenBid2::twoNTOverMinorOpen));
+        bids.addAll(ntResponseToMinor(minor, 1, RESPOND_1NT_OVER_MINOR, OpenBid2NatC::oneNTOverMinorOpen));
+        bids.addAll(ntResponseToMinor(minor, 2, RESPOND_2NT_OVER_MINOR, OpenBid2NatC::twoNTOverMinorOpen));
         if (minor == Suit.Clubs) {
-            bids.addAll(ntResponseToMinor(minor, 3, RESPOND_3NT_OVER_CLUBS, OpenBid2::threeNTOverClubOpen));
+            bids.addAll(ntResponseToMinor(minor, 3, RESPOND_3NT_OVER_CLUBS, OpenBid2NatC::threeNTOverClubOpen));
         }
         return bids;
     }
