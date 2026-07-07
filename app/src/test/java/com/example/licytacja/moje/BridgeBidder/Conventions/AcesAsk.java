@@ -37,11 +37,11 @@ public class AcesAsk extends Bidder {
         if (suit != null) {
             choices.addRules(
                     properties(new Call[]{Bid._4D, Bid._4H, Bid._4S, Bid._4NT, Bid._5C}, AcesAsk::askKing, true),
-                    shows(Bid._4D, keyCards(suit, 0)),
-                    shows(Bid._4H, keyCards(suit, 1)),
-                    shows(Bid._4S, keyCards(suit, 2)),
-                    shows(Bid._4NT, keyCards(suit, 3)),
-                    shows(Bid._5C, keyCards(suit, 4))
+                    shows(Bid._4D, aces(0)),
+                    shows(Bid._4H, aces(1)),
+                    shows(Bid._4S, aces(2)),
+                    shows(Bid._4NT,aces(3)),
+                    shows(Bid._5C, aces(4))
             );
             return choices;
         }
