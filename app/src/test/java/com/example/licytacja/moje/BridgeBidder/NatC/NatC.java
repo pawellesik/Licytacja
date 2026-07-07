@@ -7,8 +7,6 @@ public class NatC extends Bidder implements IBiddingSystem {
     public PositionCalls getPositionCalls(PositionState ps) {
         if (ps.getRole() == PositionRole.Opener && ps.getRoleRound() == 1) {
             return OpenNatC.getOpenPositionCalls(ps);
-        } else if (ps.getRole() == PositionRole.Overcaller && ps.getRoleRound() == 1) {
-            return OvercallNatC.getOvercallPositionCalls(ps);
         } else {
             PositionCalls calls = new PositionCalls(ps);
             calls.addRules(CompeteNatC::compBids);

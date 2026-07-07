@@ -1,6 +1,7 @@
 package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
+import com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk;
 import com.example.licytacja.moje.BridgeBidder.Conventions.Jacoby2NT;
 import com.example.licytacja.moje.BridgeBidder.Conventions.NegativeDouble;
 import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
@@ -272,7 +273,7 @@ public class RespondNatC extends NatC {
 
     public static Iterable<CallFeature> weakOpen(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        for (CallFeature cf : Blackwood.initiateConvention(ps)) bids.add(cf);
+        for (CallFeature cf : AcesAsk.initiateConvention(ps)) bids.add(cf);
         bids.add(shows(Bid._4H, FIT_8_PLUS, ruleOf17()));
         bids.add(shows(Bid._4H, fit(10)));
         bids.add(shows(Bid._4S, FIT_8_PLUS, ruleOf17()));

@@ -3,6 +3,7 @@ package com.example.licytacja.moje.BridgeBidder.LCStandard;
 import com.example.licytacja.moje.BridgeBidder.Suit;
 
 public class UserText {
+    public static final String AcesAsc = "Ask about aces";
     public static final String Blackwood = "Blackwood";
     public static final String Gerber = "Gerber";
     public static final String JacobyTransfer = "Jacoby Transfer";
