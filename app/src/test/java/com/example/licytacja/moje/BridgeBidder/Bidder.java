@@ -1,6 +1,7 @@
 package com.example.licytacja.moje.BridgeBidder;
 
 import com.example.licytacja.moje.BridgeBidder.Constraints.*;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +83,16 @@ public abstract class Bidder {
         return dummyPoints(range.getMin(), range.getMax());
     }
 
-    /** Sprawdza liczbę kart w licytowanym kolorze. */
+    /**
+     * Sprawdza liczbę kart w licytowanym kolorze.
+     */
     public static HandConstraint shape(int min, int max) {
         return new Shape.ShowsShape(null, min, max);
     }
 
-    /** Sprawdza liczbę kart w konkretnym kolorze. */
+    /**
+     * Sprawdza liczbę kart w konkretnym kolorze.
+     */
     public static HandConstraint shape(Suit suit, int count) {
         return new Shape.ShowsShape(suit, count, count);
     }
@@ -100,7 +105,9 @@ public abstract class Bidder {
         return new Shape.ShowsShape(suit, min, max);
     }
 
-    /** Sprawdza fit w kolorze odzywki. */
+    /**
+     * Sprawdza fit w kolorze odzywki.
+     */
     public static HandConstraint fit(int count) {
         return new PairMinShape.PairShowsMinShape(null, count, true);
     }
@@ -125,18 +132,26 @@ public abstract class Bidder {
         return fit(8, null);
     }
 
-    /** Stała sprawdzająca fitt co najmniej 8-kartowy. */
+    /**
+     * Stała sprawdzająca fitt co najmniej 8-kartowy.
+     */
     public static final HandConstraint FIT_8_PLUS = fit(8);
 
-    /** Ręka zrównoważona. */
+    /**
+     * Ręka zrównoważona.
+     */
     public static final HandConstraint BALANCED = new Balanced.ShowsBalanced(true);
-    /** Ręka niezrównoważona. */
+    /**
+     * Ręka niezrównoważona.
+     */
     public static final HandConstraint NOT_BALANCED = new Balanced.ShowsBalanced(false);
 
     public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
     public static final HandConstraint NOT_FLAT = new Flat.ShowsFlat(false);
 
-    /** Licytowany kolor jest najdłuższy. */
+    /**
+     * Licytowany kolor jest najdłuższy.
+     */
     public static final HandConstraint LONGEST_SUIT = new LongestSuit.ShowsLongestSuit(null);
 
     // =================================================================================
@@ -207,16 +222,29 @@ public abstract class Bidder {
         return group;
     }
 
-    /** Pozwala dodać własny komentarz tekstowy do uzasadnienia odzywki. */
+    /**
+     * Pozwala dodać własny komentarz tekstowy do uzasadnienia odzywki.
+     */
     public static Constraint note(String text) {
         return new Note(text);
     }
 
     public static class Note extends StaticConstraint implements IDescribeConstraint {
         private final String text;
-        public Note(String text) { this.text = text; }
-        @Override public boolean conforms(Call call, PositionState ps) { return true; }
-        @Override public String describe(Call call, PositionState ps) { return text; }
+
+        public Note(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public boolean conforms(Call call, PositionState ps) {
+            return true;
+        }
+
+        @Override
+        public String describe(Call call, PositionState ps) {
+            return text;
+        }
     }
 
     // =================================================================================
@@ -238,7 +266,9 @@ public abstract class Bidder {
     public static final StaticConstraint IS_SINGLE_JUMP = new JumpBid(1);
     public static final StaticConstraint IS_NON_JUMP = new JumpBid(0);
     public static final StaticConstraint IS_DOUBLE_JUMP = new JumpBid(2);
-    /** Sprawdza, czy licytujemy z dowolnym przeskokiem (min. 1 poziom). */
+    /**
+     * Sprawdza, czy licytujemy z dowolnym przeskokiem (min. 1 poziom).
+     */
     public static final StaticConstraint IS_ANY_JUMP = new JumpBid(1, 2, 3);
 
     public static StaticConstraint isPassedHand() {
@@ -254,7 +284,7 @@ public abstract class Bidder {
 
     public static final StaticConstraint IS_REBID = new BidHistory(0, null);
     public static final StaticConstraint IS_NOT_REBID = not(IS_REBID);
-    
+
     public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
     public static final StaticConstraint IS_NOT_CUE_BID = not(IS_CUE_BID);
     public static final StaticConstraint IS_NEW_SUIT = staticAnd(IS_NOT_CUE_BID, new NewSuit(null));
@@ -316,61 +346,154 @@ public abstract class Bidder {
     public static CallFeature alert(Call call, String text, StaticConstraint... constraints) {
         return new CallAnnotation(call, CallAnnotation.AnnotationType.Alert, text, constraints);
     }
+
     public static CallFeature announce(Call call, String text, StaticConstraint... constraints) {
         return new CallAnnotation(call, CallAnnotation.AnnotationType.Announce, text, constraints);
     }
+
     public static CallFeature convention(Call call, String text, StaticConstraint... constraints) {
         return new CallAnnotation(call, CallAnnotation.AnnotationType.Convention, text, constraints);
     }
+
     public static CallFeature convention(String text, StaticConstraint... constraints) {
         return new CallAnnotation(null, CallAnnotation.AnnotationType.Convention, text, constraints);
     }
+
     public static CallProperties partnerBids(PositionCallsFactory pcf) {
         return new CallProperties(null, pcf, false, false, false, null);
     }
+
     public static CallProperties partnerBids(CallFeaturesFactory cff) {
         return partnerBids(PositionCalls.fromCallFeaturesFactory(cff));
     }
+
     public static CallProperties partnerBids(Call call, CallFeaturesFactory cff) {
         return partnerBids(call, PositionCalls.fromCallFeaturesFactory(cff));
     }
+
     public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round, boolean forcingToGame, boolean agreeTrump, Suit trump, String alert, String announce, String convention, StaticConstraint onlyIf) {
         CallFeatureGroup group = new CallFeatureGroup();
-        for (Call call : calls) { group.getFeatures().add(properties(call, partnerBids, forcing1Round, forcingToGame, agreeTrump, trump, alert, announce, convention, onlyIf)); }
+        for (Call call : calls) {
+            group.getFeatures().add(properties(call, partnerBids, forcing1Round, forcingToGame, agreeTrump, trump, alert, announce, convention, onlyIf));
+        }
         return group;
     }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids) { return properties(call, partnerBids, false, false, false, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) { return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention) { return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, null); }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, StaticConstraint onlyIf) { return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, onlyIf); }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String text, boolean isAnnounce) { return properties(call, partnerBids, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null); }
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids) { return properties(calls, partnerBids, false, false, false, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) { return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call[] calls, boolean forcing1Round, StaticConstraint onlyIf) { return properties(calls, null, forcing1Round, false, false, null, null, null, null, onlyIf); }
-    public static CallFeatureGroup propertiesForcingToGame(Call[] calls, PositionCallsFactory partnerBids, boolean forcingToGame) { return properties(calls, partnerBids, false, forcingToGame, false, null, null, null, null, null); }
-    public static CallFeatureGroup propertiesForcingToGame(Call[] calls, boolean forcingToGame, StaticConstraint onlyIf) { return properties(calls, null, false, forcingToGame, false, null, null, null, null, onlyIf); }
-    public static CallFeatureGroup propertiesAgreeTrump(Call[] calls, PositionCallsFactory partnerBids, boolean agreeTrump) { return properties(calls, partnerBids, false, false, agreeTrump, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call call, boolean forcing1Round, boolean agreeTrump, StaticConstraint onlyIf) { return properties(call, null, forcing1Round, false, agreeTrump, null, null, null, null, onlyIf); }
-    public static CallFeatureGroup properties(Call call, boolean forcing1Round, String convention, StaticConstraint onlyIf) { return properties(call, null, forcing1Round, false, false, null, null, null, convention, onlyIf); }
-    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention, StaticConstraint onlyIf) { return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, onlyIf); }
-    public static CallFeatureGroup properties(Call call, boolean forcing1Round) { return properties(call, null, forcing1Round, false, false, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call call, boolean forcing1Round, String text, boolean isAnnounce) { return properties(call, null, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null); }
-    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round, boolean agreeTrump) { return properties(calls, partnerBids, forcing1Round, false, agreeTrump, null, null, null, null, null); }
-    public static CallFeatureGroup properties(Call call, String alert) { return properties(call, null, false, false, false, null, alert, null, null, null); }
-    public static CallFeatureGroup properties(Call call, String alert, StaticConstraint onlyIf) { return properties(call, null, false, false, false, null, alert, null, null, onlyIf); }
-    public static StaticConstraint isJump(int... jumpLevels) { return new JumpBid(jumpLevels); }
-    public static StaticConstraint rho(Constraint constraint) { return new PositionProxy(PositionProxy.RelativePosition.RHO, constraint); }
-    public static StaticConstraint isLastBid(int level, Suit suit) { return new BidHistory(0, new Bid(level, suit)); }
-    public static StaticConstraint isLastBid(int level, Strain strain) { return new BidHistory(0, new Bid(level, strain)); }
-    public static StaticConstraint isOpeningBid(Bid bid) { return new SimpleStaticConstraint((call, ps) -> java.util.Objects.equals(ps.getBiddingState().getOpeningBid(), bid)); }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids) {
+        return properties(call, partnerBids, false, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, StaticConstraint onlyIf) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, null, onlyIf);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String text, boolean isAnnounce) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids) {
+        return properties(calls, partnerBids, false, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round) {
+        return properties(calls, partnerBids, forcing1Round, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, boolean forcing1Round, StaticConstraint onlyIf) {
+        return properties(calls, null, forcing1Round, false, false, null, null, null, null, onlyIf);
+    }
+
+    public static CallFeatureGroup propertiesForcingToGame(Call[] calls, PositionCallsFactory partnerBids, boolean forcingToGame) {
+        return properties(calls, partnerBids, false, forcingToGame, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup propertiesForcingToGame(Call[] calls, boolean forcingToGame, StaticConstraint onlyIf) {
+        return properties(calls, null, false, forcingToGame, false, null, null, null, null, onlyIf);
+    }
+
+    public static CallFeatureGroup propertiesAgreeTrump(Call[] calls, PositionCallsFactory partnerBids, boolean agreeTrump) {
+        return properties(calls, partnerBids, false, false, agreeTrump, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, boolean forcing1Round, boolean agreeTrump, StaticConstraint onlyIf) {
+        return properties(call, null, forcing1Round, false, agreeTrump, null, null, null, null, onlyIf);
+    }
+
+    public static CallFeatureGroup properties(Call call, boolean forcing1Round, String convention, StaticConstraint onlyIf) {
+        return properties(call, null, forcing1Round, false, false, null, null, null, convention, onlyIf);
+    }
+
+    public static CallFeatureGroup properties(Call call, PositionCallsFactory partnerBids, boolean forcing1Round, String convention, StaticConstraint onlyIf) {
+        return properties(call, partnerBids, forcing1Round, false, false, null, null, null, convention, onlyIf);
+    }
+
+    public static CallFeatureGroup properties(Call call, boolean forcing1Round) {
+        return properties(call, null, forcing1Round, false, false, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, boolean forcing1Round, String text, boolean isAnnounce) {
+        return properties(call, null, forcing1Round, false, false, null, null, isAnnounce ? text : null, isAnnounce ? null : text, null);
+    }
+
+    public static CallFeatureGroup properties(Call[] calls, PositionCallsFactory partnerBids, boolean forcing1Round, boolean agreeTrump) {
+        return properties(calls, partnerBids, forcing1Round, false, agreeTrump, null, null, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, String alert) {
+        return properties(call, null, false, false, false, null, alert, null, null, null);
+    }
+
+    public static CallFeatureGroup properties(Call call, String alert, StaticConstraint onlyIf) {
+        return properties(call, null, false, false, false, null, alert, null, null, onlyIf);
+    }
+
+    public static StaticConstraint isJump(int... jumpLevels) {
+        return new JumpBid(jumpLevels);
+    }
+
+    public static StaticConstraint rho(Constraint constraint) {
+        return new PositionProxy(PositionProxy.RelativePosition.RHO, constraint);
+    }
+
+    public static StaticConstraint isLastBid(int level, Suit suit) {
+        return new BidHistory(0, new Bid(level, suit));
+    }
+
+    public static StaticConstraint isLastBid(int level, Strain strain) {
+        return new BidHistory(0, new Bid(level, strain));
+    }
+
+    public static StaticConstraint isOpeningBid(Bid bid) {
+        return new SimpleStaticConstraint((call, ps) -> java.util.Objects.equals(ps.getBiddingState().getOpeningBid(), bid));
+    }
+
     public static final StaticConstraint IS_REVERSE_BID = new SimpleStaticConstraint((call, ps) -> ps.isReverse(call), "reverse");
     public static final StaticConstraint IS_NOT_REVERSE = not(IS_REVERSE_BID);
     public static final StaticConstraint IS_FORCED_TO_BID = new SimpleStaticConstraint((call, ps) -> ps.isForcedToBid());
     public static final StaticConstraint IS_FORCED_TO_GAME = new SimpleStaticConstraint((call, ps) -> ps.getPairState().isForcedToGame());
     public static final StaticConstraint IS_OPPS_CONTRACT = new SimpleStaticConstraint((call, ps) -> ps.isOpponentsContract(), "opps contract");
     public static final StaticConstraint IS_OUR_CONTRACT = new SimpleStaticConstraint((call, ps) -> ps.isOurContract(), "our contract");
-    public static final StaticConstraint CONTRACT_IS_AGREED_STRAIN = new SimpleStaticConstraint((call, ps) -> { Call contractBid = ps.getBiddingState().getContract().getBid(); if (contractBid instanceof Bid) { Bid bid = (Bid) contractBid; return ps.getBiddingState().getContract().isOurs(ps.getDirection()) && bid.getSuit() == ps.getPairState().getLastShownSuit(); } return false; });
-    public static StaticConstraint id(String id) { return new LogID(id); }
+    public static final StaticConstraint CONTRACT_IS_AGREED_STRAIN = new SimpleStaticConstraint((call, ps) -> {
+        Call contractBid = ps.getBiddingState().getContract().getBid();
+        if (contractBid instanceof Bid) {
+            Bid bid = (Bid) contractBid;
+            return ps.getBiddingState().getContract().isOurs(ps.getDirection()) && bid.getSuit() == ps.getPairState().getLastShownSuit();
+        }
+        return false;
+    });
+
+    public static StaticConstraint id(String id) {
+        return new LogID(id);
+    }
+
     public static final StaticConstraint IS_JUMP_SHIFT = staticAnd(IS_SINGLE_JUMP, IS_NEW_SUIT);
     public static final StaticConstraint IS_FAV_VUL = new SimpleStaticConstraint((call, ps) -> !ps.isVulnerable() && ps.getRHO().isVulnerable(), "favorable vul");
     public static final StaticConstraint IS_UNFAV_VUL = new SimpleStaticConstraint((call, ps) -> ps.isVulnerable() && !ps.getRHO().isVulnerable(), "unfavorable vul");
@@ -378,26 +501,85 @@ public abstract class Bidder {
     public static final StaticConstraint BOTH_NOT_VUL = new SimpleStaticConstraint((call, ps) -> !ps.isVulnerable() && !ps.getRHO().isVulnerable(), "none vul");
     public static final StaticConstraint IS_FINAL_CALL = new SimpleStaticConstraint((call, ps) -> ps.getBiddingState().getContract().isPassEndsAuction(), "pass ends auction");
     public static final StaticConstraint IS_NOT_FINAL_CALL = not(IS_FINAL_CALL);
-    public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) { return new PairKeyCards(suit, hasQueen, count); }
-    public static HandConstraint keyCards(Suit suit, int... count) { return new KeyCards(suit, null, count); }
-    public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) { return new KeyCards(suit, hasQueen, count); }
-    public static Constraint aces(int... count) { return new KeyCards(null, null, count); }
-    public static Constraint pairAces(int... count) { return new PairKeyCards(null, null, count); }
-    public static Constraint kings(int... count) { return new Kings(count); }
-    public static Constraint pairKings(int... count) { return new PairKings(count); }
-    public static HandConstraint suitLosers(int min, int max, Suit suit) { return new Losers.ShowsLosers(false, suit, min, max); }
-    public static HandConstraint suitLosers(int min, int max) { return suitLosers(min, max, null); }
-    public static Constraint takeoutSuit(Suit suit) { return and(new TakeoutSuit(suit), IS_NOT_CUE_BID); }
-    public static Constraint takeoutSuit() { return takeoutSuit(null); }
-    public static Constraint ruleOf17(Suit suit) { return new RuleOf17(suit); }
-    public static Constraint ruleOf17() { return ruleOf17(null); }
-    public static HandConstraint betterMinor(Suit suit) { return new BetterMinor(suit); }
-    public static HandConstraint betterMinor() { return betterMinor(null); }
-    public static HandConstraint ruleOf9() { return new RuleOf9(); }
+
+    public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) {
+        return new PairKeyCards(suit, hasQueen, count);
+    }
+
+    public static HandConstraint keyCards(Suit suit, int... count) {
+        return new KeyCards(suit, null, count);
+    }
+
+    public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) {
+        return new KeyCards(suit, hasQueen, count);
+    }
+
+    public static Constraint aces(int... count) {
+        return new KeyCards(null, null, count);
+    }
+
+    public static Constraint pairAces(int... count) {
+        return new PairKeyCards(null, null, count);
+    }
+
+    public static Constraint kings(int... count) {
+        return new Kings(count);
+    }
+
+    public static Constraint pairKings(int... count) {
+        return new PairKings(count);
+    }
+
+    public static HandConstraint suitLosers(int min, int max, Suit suit) {
+        return new Losers.ShowsLosers(false, suit, min, max);
+    }
+
+    public static HandConstraint suitLosers(int min, int max) {
+        return suitLosers(min, max, null);
+    }
+
+    public static Constraint takeoutSuit(Suit suit) {
+        return and(new TakeoutSuit(suit), IS_NOT_CUE_BID);
+    }
+
+    public static Constraint takeoutSuit() {
+        return takeoutSuit(null);
+    }
+
+    public static Constraint ruleOf17(Suit suit) {
+        return new RuleOf17(suit);
+    }
+
+    public static Constraint ruleOf17() {
+        return ruleOf17(null);
+    }
+
+    public static HandConstraint betterMinor(Suit suit) {
+        return new BetterMinor(suit);
+    }
+
+    public static HandConstraint betterMinor() {
+        return betterMinor(null);
+    }
+
+    public static HandConstraint ruleOf9() {
+        return new RuleOf9();
+    }
+
     public static final HandConstraint OPPS_STOPPED = new OppsStopped.ShowsOppsStopped(true);
     public static final HandConstraint OPPS_NOT_STOPPED = new OppsStopped.ShowsOppsStopped(false);
     public static final HandConstraint REVERSE_SHAPE = new ReverseShape.ShowsReverseShape();
-    public static Constraint breakConstraint(boolean isStatic, String name) { if (isStatic) return new Break.StaticBreak(name); return new Break.HandBreak(name); }
-    public static Constraint agreedStrain(Strain... strains) { return new AgreedStrain(strains); }
-    public static StaticConstraint isBidAvailable(int level, Suit suit) { return new SimpleStaticConstraint((call, ps) -> ps.isValidNextCall(new Bid(level, suit))); }
+
+    public static Constraint breakConstraint(boolean isStatic, String name) {
+        if (isStatic) return new Break.StaticBreak(name);
+        return new Break.HandBreak(name);
+    }
+
+    public static Constraint agreedStrain(Strain... strains) {
+        return new AgreedStrain(strains);
+    }
+
+    public static StaticConstraint isBidAvailable(int level, Suit suit) {
+        return new SimpleStaticConstraint((call, ps) -> ps.isValidNextCall(new Bid(level, suit)));
+    }
 }

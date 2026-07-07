@@ -52,7 +52,7 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-            // 1. Znajdujemy kolejne 4 odzywki (sztafeta), pomijając nasz uzgodniony atut
+
             List<Call> kingAskBids = new ArrayList<>();
             int currentVal = ps.getBiddingState().getContract().getBid().getRawValue();
 
@@ -63,19 +63,6 @@ public class AcesAsk extends Bidder {
                 }
             }
 
-            // 2. Jeśli licytujemy którąś z tych odzywek -> Pytamy o Króle
-            Call[] bidsArray = kingAskBids.toArray(new Call[0]);
-            choices.addRules(properties(bidsArray, AcesAsk::respondKings, true));
-            for (Call c : bidsArray) {
-                choices.addRules(shows(c, pairPoints(GRAND_SLAM)));
-            }
-
-            // 3. Licytacja uzgodnionego koloru = ZAKOŃCZENIE
-            choices.addRules(
-                    shows(new Bid(6, suit), pairPoints(SLAM_OR_BETTER), pairKeyCards(suit, null, 4, 5)),
-                    shows(new Bid(5, suit), pairKeyCards(suit, null, 0, 1, 2, 3)),
-                    shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN)
-            );
 
             return choices;
         }
