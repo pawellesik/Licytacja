@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcesAsk extends Bidder {
-    private static final Range SLAM_OR_BETTER = new Range(32, 100);
+    private static final Range SLAM_OR_BETTER = new Range(28, 100);
     private static final Range GRAND_SLAM = new Range(36, 100);
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        Suit suit = getAgreedSuit(ps);
-        if (suit != null) {
-            bids.add(properties(Bid._4NT, AcesAsk::respondKeyCards, true, UserText.AcesAsc));
-            bids.add(shows(Bid._4NT, pairPoints(suit, SLAM_OR_BETTER.getMin(), SLAM_OR_BETTER.getMax())));
-        }
+        //Suit suit = getAgreedSuit(ps);
+        //if (suit != null) {
+        bids.add(properties(Bid._4C, AcesAsk::respondKeyCards, true, UserText.AcesAsc));
+        bids.add(shows(Bid._4C, fit(ps.getPairState().getLastShownSuit())));
+        //}
         return bids;
     }
 

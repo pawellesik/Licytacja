@@ -145,9 +145,8 @@ public class RespondNatC extends NatC {
     }
 
     public static PositionCalls oneSpade(PositionState ps) {
-        if (!ps.getRHO().isPassed()) return oppsInterferred(ps, Suit.Spades);
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(Blackwood.initiateConvention(ps));
+        choices.addRules(AcesAsk.initiateConvention(ps));
         Call[] raises = new Call[]{Bid._2S, Bid._3S, Bid._4S};
         if (ps.isPassedHand()) {
             choices.addRules(
@@ -164,8 +163,7 @@ public class RespondNatC extends NatC {
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
-            choices.addRules(Jacoby2NT.initiateConvention(ps));
-            choices.addRules(
+                choices.addRules(
                 partnerBids(OpenBid2NatC::responderChangedSuits),
                 properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                 shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
