@@ -12,7 +12,7 @@ public class Plesik {
         Game game = new Game();
 
 
-        game.getDeal().put(Direction.N, Hand.parse("A9854.AK2.KJT9.2"));
+        game.getDeal().put(Direction.N, Hand.parse("K9854.KQ2.KQT9.2"));
 
         game.getDeal().put(Direction.S, Hand.parse("KJT9.AKQ.A5432.2"));// 18hpc
 
