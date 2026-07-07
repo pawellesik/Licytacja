@@ -53,10 +53,42 @@ public class Plesik {
                 System.out.println(turn + " licytuje: Pass");
                 state.makeCall(Call.PASS);
             }
+            printPublicKnowledge(state);
         }
 
         // 5. Wyświetlamy ostateczny kontrakt
         System.out.println("\n--- Koniec licytacji ---");
         System.out.println("Finalny kontrakt: " + state.getContract().toString());
+    }
+
+    private void printPublicKnowledge(BiddingState state) {
+        System.out.println("   --- WIEDZA PUBLICZNA ---");
+        for (Direction d : Direction.values()) {
+            HandSummary summary = state.getPositions().get(d).getPublicHandSummary();
+            StringBuilder sb = new StringBuilder();
+            
+            Range p = summary.getPoints();
+            if (p != null && p.getMin() > 0) {
+                sb.append("Pkt: ").append(p.getMin()).append("-").append(p.getMax()).append(" ");
+            }
+            
+            for (Suit s : Suit.values()) {
+                Range shape = summary.getSuits().get(s).getShape();
+                if (shape.getMin() > 0) {
+                    sb.append(s.toSymbol()).append(":").append(shape.getMin()).append("+ ");
+                }
+            }
+            
+            if (summary.getCountAces() != null && !summary.getCountAces().isEmpty()) {
+                sb.append("Asy: ").append(summary.getCountAces()).append(" ");
+            }
+
+            if (sb.length() > 0) {
+                System.out.println("   " + d + ": " + sb.toString());
+            }
+        }
+        Suit trump = state.getNextToAct().getPairState().getTrumpSuit();
+        if (trump != null) System.out.println("   UZGODNIONY ATUT: " + trump.toSymbol());
+        System.out.println("   ------------------------");
     }
 }

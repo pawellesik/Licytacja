@@ -8,6 +8,7 @@ import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
 import com.example.licytacja.moje.BridgeBidder.PositionCalls;
 import com.example.licytacja.moje.BridgeBidder.PositionState;
 import com.example.licytacja.moje.BridgeBidder.Range;
+import com.example.licytacja.moje.BridgeBidder.Strain;
 import com.example.licytacja.moje.BridgeBidder.Suit;
 
 import java.util.ArrayList;
@@ -15,11 +16,10 @@ import java.util.List;
 
 public class AcesAsk extends Bidder {
     private static final Range SLAM_OR_BETTER = new Range(28, 40);
-    private static final Range GRAND_SLAM = new Range(36, 100);
+    private static final Range GRAND_SLAM = new Range(28, 100);
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        //bids.add(properties(Bid._4C, AcesAsk::respondKeyCards, true, UserText.AcesAsc));
         bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, true, ps.getPairState().getLastShownSuit(), null, null, UserText.AcesAsc, null));
         bids.add(shows(Bid._4C, fit(ps.getPairState().getLastShownSuit()), pairPoints(SLAM_OR_BETTER)));
         return bids;
@@ -52,23 +52,24 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-            // 1. Definiujemy odzywki, które są PYTANIEM o Króle (wszystkie poza atutem i NT)
+            // 1. Definiujemy odzywki, które są PYTANIEM o Króle (wszystkie poza uzgodnionym atutem)
             List<Call> kingAskBids = new ArrayList<>();
-            for (Suit s : Suit.values()) {
-                if (s != suit) { // Jeśli to nie jest nasz atut
-                    Call nextBid = ps.getBiddingState().getContract().nextAvailableBid(s);
-                    if (nextBid instanceof Bid && ((Bid) nextBid).getLevel() < 7) {
-                        kingAskBids.add(nextBid);
-                    }
+            for (Strain strain : Strain.values()) {
+                // Jeśli to jest nasz uzgodniony atut - pomijamy (to będzie zakończenie)
+                if (strain.toSuit() == suit) continue;
+
+                Call nextBid = ps.getBiddingState().getContract().nextAvailableBid(strain);
+                if (nextBid instanceof Bid && ((Bid) nextBid).getLevel() < 7) {
+                    kingAskBids.add(nextBid);
                 }
             }
 
-            // 2. Jeśli licytujemy nowy kolor -> Pytamy o Króle
+            // 2. Jeśli licytujemy dowolny inny kolor lub NT -> Pytamy o Króle
             Call[] bidsArray = kingAskBids.toArray(new Call[0]);
             choices.addRules(properties(bidsArray, AcesAsk::respondKings, true));
             for (Call c : bidsArray) {
                 choices.addRules(shows(c, pairPoints(GRAND_SLAM)));
-                choices.addRules(shows(c, aces(4)));
+               // choices.addRules(shows(c, aces(4)));
             }
 
 
