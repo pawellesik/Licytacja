@@ -33,19 +33,24 @@ public class Plesik {
         //state.makeCall(Call.parse("2NT"));// South licytuje 2NT (Inwit)
         //state.makeCall(Call.PASS);        // West pasuje
 
-        // 5. Pobieramy decyzję AI (North)
-        PositionCalls choices = state.getCallChoices();
-        CallDetails best = choices.getBestCall();
-
-        // Wyświetlamy wynik w konsoli podczas testu
+            // Wyświetlamy wynik w konsoli podczas testu
         System.out.println("AI North trzyma rękę: " + game.getDeal().get(Direction.N));
         System.out.println("AI South trzyma rękę: " + game.getDeal().get(Direction.S));
-        if (best != null) {
-            System.out.println("AI wybiera: " + best.getCall());
-            System.out.println("Uzasadnienie: " + best.getDescription(state.getNextToAct()));
-        }
 
-        // Weryfikacja
-        assertNotNull(best);
+
+        PositionCalls choices = state.getCallChoices();
+        CallDetails best = choices.getBestCall();
+        System.out.println("AI wybiera: " + best.getCall());
+        System.out.println("Uzasadnienie: " + best.getDescription(state.getNextToAct()));
+
+        state.makeCall(best);
+        state.makeCall(Call.PASS);
+
+        choices = state.getCallChoices();
+        best = choices.getBestCall();
+        System.out.println("AI wybiera: " + best.getCall());
+        System.out.println("Uzasadnienie: " + best.getDescription(state.getNextToAct()));
+
+
     }
 }
