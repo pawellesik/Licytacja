@@ -17,8 +17,10 @@ public class Plesik {
 
         // 3. Konfiguracja licytacji
         game.dealer = Direction.N;
-        game.bidSystemNS = "NatC";
-        game.bidSystemEW = "NatC";
+        //game.bidSystemNS = "NatC";
+        //game.bidSystemEW = "NatC";
+        game.bidSystemNS = "LC-Basic";
+        game.bidSystemEW = "LC-Basic";
 
         BiddingState state = new BiddingState(game);
 
