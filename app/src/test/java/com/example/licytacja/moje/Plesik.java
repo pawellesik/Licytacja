@@ -14,8 +14,8 @@ public class Plesik {
         Game game = new Game();
 
         // 2. Podajemy karty tylko dla N (North).
-        game.getDeal().put(Direction.N, Hand.parse("KJT9.A98.85432.2"));
-
+        game.getDeal().put(Direction.N, Hand.parse("KJT9.A98.A5432.2"));
+        game.getDeal().put(Direction.S, Hand.parse("85432.2.KJT9.A98"));
         // 3. Ustawiamy rozdającego i inicjujemy stan licytacji
         game.dealer = Direction.N;
         game.bidSystemNS = "NatC";
@@ -39,6 +39,7 @@ public class Plesik {
 
         // Wyświetlamy wynik w konsoli podczas testu
         System.out.println("AI North trzyma rękę: " + game.getDeal().get(Direction.N));
+        System.out.println("AI South trzyma rękę: " + game.getDeal().get(Direction.S));
         if (best != null) {
             System.out.println("AI wybiera: " + best.getCall());
             System.out.println("Uzasadnienie: " + best.getDescription(state.getNextToAct()));
