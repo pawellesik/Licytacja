@@ -186,14 +186,13 @@ public class RespondNatC extends NatC {
 
 
     public static Iterable<CallFeature> weakOpen(PositionState ps) {
+
+
         List<CallFeature> bids = new ArrayList<>();
         bids.add(shows(Bid._4H, FIT_8_PLUS, ruleOf17()));
         bids.add(shows(Bid._4H, fit(10)));
         bids.add(shows(Bid._4S, FIT_8_PLUS, ruleOf17()));
         bids.add(shows(Bid._4S, fit(10)));
-        bids.add(shows(Bid._3D, fit(9)));
-        bids.add(shows(Bid._3H, fit(9)));
-        bids.add(shows(Bid._3S, fit(9)));
         bids.add(shows(Call.PASS));
         return bids;
     }
