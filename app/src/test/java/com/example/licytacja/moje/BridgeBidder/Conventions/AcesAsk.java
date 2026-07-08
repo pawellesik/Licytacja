@@ -40,7 +40,7 @@ public class AcesAsk extends Bidder {
                     shows(Bid._4D, aces(0)),
                     shows(Bid._4H, aces(1)),
                     shows(Bid._4S, aces(2)),
-                    shows(Bid._4NT,aces(3)),
+                    shows(Bid._4NT, aces(3)),
                     shows(Bid._5C, aces(4))
             );
             return choices;
@@ -52,15 +52,14 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-            System.out.println("plesik asy partnera"+ps.getPartner().getPublicHandSummary().getCountAces());
-            System.out.println("plesik asy moje "+ps.getPrivateHandSummary().getCountAces());
+            if (suit.isMinor()) {
+                choices.addRules(shows(new Bid(5, suit), pairAces(1)),
+                        shows(new Bid(5, suit), pairAces(2))
+                );
+            } else if (suit.isMajor()) {
+                choices.addRules(shows(new Bid(4, suit), pairAces(1)),
+                        shows(new Bid(4, suit), pairAces(2)));
 
-            if (suit.isMinor()){
-                shows(new Bid(5, suit), pairAces(1));
-                shows(new Bid(5, suit), pairAces(2));
-            }else if(suit.isMajor()){
-                shows(new Bid(4, suit), pairAces(1));
-                shows(new Bid(4, suit), pairAces(2));
             }
             return choices;
         }

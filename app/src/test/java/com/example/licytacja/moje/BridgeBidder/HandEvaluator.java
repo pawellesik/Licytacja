@@ -62,7 +62,7 @@ public class HandEvaluator {
             Map<Suit, Integer> counts = hand.countsBySuit();
             hs.showIsBalanced(hand.isBalanced());
             hs.showIsFlat(hand.is4333());
-            
+
             long countAces = hand.stream().filter(c -> c.getRank() == Rank.Ace).count();
             Set<Integer> acesSet = new HashSet<>();
             acesSet.add((int) countAces);

@@ -41,9 +41,9 @@ public class KeyCards extends HandConstraint implements IShowsHand, IDescribeCon
             if (haveQueen != null) {
                 showHand.getSuits().get(trumpSuit).showHaveQueen(haveQueen);
             }
-        } else {
-            showHand.showCountAces(count);
-        }
+        } //else {
+           // showHand.showCountAces(count);
+       // }
     }
 
     @Override
