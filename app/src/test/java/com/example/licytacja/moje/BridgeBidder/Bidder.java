@@ -515,11 +515,11 @@ public abstract class Bidder {
     }
 
     public static Constraint aces(int... count) {
-        return new KeyCards(null, null, count);
+        return new Aces(count);
     }
 
     public static Constraint pairAces(int... count) {
-        return new PairKeyCards(null, null, count);
+        return new PairAces(count);
     }
 
     public static Constraint kings(int... count) {

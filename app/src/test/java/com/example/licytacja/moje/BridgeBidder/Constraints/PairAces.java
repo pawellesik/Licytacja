@@ -1,0 +1,37 @@
+package com.example.licytacja.moje.BridgeBidder.Constraints;
+
+import com.example.licytacja.moje.BridgeBidder.*;
+import java.util.*;
+
+public class PairAces extends HandConstraint implements IDescribeConstraint {
+    private final int[] count;
+
+    public PairAces(int... count) {
+        this.count = count;
+    }
+
+    @Override
+    public boolean conforms(Call call, PositionState ps, HandSummary hs) {
+        Set<Integer> ourAces = hs.getCountAces();
+        Set<Integer> partnerAces = ps.getPartner().getPublicHandSummary().getCountAces();
+
+        if (ourAces == null || partnerAces == null) {
+            return true; // Brak pełnej informacji - nie blokujemy licytacji
+        }
+
+        for (int mine : ourAces) {
+            for (int partners : partnerAces) {
+                int total = mine + partners;
+                for (int c : count) {
+                    if (total == c) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String describe(Call call, PositionState ps) {
+        return Arrays.toString(count) + " Ace(s) in pair";
+    }
+}
