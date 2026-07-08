@@ -61,7 +61,8 @@ public class AcesAsk extends Bidder {
                         shows(new Bid(4, suit), pairAces(2)));
 
             }
-            Bid bid = getNextBidWithoutTrump(ps, suit);
+            Call partnerCall = ps.getPartner().getLastCall();
+            Bid bid = getNextBidWithoutTrump(partnerCall, suit);
             choices.addRules(
                     properties(bid, AcesAsk::respondKings, true),
                     shows(bid, pairAces(3)),
@@ -73,8 +74,7 @@ public class AcesAsk extends Bidder {
         throw new RuntimeException("No agreed suit in askKing");
     }
 
-    private static Bid getNextBidWithoutTrump(PositionState ps, Suit suit) {
-        Call partnerCall = ps.getPartner().getLastCall();
+    private static Bid getNextBidWithoutTrump(Call partnerCall, Suit suit) {
         if (partnerCall != null) {
             Call nCall = Call.getNextCall(partnerCall);
 
@@ -95,6 +95,14 @@ public class AcesAsk extends Bidder {
 
     public static PositionCalls respondKings(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
+        Call partnerCall = ps.getPartner().getLastCall();
+
+        Call call0Kings = Call.getNextCall(partnerCall);
+        Call call1Kings = Call.getNextCall(call0Kings);
+        Call call2Kings = Call.getNextCall(call1Kings);
+        Call call3Kings = Call.getNextCall(call2Kings);
+        Call call4Kings = Call.getNextCall(call3Kings);
+
         choices.addRules(
                 properties(new Call[]{Bid._6C, Bid._6D, Bid._6H, Bid._6S}, AcesAsk::tryGrandSlam, true),
                 shows(Bid._6C, kings(0, 4)),
