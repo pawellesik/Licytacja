@@ -52,7 +52,9 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
-            System.out.println("plesik "+);
+            System.out.println("plesik asy partnera"+ps.getPartner().getPublicHandSummary().getCountAces());
+            System.out.println("plesik asy partnera");
+
             if (suit.isMinor()){
                 shows(new Bid(5, suit), pairAces(1));
                 shows(new Bid(5, suit), pairAces(2));
@@ -60,8 +62,6 @@ public class AcesAsk extends Bidder {
                 shows(new Bid(4, suit), pairAces(1));
                 shows(new Bid(4, suit), pairAces(2));
             }
-
-
             return choices;
         }
         throw new RuntimeException("No agreed suit in askKing");
