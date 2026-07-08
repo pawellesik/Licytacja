@@ -53,7 +53,7 @@ public class AcesAsk extends Bidder {
         Suit suit = getAgreedSuit(ps);
         if (suit != null) {
             System.out.println("plesik asy partnera"+ps.getPartner().getPublicHandSummary().getCountAces());
-            System.out.println("plesik asy partnera");
+            System.out.println("plesik asy moje "+ps.getPrivateHandSummary().getCountAces());
 
             if (suit.isMinor()){
                 shows(new Bid(5, suit), pairAces(1));

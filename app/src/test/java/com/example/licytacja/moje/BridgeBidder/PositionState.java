@@ -87,6 +87,10 @@ public class PositionState {
         return publicHandSummary;
     }
 
+    public HandSummary getPrivateHandSummary() {
+        return privateHandSummary;
+    }
+
     public PositionState getPartner() {
         return biddingState.getPositions().get(direction.partner());
     }
