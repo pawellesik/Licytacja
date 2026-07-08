@@ -104,11 +104,12 @@ public class AcesAsk extends Bidder {
         Call call4Kings = Call.getNextCall(call3Kings);
 
         choices.addRules(
-                properties(new Call[]{Bid._6C, Bid._6D, Bid._6H, Bid._6S}, AcesAsk::tryGrandSlam, true),
-                shows(Bid._6C, kings(0, 4)),
-                shows(Bid._6D, kings(1)),
-                shows(Bid._6H, kings(2)),
-                shows(Bid._6S, kings(3))
+                properties(new Call[]{call0Kings,call1Kings, call2Kings, call3Kings, call4Kings}, AcesAsk::tryGrandSlam, false),
+                shows(call0Kings, kings(0)),
+                shows(call1Kings, kings(1)),
+                shows(call2Kings, kings(2)),
+                shows(call3Kings, kings(3)),
+                shows(call3Kings, kings(4))
         );
         return choices;
     }
