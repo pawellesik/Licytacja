@@ -14,7 +14,7 @@ public class Plesik {
 
         game.getDeal().put(Direction.N, Hand.parse("K9854.AQ2.KQT9.2"));
 
-        game.getDeal().put(Direction.S, Hand.parse("AKJT9.KQJ.K5432.2"));// 18hpc
+        game.getDeal().put(Direction.S, Hand.parse("AJT9.AQJ.K5432.2"));// 18hpc
 
         // 3. Konfiguracja licytacji
         game.dealer = Direction.N;

@@ -14,6 +14,14 @@ public abstract class Call implements Comparable<Call> {
         return rawValue;
     }
 
+    public static Call getNextCall(Call call) {
+        int val = call.getRawValue() + 1;
+        if (val <= 37) {
+            return Call.fromRawValue(val);
+        }
+        return PASS;
+    }
+
     @Override
     public int hashCode() {
         return rawValue;
@@ -63,16 +71,23 @@ public abstract class Call implements Comparable<Call> {
 
     private static Strain parseStrain(String strainString) {
         switch (strainString) {
-            case "C": return Strain.Clubs;
-            case "D": return Strain.Diamonds;
-            case "H": return Strain.Hearts;
-            case "S": return Strain.Spades;
-            case "NT": return Strain.NoTrump;
-            default: throw new IllegalArgumentException("Strain " + strainString + " not recognized.");
+            case "C":
+                return Strain.Clubs;
+            case "D":
+                return Strain.Diamonds;
+            case "H":
+                return Strain.Hearts;
+            case "S":
+                return Strain.Spades;
+            case "NT":
+                return Strain.NoTrump;
+            default:
+                throw new IllegalArgumentException("Strain " + strainString + " not recognized.");
         }
     }
 
     public static final Map<Strain, String> STRAIN_TO_SYMBOL = new HashMap<>();
+
     static {
         STRAIN_TO_SYMBOL.put(Strain.Clubs, "C");
         STRAIN_TO_SYMBOL.put(Strain.Diamonds, "D");
