@@ -68,6 +68,7 @@ public class AcesAsk extends Bidder {
                     shows(bid, pairAces(3)),
                     shows(bid, pairAces(4)));
 
+            choices.addRules(shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN));
             choices.addRules(shows(Call.PASS));
             return choices;
         }
