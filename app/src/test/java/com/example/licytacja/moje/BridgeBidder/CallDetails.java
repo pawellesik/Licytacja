@@ -1,5 +1,6 @@
 package com.example.licytacja.moje.BridgeBidder;
 
+import com.example.licytacja.moje.BridgeBidder.Constraints.LogID;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +94,16 @@ public class CallDetails {
             }
         }
         return String.join(", ", descriptions);
+    }
+
+    public String getMatchedLogID(PositionState ps) {
+        for (BidRule rule : rules) {
+            if (ps.privateHandConforms(rule)) {
+                String id = LogID.getID(rule);
+                if (id != null) return id;
+            }
+        }
+        return null;
     }
 
     public HandSummary showHand() {

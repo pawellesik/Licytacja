@@ -101,12 +101,12 @@ public class AcesAsk extends Bidder {
         Bid nextBidWithTrump = getNextBidWithTrump(partnerCall, suit);
         if (suit != null) {
             choices.addRules(
-                    shows(new Bid(7, suit), sumPairAcesAndKings(8)),
-                    shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
-                    shows(new Bid(6, suit), sumPairAcesAndKings(7)),
-                    shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(new Bid(6, suit), secondSuit(suit, 5), hasShortness(0, 1), sumPairAcesAndKings(6, 7)),
-                    shows(nextBidWithTrump,  sumPairAcesAndKings("Suma asów i króli mniejsza od 6",1,6))
+                    shows(new Bid(7, suit), sumPairAcesAndKings(8), id("tryGrandSlam 1")),
+                    shows(new Bid(7, suit),  pairAces(4), pairKings(3), id("tryGrandSlam 2")),
+                    shows(new Bid(6, suit), sumPairAcesAndKings(7), id("tryGrandSlam 3")),
+                    shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN, id("tryGrandSlam 4")),
+                    shows(new Bid(6, suit), secondSuit(suit, 5), hasShortness(0, 1), sumPairAcesAndKings(6, 7), id("tryGrandSlam 5")),
+                    shows(nextBidWithTrump,  sumPairAcesAndKings("Suma asów i króli mniejsza od 6",1,6), id("tryGrandSlam 6"))
             );
             return choices;
         }

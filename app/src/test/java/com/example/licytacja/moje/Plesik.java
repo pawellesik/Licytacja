@@ -43,6 +43,10 @@ public class Plesik {
                 }
                 
                 System.out.println(turn + " licytuje: " + best.getCall());
+                String ruleId = best.getMatchedLogID(state.getNextToAct());
+                if (ruleId != null) {
+                    System.out.println("   [ID: " + ruleId + "]");
+                }
                 System.out.println("   [Uzasadnienie: " + best.getDescription(state.getNextToAct()) + "]");
                 state.makeCall(best);
                 printPublicKnowledge(state);
@@ -95,10 +99,29 @@ public class Plesik {
             }
         }
         
+        // Wyświetlamy wspólne HCP dla par
+        printPairHCP(state, Direction.N, Direction.S, "NS");
+        printPairHCP(state, Direction.E, Direction.W, "EW");
+        
         // Wyświetlamy uzgodnione atuty dla obu par (NS i EW)
         Suit nsTrump = state.getPositions().get(Direction.N).getPairState().getTrumpSuit();
         if (nsTrump != null) System.out.println("   UZGODNIONY ATUT NS: " + nsTrump.toSymbol());
 
         System.out.println("   ------------------------");
+    }
+
+    private void printPairHCP(BiddingState state, Direction d1, Direction d2, String pairName) {
+        PositionState p1 = state.getPositions().get(d1);
+        PositionState p2 = state.getPositions().get(d2);
+        if (p1 == null || p2 == null) return;
+
+        Range hcp1 = p1.getPublicHandSummary().getHighCardPoints();
+        Range hcp2 = p2.getPublicHandSummary().getHighCardPoints();
+
+        if (hcp1 != null && hcp2 != null && (hcp1.getMin() > 0 || hcp2.getMin() > 0)) {
+            int min = hcp1.getMin() + hcp2.getMin();
+            int max = hcp1.getMax() + hcp2.getMax();
+            System.out.println("   WSPÓLNE HCP " + pairName + ": " + min + "-" + max);
+        }
     }
 }
