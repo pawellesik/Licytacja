@@ -170,6 +170,7 @@ public abstract class Bidder {
     public static Constraint longestMajor(int max) { return and(shape(Suit.Hearts, 0, max), shape(Suit.Spades, 0, max)); }
     public static Constraint kings(int... count) { return new Kings(count); }
     public static Constraint pairKings(int... count) { return new PairKings(count); }
+    public static Constraint sumPairAcesAndKings(int... count) { return new PairKings(count); }
     public static HandConstraint pairHighCardPoints(int min, int max) { return new PairPoints.PairShowsPoints(min, max, true); }
     public static HandConstraint keyCards(Suit suit, int... count) { return new KeyCards(suit, null, count); }
     public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) { return new KeyCards(suit, hasQueen, count); }

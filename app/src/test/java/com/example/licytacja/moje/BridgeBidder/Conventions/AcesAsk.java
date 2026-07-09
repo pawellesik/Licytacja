@@ -8,7 +8,6 @@ import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
 import com.example.licytacja.moje.BridgeBidder.PositionCalls;
 import com.example.licytacja.moje.BridgeBidder.PositionState;
 import com.example.licytacja.moje.BridgeBidder.Range;
-import com.example.licytacja.moje.BridgeBidder.Strain;
 import com.example.licytacja.moje.BridgeBidder.Suit;
 
 import java.util.ArrayList;
@@ -100,14 +99,16 @@ public class AcesAsk extends Bidder {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
         Call partnerCall = ps.getPartner().getLastCall();
-        Bid bid = getNextBidWithTrump(partnerCall, suit);
+        Bid nextBidWithTrump = getNextBidWithTrump(partnerCall, suit);
         if (suit != null) {
             choices.addRules(
                     shows(new Bid(7, suit), pairAces(4), pairKings(4)),
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
                     shows(new Bid(6, suit),  pairAces(3), pairKings(4)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(bid)
+                    shows(nextBidWithTrump,  pairAces(4), pairKings(0))
+
+
             );
             return choices;
         }
