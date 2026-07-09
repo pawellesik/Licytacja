@@ -90,7 +90,7 @@ public class AcesAsk extends Bidder {
                 shows(call1Kings, kings(1)),
                 shows(call2Kings, kings(2)),
                 shows(call3Kings, kings(3)),
-                shows(call3Kings, kings(4))
+                shows(call4Kings, kings(4))
         );
         return choices;
     }
