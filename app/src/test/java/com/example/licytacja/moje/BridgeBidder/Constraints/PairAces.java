@@ -3,8 +3,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
+/**
+ * Constraint sprawdzający łączną liczbę asów posiadanych przez parę.
+ * Różni się od klasy Aces tym, że bierze pod uwagę wiedzę o obu rękach partnerów.
+ */
 public class PairAces extends HandConstraint implements IDescribeConstraint {
-    private final int[] count;
+    private final int[] count; // Dopuszczalne sumy asów w parze
 
     public PairAces(int... count) {
         this.count = count;

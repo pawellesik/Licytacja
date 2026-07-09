@@ -2,9 +2,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Sprawdza czy dany kolor został już wcześniej "pokazany" (zalicytowany) w trakcie licytacji.
+ */
 public class HasShownSuit extends StaticConstraint {
-    private final Suit suit;
-    private final boolean eitherPartner;
+    private final Suit suit;         // Kolor do sprawdzenia
+    private final boolean eitherPartner; // Czy sprawdzamy dowolnego partnera (true) czy konkretnego (false)
 
     public HasShownSuit(Suit suit, boolean eitherPartner) {
         this.suit = suit;

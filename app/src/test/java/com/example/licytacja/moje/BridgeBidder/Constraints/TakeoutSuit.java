@@ -2,8 +2,13 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Specjalistyczny constraint dla kontry wywoławczej (Takeout Double).
+ * Upewnia się, że ręka posiada wsparcie we wszystkich niepokazanych jeszcze kolorach,
+ * a wskazany kolor jest najlepszym z nich.
+ */
 public class TakeoutSuit extends HandConstraint implements IShowsHand {
-    private final Suit suit;
+    private final Suit suit; // Kolor, o który "pytamy" lub który wskazujemy
 
     public TakeoutSuit(Suit suit) {
         this.suit = suit;

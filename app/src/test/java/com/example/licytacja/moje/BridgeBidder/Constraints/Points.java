@@ -3,9 +3,23 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.List;
 
+/**
+ * Kluczowa klasa do obsługi punktacji w brydżu.
+ * Obsługuje punkty honorowe (HCP), punkty układowe (Starting) oraz punkty dummy (wsparcie).
+ */
 public class Points {
-    public enum PointType { HighCard, Starting, Dummy }
+    /**
+     * Typy punktacji obsługiwane przez system.
+     */
+    public enum PointType { 
+        HighCard, // Punkty za figury (A=4, K=3, Q=2, J=1)
+        Starting, // Punkty honorowe + punkty za długość/krótkość
+        Dummy     // Punkty obliczane przy wspieraniu koloru partnera
+    }
 
+    /**
+     * Weryfikuje czy siła ręki mieści się w zadanym zakresie.
+     */
     public static class HasPoints extends HandConstraint {
         protected final int min;
         protected final int max;
@@ -48,6 +62,9 @@ public class Points {
         }
     }
 
+    /**
+     * Pokazuje partnerowi siłę ręki w punktach wybranego typu.
+     */
     public static class ShowsPoints extends HasPoints implements IShowsHand, IDescribeConstraint {
         public ShowsPoints(Suit trumpSuit, int min, int max, PointType pointType) {
             super(trumpSuit, min, max, pointType);

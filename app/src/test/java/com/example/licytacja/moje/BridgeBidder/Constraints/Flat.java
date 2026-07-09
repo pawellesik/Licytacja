@@ -2,7 +2,15 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa sprawdzająca czy ręka ma charakter "płaski" (zrównoważony).
+ * Ręka płaska to taka, która nie posiada krótkości (singli ani renonsów),
+ * a jej układ to zazwyczaj 4-3-3-3.
+ */
 public class Flat {
+    /**
+     * Weryfikuje czy ręka spełnia warunek płaskości bez pokazywania tego partnerowi.
+     */
     public static class IsFlat extends HandConstraint {
         protected final boolean desiredValue;
 
@@ -16,6 +24,10 @@ public class Flat {
         }
     }
 
+    /**
+     * Informuje system i partnera o płaskim charakterze ręki.
+     * Dodatkowo wymusza zakres 3-4 karty w każdym kolorze dla ręki płaskiej.
+     */
     public static class ShowsFlat extends IsFlat implements IShowsHand, IDescribeConstraint {
         public ShowsFlat(boolean desiredValue) {
             super(desiredValue);

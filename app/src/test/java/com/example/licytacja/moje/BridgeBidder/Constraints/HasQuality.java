@@ -2,10 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa określająca jakość honorową daną w konkretnym kolorze.
+ * Pozwala odróżnić np. kolor "solidny" (z AKQ) od "słabego".
+ */
 public class HasQuality extends HandConstraint {
-    protected final Suit suit;
-    protected final SuitQuality min;
-    protected final SuitQuality max;
+    protected final Suit suit;      // Kolor do sprawdzenia
+    protected final SuitQuality min; // Minimalna akceptowalna jakość
+    protected final SuitQuality max; // Maksymalna akceptowalna jakość
 
     public HasQuality(Suit suit, SuitQuality min, SuitQuality max) {
         this.suit = suit;
@@ -23,6 +27,9 @@ public class HasQuality extends HandConstraint {
         return false;
     }
 
+    /**
+     * Pokazuje i opisuje jakość koloru w wiedzy publicznej.
+     */
     public static class ShowsQuality extends HasQuality implements IShowsHand, IDescribeConstraint {
         public ShowsQuality(Suit suit, SuitQuality min, SuitQuality max) {
             super(suit, min, max);

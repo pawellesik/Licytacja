@@ -2,8 +2,11 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Constraint sprawdzający czy dany kolor jest najdłuższym kolorem w całej ręce.
+ */
 public class LongestSuit extends HandConstraint implements IDescribeConstraint {
-    protected final Suit suit;
+    protected final Suit suit; // Kolor do sprawdzenia
 
     public LongestSuit(Suit suit) {
         this.suit = suit;
@@ -33,6 +36,9 @@ public class LongestSuit extends HandConstraint implements IDescribeConstraint {
         return null;
     }
 
+    /**
+     * Pokazuje partnerowi, że licytowany kolor jest najdłuższym kolorem gracza.
+     */
     public static class ShowsLongestSuit extends LongestSuit implements IShowsHand {
         public ShowsLongestSuit(Suit suit) {
             super(suit);

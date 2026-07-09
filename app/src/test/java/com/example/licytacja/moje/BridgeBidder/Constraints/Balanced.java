@@ -2,7 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa określająca czy ręka jest zrównoważona (bez singli i renonsów).
+ * Ręka zrównoważona może posiadać co najwyżej jeden dubleton.
+ */
 public class Balanced {
+    /**
+     * Pokazuje i opisuje zrównoważony charakter ręki.
+     */
     public static class ShowsBalanced extends HandConstraint implements IShowsHand, IDescribeConstraint {
         private final boolean desiredValue;
 

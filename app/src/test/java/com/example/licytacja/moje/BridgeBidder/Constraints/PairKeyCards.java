@@ -3,10 +3,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
+/**
+ * Constraint sprawdzający łączną liczbę Key Cards (asy + król atutowy) posiadanych przez parę.
+ * Kluczowe przy ocenie szans na szlemika lub szlema w oparciu o wiedzę o obu rękach.
+ */
 public class PairKeyCards extends HandConstraint implements IDescribeConstraint {
-    private final int[] count;
-    private final Suit trumpSuit;
-    private final Boolean hasQueen;
+    private final int[] count;      // Dopuszczalne sumy Key Cards w parze
+    private final Suit trumpSuit;   // Kolor atutu
+    private final Boolean hasQueen; // Informacja o damie atutowej (czy para ją posiada)
 
     public PairKeyCards(Suit trumpSuit, Boolean hasQueen, int... count) {
         this.trumpSuit = trumpSuit;

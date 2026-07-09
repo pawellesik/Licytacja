@@ -3,9 +3,16 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
+/**
+ * Constraint sprawdzający liczbę króli na ręce.
+ * Używany analogicznie do klasy Aces, często w końcowych fazach licytacji szlemowej.
+ */
 public class Kings extends HandConstraint implements IShowsHand, IDescribeConstraint {
-    private final Set<Integer> count;
+    private final Set<Integer> count; // Zbiór akceptowalnych liczb króli
 
+    /**
+     * @param count Dopuszczalne liczby króli (np. 0, 1, 2).
+     */
     public Kings(int... count) {
         this.count = new HashSet<>();
         for (int c : count) {

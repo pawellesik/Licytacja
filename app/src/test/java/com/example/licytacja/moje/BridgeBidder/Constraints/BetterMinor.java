@@ -2,8 +2,13 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa decydująca o wyborze "lepszego" koloru młodszego (Trefl lub Karo).
+ * Stosowana przy otwarciach 1 w kolor młodszy, gdy gracz ma oba te kolory.
+ * Przy równej długości 3-3 wybiera się zazwyczaj trefle, przy 4-4 kara.
+ */
 public class BetterMinor extends HandConstraint {
-    private final Suit suit;
+    private final Suit suit; // Kolor, który sprawdzamy czy jest "lepszy"
 
     public BetterMinor(Suit suit) {
         this.suit = suit;

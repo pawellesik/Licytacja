@@ -19,7 +19,7 @@ public class AcesAsk extends Bidder {
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, Suit.Spades, null, null, UserText.AcesAsc, null));
-        bids.add(shows(Bid._4C, fit(Suit.Spades), IS_ANY_JUMP, pairPoints(SLAM_OR_BETTER)));
+        bids.add(shows(Bid._4C, fit(Suit.Spades), IS_ANY_JUMP, pairPoints(SLAM_OR_BETTER), points(16, 40)));
         return bids;
     }
 

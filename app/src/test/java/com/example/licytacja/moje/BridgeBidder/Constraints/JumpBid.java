@@ -3,9 +3,16 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.Arrays;
 
+/**
+ * Constraint sprawdzający czy odzywka wiąże się ze skokiem.
+ * Pozwala odróżnić odzywki ekonomiczne od tych ze skokiem (np. licytacja forsująca).
+ */
 public class JumpBid extends StaticConstraint {
-    private final int[] jumpLevels;
+    private final int[] jumpLevels; // Lista dopuszczalnych poziomów skoku (0 = bez skoku, 1 = pojedynczy skok, itd.)
 
+    /**
+     * @param jumpLevels Tablica poziomów skoku (np. 1 dla pojedynczego skoku).
+     */
     public JumpBid(int... jumpLevels) {
         this.jumpLevels = jumpLevels;
     }

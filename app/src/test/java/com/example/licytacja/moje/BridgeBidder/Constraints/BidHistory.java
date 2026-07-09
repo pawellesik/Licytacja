@@ -2,9 +2,13 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Constraint sprawdzający historię licytacji.
+ * Pozwala na uzależnienie aktualnej decyzji od tego, co zalicytowano wcześniej.
+ */
 public class BidHistory extends StaticConstraint {
-    private final int bidIndex;
-    private final Call call;
+    private final int bidIndex; // Indeks odzywki wstecz (0 = ostatnia odzywka, 1 = przedostatnia, itd.)
+    private final Call call;     // Konkretna odzywka, której szukamy (null jeśli interesuje nas tylko kolor/typ)
 
     public BidHistory(int bidIndex, Call call) {
         this.bidIndex = bidIndex;

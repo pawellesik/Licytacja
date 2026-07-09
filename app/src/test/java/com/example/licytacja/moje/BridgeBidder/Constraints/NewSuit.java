@@ -2,8 +2,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Sprawdza czy licytowany kolor jest nowym kolorem dla danej pary.
+ * Nowy kolor to taki, którego nikt z pary wcześniej nie zalicytował naturalnie.
+ */
 public class NewSuit extends StaticConstraint implements IDescribeConstraint {
-    private final Suit suit;
+    private final Suit suit; // Kolor do sprawdzenia (null jeśli sprawdzamy kolor aktualnej odzywki)
 
     public NewSuit(Suit suit) {
         this.suit = suit;

@@ -2,9 +2,15 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Constraint sprawdzający czy aktualna linia licytacji dotyczy uzgodnionego koloru (atutu).
+ */
 public class AgreedStrain extends StaticConstraint {
-    private final Strain[] strains;
+    private final Strain[] strains; // Lista akceptowalnych mian (np. Kier, Pik)
 
+    /**
+     * @param strains Miana, które uznajemy za uzgodnione.
+     */
     public AgreedStrain(Strain... strains) {
         this.strains = strains;
     }

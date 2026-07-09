@@ -2,7 +2,15 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Techniczna klasa służąca do debugowania procesu licytacji.
+ * Pozwala na wstawienie "punktu przerwania" w kodzie, aby sprawdzić ile razy 
+ * dana reguła była analizowana publicznie i prywatnie.
+ */
 public class Break {
+    /**
+     * Punkt przerwania sprawdzany podczas dopasowywania konkretnej ręki.
+     */
     public static class HandBreak extends HandConstraint {
         private final String name;
         public int countPublic = 0;
@@ -29,6 +37,9 @@ public class Break {
         }
     }
 
+    /**
+     * Punkt przerwania sprawdzany dla warunków statycznych (niezależnych od kart na ręce).
+     */
     public static class StaticBreak extends StaticConstraint {
         private final String name;
 

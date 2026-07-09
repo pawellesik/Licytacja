@@ -2,7 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa weryfikująca minimalną łączną liczbę kart pary w danym kolorze.
+ * Pozwala sprawdzić czy para posiada np. fit 8-kartowy (suma kart obu partnerów).
+ */
 public class PairMinShape {
+    /**
+     * Weryfikuje łączną liczbę kart pary bez deklarowania jej w wiedzy publicznej.
+     */
     public static class PairHasMinShape extends HandConstraint {
         protected final Suit suit;
         protected final int min;
@@ -46,6 +53,9 @@ public class PairMinShape {
         }
     }
 
+    /**
+     * Pokazuje partnerowi brakującą liczbę kart do osiągnięcia sumy pary.
+     */
     public static class PairShowsMinShape extends PairHasMinShape implements IShowsHand, IDescribeConstraint {
         public PairShowsMinShape(Suit suit, int min, boolean desiredValue) {
             super(suit, min, desiredValue);

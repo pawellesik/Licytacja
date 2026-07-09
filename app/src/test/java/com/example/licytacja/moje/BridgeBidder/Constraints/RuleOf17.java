@@ -2,8 +2,13 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Implementacja Reguły 17, stosowanej przy odpowiedzi na otwarcie blokujące partnera.
+ * Partner otwiera 3 w kolor starszy, my sprawdzamy czy suma naszych punktów (HCP) 
+ * i liczby naszych atutów wynosi co najmniej 17. Jeśli tak, można licytować końcówkę.
+ */
 public class RuleOf17 extends HandConstraint implements IDescribeConstraint {
-    private final Suit suit;
+    private final Suit suit; // Kolor atutowy do sprawdzenia
 
     public RuleOf17(Suit suit) {
         this.suit = suit;

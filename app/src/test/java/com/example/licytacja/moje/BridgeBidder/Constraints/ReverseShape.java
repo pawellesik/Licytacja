@@ -2,7 +2,15 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Constraint obsługujący licytację typu "Reverse" (odwrotka).
+ * Wymusza specyficzny układ ręki dla silnych odzywek dwukolorowych,
+ * gdzie pierwszy licytowany kolor musi być dłuższy od drugiego (układ min. 5-4).
+ */
 public class ReverseShape {
+    /**
+     * Weryfikuje czy układ ręki pozwala na zalicytowanie odzywki typu Reverse.
+     */
     public static class HasReverseShape extends HandConstraint {
         protected Suit openSuit(PositionState ps) {
             Bid openingBid = ps.getBiddingState().getOpeningBid();
@@ -28,6 +36,9 @@ public class ReverseShape {
         }
     }
 
+    /**
+     * Pokazuje partnerowi minimalną długość obu kolorów przy licytacji Reverse.
+     */
     public static class ShowsReverseShape extends HasReverseShape implements IShowsHand {
         @Override
         public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand) {

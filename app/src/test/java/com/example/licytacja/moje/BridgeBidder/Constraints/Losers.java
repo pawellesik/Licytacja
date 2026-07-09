@@ -2,7 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa implementująca Metodę Liczenia Przegranych (Losing Trick Count - LTC).
+ * Pozwala ocenić siłę ręki na podstawie liczby brakujących asów, króli i dam w kolorach.
+ */
 public class Losers {
+    /**
+     * Weryfikuje liczbę przegrywających (całej ręki lub konkretnego koloru).
+     */
     public static class HasLosers extends HandConstraint {
         protected final int min;
         protected final int max;
@@ -40,6 +47,9 @@ public class Losers {
         }
     }
 
+    /**
+     * Informuje partnera o liczbie przegrywających lew w ręce lub kolorze.
+     */
     public static class ShowsLosers extends HasLosers implements IShowsHand, IDescribeConstraint {
         public ShowsLosers(boolean handLosers, Suit suit, int min, int max) {
             super(handLosers, suit, min, max);

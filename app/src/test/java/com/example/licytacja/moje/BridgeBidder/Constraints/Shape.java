@@ -2,7 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Podstawowa klasa do definiowania układu (długości kolorów) w ręce.
+ * Pozwala określić ile kart w danym kolorze musi posiadać gracz.
+ */
 public class Shape {
+    /**
+     * Sprawdza wymaganą długość koloru bez jej deklarowania w wiedzy publicznej.
+     */
     public static class HasShape extends HandConstraint {
         protected final Suit suit;
         protected final int min;
@@ -25,6 +32,9 @@ public class Shape {
         }
     }
 
+    /**
+     * Pokazuje partnerowi informację o posiadanej liczbie kart w danym kolorze.
+     */
     public static class ShowsShape extends HasShape implements IShowsHand, IDescribeConstraint {
         public ShowsShape(Suit suit, int min, int max) {
             super(suit, min, max);
@@ -49,6 +59,9 @@ public class Shape {
         }
     }
 
+    /**
+     * Uproszczona wersja sprawdzająca tylko minimalną liczbę kart w kolorze.
+     */
     public static class HasMinShape extends HandConstraint {
         protected final Suit suit;
         protected final int min;

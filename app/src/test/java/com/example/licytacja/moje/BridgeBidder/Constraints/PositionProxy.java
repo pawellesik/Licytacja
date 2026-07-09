@@ -2,11 +2,22 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Techniczna klasa pozwalająca na delegowanie sprawdzenia warunku na inną pozycję przy stole.
+ * Pozwala np. sprawdzić czy PARTNER zalicytował już dany kolor lub czy PRZECIWNIK ma określoną siłę.
+ */
 public class PositionProxy extends StaticConstraint implements IDescribeConstraint {
-    public enum RelativePosition { Partner, LHO, RHO }
+    /**
+     * Definiuje pozycję względem aktualnego gracza.
+     */
+    public enum RelativePosition { 
+        Partner, // Gracz po przeciwnej stronie stołu
+        LHO,     // Lewy przeciwnik
+        RHO      // Prawy przeciwnik
+    }
 
     private final RelativePosition relativePosition;
-    private final StaticConstraint constraint;
+    private final StaticConstraint constraint; // Warunek, który ma zostać sprawdzony dla wskazanej pozycji
 
     public PositionProxy(RelativePosition relativePosition, Constraint constraint) {
         this.relativePosition = relativePosition;

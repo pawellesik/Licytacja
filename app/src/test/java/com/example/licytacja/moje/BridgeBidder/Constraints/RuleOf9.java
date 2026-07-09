@@ -2,6 +2,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Implementacja brydżowej Reguły Dziewięciu.
+ * Służy do oceny, czy po wejściu przeciwnika należy go skontrować karnie.
+ * Sumuje się poziom odzywki przeciwnika, liczbę posiadanych atutów (w jego kolorze)
+ * oraz liczbę honorów w tym kolorze. Jeśli suma >= 9, należy kontrować.
+ */
 public class RuleOf9 extends HandConstraint implements IDescribeConstraint {
     @Override
     public boolean conforms(Call call, PositionState ps, HandSummary hs) {

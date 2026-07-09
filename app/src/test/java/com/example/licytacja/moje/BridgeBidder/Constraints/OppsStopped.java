@@ -3,7 +3,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.Set;
 
+/**
+ * Klasa weryfikująca posiadanie "zatrzymań" (stopperów) w kolorach przeciwników.
+ * Kluczowa przy licytacji Bez Atutu (NT).
+ */
 public class OppsStopped {
+    /**
+     * Sprawdza czy kolory przeciwników są zatrzymane przez nas lub partnera.
+     */
     public static class HasOppsStopped extends HandConstraint {
         protected final boolean desiredValue;
 
@@ -24,6 +31,9 @@ public class OppsStopped {
         }
     }
 
+    /**
+     * Deklaruje partnerowi posiadanie zatrzymania w kolorze przeciwnika.
+     */
     public static class ShowsOppsStopped extends HasOppsStopped implements IShowsHand, IDescribeConstraint {
         public ShowsOppsStopped(boolean desiredValue) {
             super(desiredValue);

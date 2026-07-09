@@ -2,7 +2,14 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Klasa służąca do porównywania dwóch kolorów w ręce gracza.
+ * Pozwala określić, który kolor jest dłuższy lub silniejszy (lepszej jakości).
+ */
 public class BetterSuit {
+    /**
+     * Weryfikuje relację między dwoma kolorami (np. czy Piki są lepsze od Kierów).
+     */
     public static class IsBetterSuit extends HandConstraint {
         protected final Suit better;
         protected final Suit worse;
@@ -52,6 +59,9 @@ public class BetterSuit {
         }
     }
 
+    /**
+     * Informuje partnera o relacji między dwoma kolorami (pokazuje ich względną siłę/długość).
+     */
     public static class ShowsBetterSuit extends IsBetterSuit implements IShowsHand, IDescribeConstraint {
         public ShowsBetterSuit(Suit better, Suit worse, Suit defaultIfEqual, boolean lengthOnly) {
             super(better, worse, defaultIfEqual, lengthOnly);

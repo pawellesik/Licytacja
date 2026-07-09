@@ -3,8 +3,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
+/**
+ * Constraint sprawdzający łączną liczbę króli posiadanych przez parę.
+ * Używany analogicznie do PairAces przy podejmowaniu decyzji o szlemie.
+ */
 public class PairKings extends HandConstraint implements IDescribeConstraint {
-    private final int[] count;
+    private final int[] count; // Dopuszczalne sumy króli w parze
 
     public PairKings(int... count) {
         this.count = count;

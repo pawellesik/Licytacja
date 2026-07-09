@@ -2,12 +2,16 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Zaawansowana klasa do obsługi wspólnej siły punktowej pary.
+ * Pozwala na dynamiczne sprawdzanie punktów na podstawie aktualnej wiedzy o obu rękach.
+ */
 public class PairPoints {
-    protected final boolean useStartingPoints;
-    protected final boolean useAgreedStrain;
-    protected final Suit suit;
-    protected final int min;
-    protected final int max;
+    protected final boolean useStartingPoints; // Czy używać punktów początkowych
+    protected final boolean useAgreedStrain;   // Czy bazować na uzgodnionym kolorze atutowym
+    protected final Suit suit;                 // Opcjonalny konkretny kolor atutowy
+    protected final int min;                   // Minimalna suma punktów pary
+    protected final int max;                   // Maksymalna suma punktów pary
 
     public PairPoints(Suit suit, int min, int max) {
         this.useStartingPoints = false;
@@ -82,6 +86,9 @@ public class PairPoints {
         }
     }
 
+    /**
+     * Weryfikuje sumę punktów pary bez pokazywania nowych informacji.
+     */
     public static class PairHasShownPoints extends StaticConstraint {
         private final PairPoints pairPoints;
         private final boolean highCard;
@@ -100,6 +107,9 @@ public class PairPoints {
         }
     }
 
+    /**
+     * Pokazuje partnerowi brakujące punkty do osiągnięcia sumy pary.
+     */
     public static class PairShowsPoints extends HandConstraint implements IShowsHand, IDescribeConstraint {
         private final PairPoints pairPoints;
         private final boolean highCard;
