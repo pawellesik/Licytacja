@@ -180,8 +180,8 @@ public abstract class Bidder {
     public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) { return new PairKeyCards(suit, hasQueen, count); }
     public static HandConstraint quality(SuitQuality min, SuitQuality max) { return new HasQuality.ShowsQuality(null, min, max); }
     public static HandConstraint quality(Suit suit, SuitQuality min, SuitQuality max) { return new HasQuality.ShowsQuality(suit, min, max); }
-    public static final HandConstraint DECENT_PLUS_SUIT = quality(SuitQuality.Good, SuitQuality.Solid);
-    public static final HandConstraint GOOD_PLUS_SUIT = quality(SuitQuality.Excellent, SuitQuality.Solid);
+    public static final HandConstraint DECENT_PLUS_SUIT = quality(SuitQuality.Decent, SuitQuality.Solid);
+    public static final HandConstraint GOOD_PLUS_SUIT = quality(SuitQuality.Good, SuitQuality.Solid);
     public static final HandConstraint EXCELLENT_PLUS_SUIT = quality(SuitQuality.Excellent, SuitQuality.Solid);
     public static final HandConstraint BAD_SUIT = quality(SuitQuality.Poor, SuitQuality.Poor);
     public static HandConstraint showsBadSuit(Suit suit) { return quality(suit, SuitQuality.Poor, SuitQuality.Poor); }
