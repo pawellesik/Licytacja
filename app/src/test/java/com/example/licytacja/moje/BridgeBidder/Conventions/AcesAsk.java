@@ -15,7 +15,6 @@ import java.util.List;
 
 public class AcesAsk extends Bidder {
     private static final Range SLAM_OR_BETTER = new Range(28, 40);
-    private static final Range GRAND_SLAM = new Range(28, 100);
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
@@ -105,6 +104,7 @@ public class AcesAsk extends Bidder {
                     shows(new Bid(7, suit), sumPairAcesAndKings(8)),
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
                     shows(new Bid(6, suit),  sumPairAcesAndKings(7)),
+                    shows(new Bid(6, suit),   ),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
                     shows(nextBidWithTrump,  sumPairAcesAndKings("Suma asów i króli mniejsza od 6",1,6))
             );
