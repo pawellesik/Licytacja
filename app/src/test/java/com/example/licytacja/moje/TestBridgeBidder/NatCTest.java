@@ -55,7 +55,7 @@ public class NatCTest {
 
     @Test
     public void testNatC() {
-        String suggestion = BridgeBidder.suggestBid(test.getDeal(), test.getVulnerable(), test.getAuction());
+        String suggestion = BridgeBidder.suggestBid(test.getDeal(), test.getVulnerable(), test.getAuction(), "NatC","NatC");
         if (!test.getExpectedCall().equals(suggestion)) {
             String msg = "FAILURE: " + test.getName() + "\n" +
                          "  Auction:  " + test.getAuction() + "\n" +
