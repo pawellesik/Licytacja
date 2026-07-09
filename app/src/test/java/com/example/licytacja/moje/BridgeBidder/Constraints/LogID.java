@@ -2,8 +2,12 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 
+/**
+ * Techniczny "znacznik" przypisywany do reguł licytacyjnych.
+ * Nie wpływa na logikę (zawsze zwraca true), ale pozwala zidentyfikować regułę w logach.
+ */
 public class LogID extends StaticConstraint {
-    private final String id;
+    private final String id; // Unikalna nazwa reguły, np. "OTWARCIE_1KIER"
 
     public LogID(String id) {
         this.id = id;
@@ -14,6 +18,9 @@ public class LogID extends StaticConstraint {
         return true;
     }
 
+    /**
+     * Metoda statyczna pozwalająca wyciągnąć identyfikator z dowolnej reguły licytacyjnej.
+     */
     public static String getID(BidRule rule) {
         for (Constraint constraint : rule.getConstraints()) {
             if (constraint instanceof LogID) {

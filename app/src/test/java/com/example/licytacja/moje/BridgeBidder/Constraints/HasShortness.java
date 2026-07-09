@@ -3,17 +3,25 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 
 /**
- * Sprawdza, czy w ręce znajduje się JAKIKOLWIEK kolor o długości w podanym zakresie (np. 0-1 dla krótkości).
+ * Wykrywa krótkość (renons lub singiel) w JAKIMKOLWIEK kolorze.
+ * Bardzo przydatne przy licytowaniu Splinterów lub sprawdzaniu wartości układowych.
  */
 public class HasShortness extends HandConstraint implements IDescribeConstraint {
-    private final int min;
-    private final int max;
+    private final int min; // Zazwyczaj 0
+    private final int max; // Zazwyczaj 1 (dla singla/renonsu)
 
+    /**
+     * @param min Minimalna długość (np. 0).
+     * @param max Maksymalna długość (np. 1).
+     */
     public HasShortness(int min, int max) {
         this.min = min;
         this.max = max;
     }
 
+    /**
+     * Sprawdza wszystkie kolory w poszukiwaniu takiego, który mieści się w zakresie [min, max].
+     */
     @Override
     public boolean conforms(Call call, PositionState ps, HandSummary hs) {
         for (Suit s : Suit.values()) {

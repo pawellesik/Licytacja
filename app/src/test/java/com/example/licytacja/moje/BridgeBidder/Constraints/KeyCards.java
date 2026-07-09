@@ -3,11 +3,20 @@ package com.example.licytacja.moje.BridgeBidder.Constraints;
 import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
+/**
+ * Klasa obsługująca tzw. "Key Cards" (asy plus król atutowy).
+ * Kluczowa dla konwencji Blackwood (RKCB 1430/0314).
+ */
 public class KeyCards extends HandConstraint implements IShowsHand, IDescribeConstraint {
     private final Set<Integer> count;
-    private final Suit trumpSuit;
-    private final Boolean haveQueen;
+    private final Suit trumpSuit; // Kolor atutowy, w którym Król liczony jest jako as
+    private final Boolean haveQueen; // Opcjonalna informacja o posiadaniu Damy atutowej
 
+    /**
+     * @param trumpSuit Kolor atutu.
+     * @param haveQueen Czy gracz posiada damę atutową (true/false/null jeśli nieistotne).
+     * @param count Lista dopuszczalnych liczb Key Cards.
+     */
     public KeyCards(Suit trumpSuit, Boolean haveQueen, int... count) {
         this.trumpSuit = trumpSuit;
         this.haveQueen = haveQueen;
@@ -17,6 +26,9 @@ public class KeyCards extends HandConstraint implements IShowsHand, IDescribeCon
         }
     }
 
+    /**
+     * Weryfikuje czy liczba Key Cards w ręce zgadza się z licytacją.
+     */
     @Override
     public boolean conforms(Call call, PositionState ps, HandSummary hs) {
         Set<Integer> keyCards = hs.getCountAces();
@@ -34,6 +46,9 @@ public class KeyCards extends HandConstraint implements IShowsHand, IDescribeCon
         return false;
     }
 
+    /**
+     * Pokazuje partnerowi liczbę Key Cards oraz informację o Damie atutowej.
+     */
     @Override
     public void showHand(Call call, PositionState ps, HandSummary.ShowState showHand) {
         if (trumpSuit != null) {
@@ -41,11 +56,12 @@ public class KeyCards extends HandConstraint implements IShowsHand, IDescribeCon
             if (haveQueen != null) {
                 showHand.getSuits().get(trumpSuit).showHaveQueen(haveQueen);
             }
-        } //else {
-           // showHand.showCountAces(count);
-       // }
+        }
     }
 
+    /**
+     * Zwraca opis, np. "[1, 4] key card s and queen".
+     */
     @Override
     public String describe(Call call, PositionState ps) {
         String s = (count.size() == 1 && count.contains(1)) ? "" : "s";
