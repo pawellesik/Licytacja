@@ -118,12 +118,14 @@ public class AcesAsk extends Bidder {
     public static PositionCalls tryGrandSlam(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
+        int lev = ps.getBiddingState().getContract().getBid().getLevel();
         if (suit != null) {
             choices.addRules(
-                    shows(new Bid(7, suit), pairKeyCards(suit, true, 5), pairKings(4)),
+                    shows(new Bid(7, suit), pairAces(4), pairKings(4)),
+                    shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
+                    shows(new Bid(6, suit),  pairAces(3), pairKings(4)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(new Bid(6, suit)),
-                    shows(new Bid(7, suit))
+                    shows(new Bid(lev, suit))//todo get nearest suit
             );
             return choices;
         }
