@@ -4,10 +4,29 @@ import com.example.licytacja.moje.BridgeBidder.*;
 import java.util.*;
 
 public class SumPairAcesAndKings extends HandConstraint implements IDescribeConstraint {
-    private final int[] counts;
+    private final Set<Integer> counts;
+    private final String customDescription;
+    private final Range range;
 
     public SumPairAcesAndKings(int... counts) {
-        this.counts = counts;
+        this(null, counts);
+    }
+
+    public SumPairAcesAndKings(String customDescription, int... counts) {
+        this.customDescription = customDescription;
+        this.counts = new HashSet<>();
+        for (int c : counts) this.counts.add(c);
+        this.range = null;
+    }
+
+    public SumPairAcesAndKings(Range range) {
+        this(null, range);
+    }
+
+    public SumPairAcesAndKings(String customDescription, Range range) {
+        this.customDescription = customDescription;
+        this.range = range;
+        this.counts = null;
     }
 
     @Override
@@ -17,7 +36,6 @@ public class SumPairAcesAndKings extends HandConstraint implements IDescribeCons
         Set<Integer> partnerAces = ps.getPartner().getPublicHandSummary().getCountAces();
         Set<Integer> partnerKings = ps.getPartner().getPublicHandSummary().getCountKings();
 
-        // If any piece of information is missing, we conservatively return true to avoid blocking.
         if (ourAces == null || ourKings == null || partnerAces == null || partnerKings == null) {
             return true;
         }
@@ -27,8 +45,10 @@ public class SumPairAcesAndKings extends HandConstraint implements IDescribeCons
                 for (int pA : partnerAces) {
                     for (int pK : partnerKings) {
                         int total = myA + myK + pA + pK;
-                        for (int c : counts) {
-                            if (total == c) return true;
+                        if (range != null) {
+                            if (range.contains(total)) return true;
+                        } else {
+                            if (counts.contains(total)) return true;
                         }
                     }
                 }
@@ -39,6 +59,8 @@ public class SumPairAcesAndKings extends HandConstraint implements IDescribeCons
 
     @Override
     public String describe(Call call, PositionState ps) {
-        return Arrays.toString(counts) + " total Aces and Kings in pair";
+        if (customDescription != null) return customDescription;
+        if (range != null) return range.toString() + " total Aces and Kings in pair";
+        return counts.toString() + " total Aces and Kings in pair";
     }
 }

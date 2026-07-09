@@ -106,7 +106,7 @@ public class AcesAsk extends Bidder {
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
                     shows(new Bid(6, suit),  sumPairAcesAndKings(7)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(nextBidWithTrump,  sumPairAcesAndKings(6,5,4,3,2,1))
+                    shows(nextBidWithTrump,  sumPairAcesAndKings("Suma asów i króli mniejsza od 6",1,6))
             );
             return choices;
         }

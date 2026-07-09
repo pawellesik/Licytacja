@@ -19,6 +19,10 @@ public class Range {
         return max;
     }
 
+    public boolean contains(int value) {
+        return value >= min && value <= max;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
