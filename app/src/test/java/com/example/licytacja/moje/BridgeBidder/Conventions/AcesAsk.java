@@ -102,13 +102,11 @@ public class AcesAsk extends Bidder {
         Bid nextBidWithTrump = getNextBidWithTrump(partnerCall, suit);
         if (suit != null) {
             choices.addRules(
-                    shows(new Bid(7, suit), pairAces(4), pairKings(4)),
+                    shows(new Bid(7, suit), sumPairAcesAndKings(8)),
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
-                    shows(new Bid(6, suit),  pairAces(3), pairKings(4)),
+                    shows(new Bid(6, suit),  sumPairAcesAndKings(7)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(nextBidWithTrump,  pairAces(4), pairKings(0))
-
-
+                    shows(nextBidWithTrump,  sumPairAcesAndKings(6,5,4,3,2,1))
             );
             return choices;
         }
