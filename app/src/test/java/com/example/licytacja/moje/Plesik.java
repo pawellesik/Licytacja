@@ -45,20 +45,19 @@ public class Plesik {
                 
                 System.out.println(turn + " licytuje: " + best.getCall());
                 System.out.println("   [Uzasadnienie: " + best.getDescription(state.getNextToAct()) + "]");
-                
                 state.makeCall(best);
+                printPublicKnowledge(state);
             } 
             // Jeśli kolej na przeciwników (E lub W) - automatycznie PASUJEMY
             else {
-            //    System.out.println(turn + " licytuje: Pass");
                 state.makeCall(Call.PASS);
             }
-            //printPublicKnowledge(state);
         }
 
         // 5. Wyświetlamy ostateczny kontrakt
         System.out.println("\n--- Koniec licytacji ---");
         System.out.println("Finalny kontrakt: " + state.getContract().toString());
+        System.out.println("\n------------------------------");
     }
 
     private void printPublicKnowledge(BiddingState state) {

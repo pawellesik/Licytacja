@@ -20,8 +20,8 @@ public class AcesAsk extends Bidder {
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, ps.getPairState().getLastShownSuit(), null, null, UserText.AcesAsc, null));
-        bids.add(shows(Bid._4C, IS_ANY_JUMP, pairPoints(SLAM_OR_BETTER)));
+        bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, Suit.Spades, null, null, UserText.AcesAsc, null));
+        bids.add(shows(Bid._4C, fit(Suit.Spades), IS_ANY_JUMP, pairPoints(SLAM_OR_BETTER)));
         return bids;
     }
 
@@ -75,25 +75,6 @@ public class AcesAsk extends Bidder {
         throw new RuntimeException("No agreed suit in askKing");
     }
 
-    private static Bid getNextBidWithoutTrump(Call partnerCall, Suit suit) {
-        if (partnerCall != null) {
-            Call nCall = Call.getNextCall(partnerCall);
-
-            while (true) {
-                if (nCall instanceof Bid) {
-                    Suit suitOfNextCall = ((Bid) nCall).getSuit();
-                    if (suit != suitOfNextCall) {
-                        return (Bid) nCall;
-                    } else {
-                        nCall = Call.getNextCall(nCall);
-                    }
-                }
-            }
-
-        }
-        return (Bid) Call.PASS;
-    }
-
     public static PositionCalls respondKings(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Call partnerCall = ps.getPartner().getLastCall();
@@ -118,20 +99,57 @@ public class AcesAsk extends Bidder {
     public static PositionCalls tryGrandSlam(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         Suit suit = getAgreedSuit(ps);
-        int lev = ps.getBiddingState().getContract().getBid().getLevel();
+        Call partnerCall = ps.getPartner().getLastCall();
+        Bid bid = getNextBidWithTrump(partnerCall, suit);
         if (suit != null) {
             choices.addRules(
                     shows(new Bid(7, suit), pairAces(4), pairKings(4)),
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
                     shows(new Bid(6, suit),  pairAces(3), pairKings(4)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(ps.getBiddingState().getContract().nextAvailableBid(suit), note("test czy to ttuuaj"))
+                    shows(bid)
             );
             return choices;
         }
         throw new RuntimeException("This should not happen");
     }
 
+    private static Bid getNextBidWithoutTrump(Call partnerCall, Suit suit) {
+        if (partnerCall != null) {
+            Call nCall = Call.getNextCall(partnerCall);
+
+            while (true) {
+                if (nCall instanceof Bid) {
+                    Suit suitOfNextCall = ((Bid) nCall).getSuit();
+                    if (suit != suitOfNextCall) {
+                        return (Bid) nCall;
+                    } else {
+                        nCall = Call.getNextCall(nCall);
+                    }
+                }
+            }
+
+        }
+        return (Bid) Call.PASS;
+    }
+    private static Bid getNextBidWithTrump(Call partnerCall, Suit suit) {
+        if (partnerCall != null) {
+            Call nCall = Call.getNextCall(partnerCall);
+
+            while (true) {
+                if (nCall instanceof Bid) {
+                    Suit suitOfNextCall = ((Bid) nCall).getSuit();
+                    if (suit == suitOfNextCall) {
+                        return (Bid) nCall;
+                    } else {
+                        nCall = Call.getNextCall(nCall);
+                    }
+                }
+            }
+
+        }
+        return (Bid) Call.PASS;
+    }
 
 
 }
