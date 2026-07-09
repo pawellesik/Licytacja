@@ -1,0 +1,37 @@
+package com.example.licytacja.moje.BridgeBidder.Constraints;
+
+import com.example.licytacja.moje.BridgeBidder.*;
+
+/**
+ * Sprawdza, czy w ręce znajduje się JAKIKOLWIEK kolor o długości w podanym zakresie (np. 0-1 dla krótkości).
+ */
+public class HasShortness extends HandConstraint implements IDescribeConstraint {
+    private final int min;
+    private final int max;
+
+    public HasShortness(int min, int max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    @Override
+    public boolean conforms(Call call, PositionState ps, HandSummary hs) {
+        for (Suit s : Suit.values()) {
+            Range shape = hs.getSuits().get(s).getShape();
+            // Sprawdzamy czy MOŻLIWE jest, że ten kolor ma długość w zakresie [min, max]
+            // W licytacji sprawdzamy czy istnieje chociaż jedna kombinacja, która spełnia warunek.
+            if (shape.getMin() <= max && shape.getMax() >= min) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String describe(Call call, PositionState ps) {
+        if (min == 0 && max == 0) return "any void";
+        if (min == 1 && max == 1) return "any singleton";
+        if (min == 0 && max == 1) return "any shortness (0-1)";
+        return "any suit with " + min + "-" + max + " cards";
+    }
+}
