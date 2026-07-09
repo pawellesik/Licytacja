@@ -105,6 +105,7 @@ public abstract class Bidder {
     public static StaticConstraint isOpeningBid(Bid bid) { return new SimpleStaticConstraint((call, ps) -> java.util.Objects.equals(ps.getBiddingState().getOpeningBid(), bid)); }
 
     public static final StaticConstraint IS_CUE_BID = new IsCueBid(null);
+    public static final StaticConstraint IS_NEW_SUIT = new NewSuit(null);
     public static final StaticConstraint IS_NOT_CUE_BID = not(IS_CUE_BID);
     public static final StaticConstraint IS_REVERSE_BID = new SimpleStaticConstraint((call, ps) -> ps.isReverse(call), "reverse");
     public static final StaticConstraint IS_NOT_REVERSE = not(IS_REVERSE_BID);
@@ -142,6 +143,7 @@ public abstract class Bidder {
     public static StaticConstraint rho(Constraint constraint) { return new PositionProxy(PositionProxy.RelativePosition.RHO, constraint); }
     public static StaticConstraint hasShownSuit(Suit suit, boolean eitherPartner) { return new HasShownSuit(suit, eitherPartner); }
     public static final StaticConstraint IS_PARTNERS_SUIT = partner(hasShownSuit(null, false));
+    public static StaticConstraint isPartnersSuit() { return IS_PARTNERS_SUIT; }
     public static StaticConstraint isPassedHand() { return new SimpleStaticConstraint((call, ps) -> ps.isPassedHand(), "passed hand"); }
 
     public static HandConstraint dummyPoints(int min, int max) { return new Points.ShowsPoints(null, min, max, Points.PointType.Dummy); }
@@ -157,6 +159,7 @@ public abstract class Bidder {
     public static final HandConstraint BALANCED = new Balanced.ShowsBalanced(true);
     public static final HandConstraint NOT_BALANCED = new Balanced.ShowsBalanced(false);
     public static final HandConstraint FLAT = new Flat.ShowsFlat(true);
+    public static final HandConstraint NOT_FLAT = new Flat.ShowsFlat(false);
     public static final HandConstraint LONGEST_SUIT = new LongestSuit.ShowsLongestSuit(null);
     public static HandConstraint longerThan(Suit worse) { return new BetterSuit.ShowsBetterSuit(null, worse, worse, true); }
     public static HandConstraint longerOrEqualTo(Suit worse) { return new BetterSuit.ShowsBetterSuit(null, worse, null, true); }
@@ -169,6 +172,7 @@ public abstract class Bidder {
     public static Constraint pairKings(int... count) { return new PairKings(count); }
     public static HandConstraint pairHighCardPoints(int min, int max) { return new PairPoints.PairShowsPoints(min, max, true); }
     public static HandConstraint keyCards(Suit suit, int... count) { return new KeyCards(suit, null, count); }
+    public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) { return new KeyCards(suit, hasQueen, count); }
     public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) { return new PairKeyCards(suit, hasQueen, count); }
     public static HandConstraint quality(SuitQuality min, SuitQuality max) { return new HasQuality.ShowsQuality(null, min, max); }
     public static HandConstraint quality(Suit suit, SuitQuality min, SuitQuality max) { return new HasQuality.ShowsQuality(suit, min, max); }
