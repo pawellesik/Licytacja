@@ -32,8 +32,7 @@ public class Plesik {
         // 4. Pętla licytacji aż do końca (3 pasy)
         while (!state.getContract().isAuctionComplete()) {
             Direction turn = state.getNextToAct().getDirection();
-            
-            // Jeśli kolej na N lub S (nasza para AI)
+
             if (turn == Direction.N || turn == Direction.S) {
                 PositionCalls choices = state.getCallChoices();
                 CallDetails best = choices.getBestCall();
@@ -47,8 +46,7 @@ public class Plesik {
                 System.out.println("   [Uzasadnienie: " + best.getDescription(state.getNextToAct()) + "]");
                 state.makeCall(best);
                 printPublicKnowledge(state);
-            } 
-            // Jeśli kolej na przeciwników (E lub W) - automatycznie PASUJEMY
+            }
             else {
                 state.makeCall(Call.PASS);
             }
@@ -87,6 +85,9 @@ public class Plesik {
             
             if (summary.getCountAces() != null && !summary.getCountAces().isEmpty()) {
                 sb.append("Asy: ").append(summary.getCountAces()).append(" ");
+            }
+            if (summary.getCountKings() != null && !summary.getCountKings().isEmpty()) {
+                sb.append("króle: ").append(summary.getCountKings()).append(" ");
             }
 
             if (sb.length() > 0) {
