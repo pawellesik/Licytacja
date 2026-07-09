@@ -127,7 +127,7 @@ public abstract class Bidder {
     public static final StaticConstraint IS_NON_JUMP = isJump(0);
     public static final StaticConstraint IS_SINGLE_JUMP = isJump(1);
     public static final StaticConstraint IS_DOUBLE_JUMP = isJump(2);
-    public static final StaticConstraint IS_ANY_JUMP = isJump(1, 2, 3);
+    public static final StaticConstraint IS_ANY_JUMP = isJump(1, 2);
     public static final StaticConstraint IS_JUMP_SHIFT = staticAnd(IS_SINGLE_JUMP, new NewSuit(null));
 
     public static final StaticConstraint IS_VUL = new SimpleStaticConstraint((call, ps) -> ps.isVulnerable(), "vul");

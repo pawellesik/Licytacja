@@ -125,10 +125,13 @@ public class AcesAsk extends Bidder {
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
                     shows(new Bid(6, suit),  pairAces(3), pairKings(4)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
-                    shows(new Bid(lev, suit))//todo get nearest suit
+                    shows(ps.getBiddingState().getContract().nextAvailableBid(suit), note("test czy to ttuuaj"))
             );
             return choices;
         }
         throw new RuntimeException("This should not happen");
     }
+
+
+
 }

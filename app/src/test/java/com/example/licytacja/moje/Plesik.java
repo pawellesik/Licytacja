@@ -50,10 +50,10 @@ public class Plesik {
             } 
             // Jeśli kolej na przeciwników (E lub W) - automatycznie PASUJEMY
             else {
-                System.out.println(turn + " licytuje: Pass");
+            //    System.out.println(turn + " licytuje: Pass");
                 state.makeCall(Call.PASS);
             }
-            printPublicKnowledge(state);
+            //printPublicKnowledge(state);
         }
 
         // 5. Wyświetlamy ostateczny kontrakt
