@@ -194,6 +194,8 @@ public abstract class Bidder {
     public static HandConstraint betterMinor(Suit suit) { return new BetterMinor(suit); }
     public static HandConstraint betterMinor() { return betterMinor(null); }
     public static HandConstraint ruleOf9() { return new RuleOf9(); }
+    public static HandConstraint secondSuit(Suit exclude, int min) { return new TwoSuiter(exclude, min); }
+    public static HandConstraint twoSuiter(int min) { return new TwoSuiter(null, min); }
     public static final HandConstraint OPPS_STOPPED = new OppsStopped.ShowsOppsStopped(true);
     public static final HandConstraint OPPS_NOT_STOPPED = new OppsStopped.ShowsOppsStopped(false);
     public static final HandConstraint REVERSE_SHAPE = new ReverseShape.ShowsReverseShape();

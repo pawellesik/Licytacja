@@ -103,9 +103,9 @@ public class AcesAsk extends Bidder {
             choices.addRules(
                     shows(new Bid(7, suit), sumPairAcesAndKings(8)),
                     shows(new Bid(7, suit),  pairAces(4), pairKings(3)),
-                    shows(new Bid(6, suit),  sumPairAcesAndKings(7)),
-                    shows(new Bid(6, suit),   ),
+                    shows(new Bid(6, suit), sumPairAcesAndKings(7)),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN),
+                    shows(new Bid(6, suit), secondSuit(suit, 5), shape(null,0,1), sumPairAcesAndKings(6,7)),
                     shows(nextBidWithTrump,  sumPairAcesAndKings("Suma asów i króli mniejsza od 6",1,6))
             );
             return choices;
