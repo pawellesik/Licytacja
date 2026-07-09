@@ -25,3 +25,17 @@
 4S Pass 4NT Pass
 5H Pass 7S Pass
 [Play "E"]
+
+% Cleaned by CleanPBN
+[Event "NatC Deal 3"]
+[Board "1"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:K9854.K92.AKQJ.3 Q76.T7.9876.T987 AJT9.AQJ.AK543.2 32.6543.QJ2.6542"]
+[Declarer "N"]
+[Contract "Pass"]
+[Auction "N"]
+1S Pass 4C Pass
+4S Pass 4NT Pass
+5H Pass 7S Pass
+[Play "E"]
