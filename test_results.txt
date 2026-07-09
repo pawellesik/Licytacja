@@ -13,4 +13,44 @@ Uruchamiam: TestGame
   Wszystkie 2 testów OK.
 
 Uruchamiam: BiddingTests
-  Wszystkie 628 testów OK.
+  BŁĘDY: 5 na 628
+    - testTwoOverOne[Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  Pass Pass
+  Deal:     N:- - KQJT.3.876.AT762 -
+  Vulnerable: None
+  Expected: 1S
+  Actual:   1C
+ expected:<1[S]> but was:<1[C]>
+    - testTwoOverOne[Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  Pass Pass
+  Deal:     N:- - 3.KQJT.876.AT762 -
+  Vulnerable: None
+  Expected: 1H
+  Actual:   1C
+ expected:<1[H]> but was:<1[C]>
+    - testTwoOverOne[Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  Pass Pass
+  Deal:     N:- - J3.Q842.KJ7.AT72 -
+  Vulnerable: None
+  Expected: 1C
+  Actual:   Pass
+ expected:<[1C]> but was:<[Pass]>
+    - testTwoOverOne[Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  Pass Pass
+  Deal:     N:- - J32.QJT2.K76.AT7 -
+  Vulnerable: None
+  Expected: 1H
+  Actual:   Pass
+ expected:<[1H]> but was:<[Pass]>
+    - testTwoOverOne[Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)](com.example.licytacja.moje.TestBridgeBidder.BiddingTests):
+FAILURE: Open3rdSeat.pbn: Unknown Event (Seat S, Bid 1)
+  Auction:  Pass Pass
+  Deal:     N:- - A32.T92.QJ76.AT7 -
+  Vulnerable: None
+  Expected: 1D
+  Actual:   Pass
+ expected:<[1D]> but was:<[Pass]>
