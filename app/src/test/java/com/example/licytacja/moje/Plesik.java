@@ -96,10 +96,7 @@ public class Plesik {
         
         // Wyświetlamy uzgodnione atuty dla obu par (NS i EW)
         Suit nsTrump = state.getPositions().get(Direction.N).getPairState().getTrumpSuit();
-        Suit ewTrump = state.getPositions().get(Direction.E).getPairState().getTrumpSuit();
-        
         if (nsTrump != null) System.out.println("   UZGODNIONY ATUT NS: " + nsTrump.toSymbol());
-        if (ewTrump != null) System.out.println("   UZGODNIONY ATUT EW: " + ewTrump.toSymbol());
 
         System.out.println("   ------------------------");
     }
