@@ -47,14 +47,6 @@ public class OpenNatC extends NatC {
         bids.add(partnerBids(Bid._1H, RespondNatC::oneHeart));
         bids.add(partnerBids(Bid._1S, RespondNatC::oneSpade));
 
-        bids.add(shows(Call.PASS, isSeat(4), passIn4thSeat()));
-
-        if (ps.getSeat() == 3) {
-            bids.addAll(thirdSeat4CardMajor(and(points(11, 11))));
-            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, BALANCED, points(11, 13))));
-            bids.addAll(thirdSeat4CardMajor(and(IS_NOT_VUL, NOT_BALANCED, points(10, 13))));
-        }
-
         // Strong hands
         bids.add(shows(Bid._1C, Strong));
 
@@ -63,12 +55,6 @@ public class OpenNatC extends NatC {
         bids.add(shows(Bid._1S, OneLevel, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
         bids.add(shows(Bid._1D, OneLevel, shape(5, 10)));
         bids.add(shows(Bid._1C, OneLevel, note("Otwarcie naturalne")));
-
-        if (ps.getSeat() == 3) {
-            bids.addAll(thirdSeatWeak(and(IS_VUL, NOT_BALANCED, points(11, 11))));
-            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, BALANCED, DECENT_PLUS_SUIT, points(11, 11))));
-            bids.addAll(thirdSeatWeak(and(IS_NOT_VUL, NOT_BALANCED, points(10, 11))));
-        }
 
         bids.add(shows(Call.PASS, isSeat(4), DontOpen));
         return bids;
