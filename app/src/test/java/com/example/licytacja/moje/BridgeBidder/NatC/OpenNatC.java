@@ -12,8 +12,6 @@ public class OpenNatC extends NatC {
     public static final HandConstraint Weak = highCardPoints(7, 11);
     public static final HandConstraint DontOpen = highCardPoints(0, 11);
 
-
-
     public static final HandConstraint Minimum = points(12, 17);
     public static final HandConstraint CantJumpShift = points(12, 18);
     public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
