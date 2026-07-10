@@ -147,8 +147,8 @@ public class RespondNatC extends NatC {
                     partnerBids(OpenBid2NatC::responderChangedSuits),
                     propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
                     propertiesAgreeTrump(new Call[]{Bid._1NT}, OpenBid2NatC::responder1NT, true),
-                    //propertiesAgreeTrump(new Call[]{Bid._2NT}, OpenBid2NatC::responder2NT, true), todo
-                    //propertiesAgreeTrump(new Call[]{Bid._3C, Bid._3D, Bid._3H}, OpenBid2NatC::responder3, true) todo
+                    propertiesAgreeTrump(new Call[]{Bid._2NT}, OpenBid2NatC::responder2NT, true),
+                    properties(),
                     shows(Bid._2S, highCardPoints(MINIMUM_HAND), shape(3, 5)),
                     shows(Bid._3S, highCardPoints(11, 11), shape(3, 5)),
 
