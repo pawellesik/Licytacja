@@ -59,6 +59,7 @@ public class Game {
         Game game = new Game();
         List<com.example.licytacja.moje.BridgeBidder.PBN.FromString.PBNTag> tags = com.example.licytacja.moje.BridgeBidder.PBN.FromString.tokenizeTags(pbnGame);
         for (com.example.licytacja.moje.BridgeBidder.PBN.FromString.PBNTag tag : tags) {
+            game.tags.put(tag.name, tag.value);
             switch (tag.name) {
                 case "Dealer":
                     game.dealer = Direction.valueOf(tag.value);
@@ -90,22 +91,26 @@ public class Game {
             throw new RuntimeException("deal parameter is too short to be valid PBN deal format");
         }
         Direction direction;
-        try {
-            direction = Direction.valueOf(dealStr.substring(0, 1));
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Deal prefix " + dealStr.substring(0, 2) + " is invalid");
-        }
-        if (dealStr.charAt(1) != ':') {
-            throw new RuntimeException("Deal prefix " + dealStr.substring(0, 2) + " is invalid");
+        int dealDataStart = 0;
+        if (dealStr.length() > 2 && dealStr.charAt(1) == ':') {
+            try {
+                direction = Direction.valueOf(dealStr.substring(0, 1));
+                dealDataStart = 2;
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Deal prefix " + dealStr.substring(0, 2) + " is invalid");
+            }
+
+            if (overrideDealer) {
+                this.dealer = direction;
+            } else if (direction != this.dealer) {
+                throw new IllegalArgumentException("Deal direction prefix " + direction + " does not match game Dealer " + this.dealer);
+            }
+        } else {
+            direction = this.dealer;
+            dealDataStart = 0;
         }
 
-        if (overrideDealer) {
-            this.dealer = direction;
-        } else if (direction != this.dealer) {
-            throw new IllegalArgumentException("Deal direction prefix " + direction + " does not match game Dealer " + this.dealer);
-        }
-
-        String[] handStrings = dealStr.substring(2).split(" ");
+        String[] handStrings = dealStr.substring(dealDataStart).split(" ");
         if (handStrings.length != 4) {
             throw new IllegalArgumentException("deal must contain 4 hands");
         }

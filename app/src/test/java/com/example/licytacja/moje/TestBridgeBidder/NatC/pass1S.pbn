@@ -3,23 +3,21 @@
 [Board "1"]
 [Dealer "N"]
 [Vulnerable "None"]
-[Deal "AJT.AJ98.J5432.2 Q76.K7.9876.T987 K9854.T92.AKQJ.3 32.6543.AJ5.6542"]
+[Deal "N:AJT.AJ98.J5432.2 Q76.K7.9876.T987 K9854.T92.AKQJ.3 32.6543.AJ5.6542"]
 [Declarer "N"]
-[Contract "Pass"]
+[Contract "4S"]
 [Auction "N"]
 PASS PASS 1S Pass
 3S Pass 4S Pass
-Pass Pass
 
 % Cleaned by CleanPBN
-[Event "NatC Deal 1"]
-[Board "1"]
+[Event "NatC Deal 2"]
+[Board "2"]
 [Dealer "N"]
 [Vulnerable "None"]
-[Deal "AJT.AJ98.J5432.2 Q76.K7.9876.T987 K9854.T92.AKQT.3 32.6543.AJ5.6542"]
+[Deal "N:AJT.AJ98.J5432.2 Q76.K7.9876.T987 K9854.T92.AKQT.3 32.6543.AJ5.6542"]
 [Declarer "N"]
-[Contract "Pass"]
+[Contract "3S"]
 [Auction "N"]
 PASS PASS 1S Pass
-3S Pass 3S Pass
-Pass Pass
+3S Pass Pass Pass
