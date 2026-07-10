@@ -11,20 +11,9 @@ public class OpenNatC extends NatC {
     public static final HandConstraint Strong = highCardPoints(18, 40);
     public static final HandConstraint Weak = highCardPoints(7, 11);
     public static final HandConstraint DontOpen = highCardPoints(0, 11);
-
     public static final HandConstraint CantJumpShift = highCardPoints(12, 18);
-    public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
-    public static final HandConstraint Medium = highCardPoints(17, 18);
-    public static final HandConstraint DummyMedium = dummyPoints(17, 18);
-    public static final HandConstraint Maximum = highCardPoints(19, 21);
-    public static final HandConstraint DummyMaximum = dummyPoints(19, 26);
-    public static final HandConstraint MediumOrBetter = highCardPoints(17, 21);
-
     public static final Range Rebid1NT = new Range(12, 15);
     public static final Range Rebid2NT = new Range(18, 20);
-
-    public static final Range LessThanJumpShift = new Range(12, 18);
-    public static final Range JumpShift = new Range(19, 21);
 
     public static PositionCalls getOpenPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
@@ -33,7 +22,7 @@ public class OpenNatC extends NatC {
         //choices.addRules(NoTrumpNatC.open(ps));
         choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
-
+        choices.addRules(CompeteNatC::compBids);
         choices.addPassRule(DontOpen);
 
         return choices;
@@ -48,8 +37,8 @@ public class OpenNatC extends NatC {
 
         bids.add(shows(Bid._1C, Strong));
 
-        bids.add(shows(Bid._1H, FirstOpen, shape(5, 8), betterThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, FirstOpen, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
+        bids.add(shows(Bid._1S, FirstOpen, shape(5, 8)));
+        bids.add(shows(Bid._1H, FirstOpen, shape(5, 8)));
         bids.add(shows(Bid._1D, FirstOpen, shape(5, 10)));
         bids.add(shows(Bid._1C, FirstOpen, note("Otwarcie naturalne")));
 

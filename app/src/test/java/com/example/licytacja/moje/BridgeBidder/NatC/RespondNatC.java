@@ -28,9 +28,6 @@ public class RespondNatC extends NatC {
     public static final Range MAX_PASSED = new Range(10, 11);
     protected static final Range WEAK_JUMP_SHIFT_POINTS = new Range(0, 5);
 
-    protected static final Range RESPOND_1NT_OVER_MINOR = new Range(6, 10);
-    protected static final Range RESPOND_2NT_OVER_MINOR = new Range(11, 12);
-    protected static final Range RESPOND_3NT_OVER_CLUBS = new Range(13, 17);
 
     public static PositionCalls oneClub(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
@@ -64,7 +61,6 @@ public class RespondNatC extends NatC {
                     shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         }
-        choices.addRules(noTrumpResponsesToMinor(Suit.Clubs));
         choices.addRules(weakJumpShift(Suit.Clubs));
         choices.addPassRule(points(RESPOND_PASS));
         return choices;
@@ -76,7 +72,6 @@ public class RespondNatC extends NatC {
         choices.addRules(Blackwood.initiateConvention(ps));
         choices.addRules(
                 propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2NatC::responderRaisedMinor, true),
-                properties(Bid._2C, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                 properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
                 shows(Bid._2C, points(GAME_OR_BETTER), longestMajor(4)),
                 shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
@@ -87,7 +82,6 @@ public class RespondNatC extends NatC {
                 shows(Bid._5D, points(WEAK_5_LEVEL), shape(7, 10)),
                 shows(Bid._4D, points(WEAK_4_LEVEL), shape(6))
         );
-        choices.addRules(noTrumpResponsesToMinor(Suit.Diamonds));
         choices.addRules(weakJumpShift(Suit.Diamonds));
         choices.addPassRule(points(RESPOND_PASS));
         return choices;
@@ -115,7 +109,6 @@ public class RespondNatC extends NatC {
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
                     partnerBids(OpenBid2NatC::responderChangedSuits),
-                    properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                     shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                     shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
                     shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
@@ -166,7 +159,6 @@ public class RespondNatC extends NatC {
             choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
                     partnerBids(OpenBid2NatC::responderChangedSuits),
-                    properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
                     shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                     shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
                     shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
@@ -206,16 +198,6 @@ public class RespondNatC extends NatC {
                 bids.add(shows(new Bid(2, suit), IS_SINGLE_JUMP, points(WEAK_JUMP_SHIFT_POINTS), shape(6, 10), DECENT_PLUS_SUIT));
                 bids.add(shows(new Bid(3, suit), IS_SINGLE_JUMP, points(WEAK_JUMP_SHIFT_POINTS), shape(6, 10), DECENT_PLUS_SUIT));
             }
-        }
-        return bids;
-    }
-
-    private static Iterable<CallFeature> noTrumpResponsesToMinor(Suit minor) {
-        List<CallFeature> bids = new ArrayList<>();
-        bids.addAll(ntResponseToMinor(minor, 1, RESPOND_1NT_OVER_MINOR, OpenBid2NatC::oneNTOverMinorOpen));
-        bids.addAll(ntResponseToMinor(minor, 2, RESPOND_2NT_OVER_MINOR, OpenBid2NatC::twoNTOverMinorOpen));
-        if (minor == Suit.Clubs) {
-            bids.addAll(ntResponseToMinor(minor, 3, RESPOND_3NT_OVER_CLUBS, OpenBid2NatC::threeNTOverClubOpen));
         }
         return bids;
     }
