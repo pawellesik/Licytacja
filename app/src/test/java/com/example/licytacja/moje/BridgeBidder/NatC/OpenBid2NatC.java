@@ -24,33 +24,6 @@ public class OpenBid2NatC extends OpenNatC {
                 shows(Bid._5D,  shape(3, 5), pairHighCardPoints(PAIR_GAME)),
                 shows(Bid._5C,  shape(3, 5), pairHighCardPoints(PAIR_GAME))
 
-                //properties(new Bid[]{Bid._2D, Bid._2H, Bid._2S}, true, IS_REVERSE_BID),
-                //shows(Bid._2D, IS_REVERSE_BID, REVERSE_SHAPE, FirstOpen),
-                //shows(Bid._2H, IS_REVERSE_BID, REVERSE_SHAPE, FirstOpen),
-                //shows(Bid._2S, IS_REVERSE_BID, REVERSE_SHAPE, FirstOpen),
-
-                //shows(Bid._2H, IS_NEW_SUIT, IS_NOT_REVERSE, NOT_BALANCED, FirstOpen, shape(4, 6)),
-                //shows(Bid._2C, IS_NEW_SUIT, NOT_BALANCED, CantJumpShift, shape(4, 6)),
-                //shows(Bid._2D, IS_NEW_SUIT, IS_NOT_REVERSE, NOT_BALANCED, CantJumpShift, shape(4, 6)),
-
-                //shows(Bid._2C, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._2D, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._2H, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._2S, IS_REBID, shape(6, 11), FirstOpen),
-
-                //shows(Bid._3C, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._3D, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._3H, IS_REBID, shape(6, 11), FirstOpen),
-                //shows(Bid._3S, IS_REBID, shape(6, 11), FirstOpen),
-
-                //shows(Bid._4H, IS_REBID, EXCELLENT_PLUS_SUIT, shape(7, 11), points(20, 21)),
-                //shows(Bid._3H, IS_REBID, shape(6, 11), points(17, 19)),
-                //shows(Bid._4S, IS_REBID, EXCELLENT_PLUS_SUIT, shape(7, 11), points(20, 21)),
-                //shows(Bid._3S, IS_REBID, shape(6, 11), points(17, 19)),
-
-                //shows(Bid._2NT, BALANCED, points(Rebid2NT)),
-                //shows(Bid._1NT, BALANCED, highCardPoints(12, 14), points(Rebid1NT))
-
         );
         choices.addRules(CompeteNatC::compBids);//todo ??
         return choices;
