@@ -185,4 +185,26 @@ public class OpenBid2NatC extends OpenNatC {
         );
         return choices;
     }
+
+    public static PositionCalls responderRaisedNT(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(
+                partnerBids(Bid._3H, RespondBid2NatC::openerInvitedGame),
+                partnerBids(Bid._3S, RespondBid2NatC::openerInvitedGame),
+
+                shows(Bid._3H, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE)),
+                shows(Bid._3S, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE)),
+
+                shows(Bid._3H, IS_NEW_SUIT, shape(5,10), pairPoints(PAIR_GAME_INVITE)),
+                shows(Bid._3S, IS_NEW_SUIT, shape(5,10), pairPoints(PAIR_GAME_INVITE)),
+
+                shows(Bid._3D, IS_NEW_SUIT, shape(5,10)),
+                shows(Bid._3C, IS_NEW_SUIT, shape(5,10)),
+
+                shows(Bid._3NT, FIT_8_PLUS, pairPoints(PAIR_GAME)),
+                shows(Bid._3NT, FIT_8_PLUS, pairPoints(PAIR_GAME)),
+                shows(Call.PASS)
+        );
+        return choices;
+    }
 }

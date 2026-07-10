@@ -41,31 +41,31 @@ public class RespondNatC extends NatC {
         choices.addRules(Blackwood.initiateConvention(ps));
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
-                shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
-                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
-                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
-                shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
-                shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
-                shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
-                shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
-                shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
+                    shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
+                    shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
+                    propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
+                    shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
+                    shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
+                    shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
+                    shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
-                properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
-                shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
-                shows(Bid._1D, points(LIMIT_RAISE_OR_BETTER), shape(5, 10), longerThan(Suit.Hearts), longerThan(Suit.Spades)),
-                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
-                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
-                shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-                propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
-                shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
-                shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
-                shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
-                shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
+                    properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
+                    shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
+                    shows(Bid._1D, points(LIMIT_RAISE_OR_BETTER), shape(5, 10), longerThan(Suit.Hearts), longerThan(Suit.Spades)),
+                    shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
+                    shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
+                    propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
+                    shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
+                    shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
+                    shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
+                    shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         }
         choices.addRules(noTrumpResponsesToMinor(Suit.Clubs));
@@ -80,17 +80,17 @@ public class RespondNatC extends NatC {
         choices.addRules(SolidSuitNatC.BIDS(ps));
         choices.addRules(Blackwood.initiateConvention(ps));
         choices.addRules(
-            propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2NatC::responderRaisedMinor, true),
-            properties(Bid._2C, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
-            properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
-            shows(Bid._2C, points(GAME_OR_BETTER), longestMajor(4)),
-            shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
-            shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
-            shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-            shows(Bid._2D, points(RAISE_1), shape(5), longestMajor(3)),
-            shows(Bid._3D, points(LIMIT_RAISE), shape(5), longestMajor(3)),
-            shows(Bid._5D, points(WEAK_5_LEVEL), shape(7, 10)),
-            shows(Bid._4D, points(WEAK_4_LEVEL), shape(6))
+                propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2NatC::responderRaisedMinor, true),
+                properties(Bid._2C, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
+                properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
+                shows(Bid._2C, points(GAME_OR_BETTER), longestMajor(4)),
+                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
+                shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
+                shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
+                shows(Bid._2D, points(RAISE_1), shape(5), longestMajor(3)),
+                shows(Bid._3D, points(LIMIT_RAISE), shape(5), longestMajor(3)),
+                shows(Bid._5D, points(WEAK_5_LEVEL), shape(7, 10)),
+                shows(Bid._4D, points(WEAK_4_LEVEL), shape(6))
         );
         choices.addRules(noTrumpResponsesToMinor(Suit.Diamonds));
         choices.addRules(weakJumpShift(Suit.Diamonds));
@@ -105,38 +105,38 @@ public class RespondNatC extends NatC {
         Call[] raises = new Call[]{Bid._2H, Bid._3H, Bid._4H};
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
-                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
-                shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(3, 5)),
-                shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
-                shows(Bid._1S, shape(4, 10), points(RESPOND_1_LEVEL), shape(Suit.Hearts, 0, 3)),
-                shows(Bid._2C, points(MAX_PASSED), shape(5, 10)),
-                shows(Bid._2D, points(MAX_PASSED), shape(5, 10)),
-                shows(Bid._1NT, points(6, 10), shape(Suit.Hearts, 0, 2), shape(Suit.Spades, 0, 3)),
-                shows(Bid._2NT, points(11, 12), shape(Suit.Hearts, 0, 2), shape(Suit.Spades, 0, 3))
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+                    shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
+                    shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(3, 5)),
+                    shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
+                    shows(Bid._1S, shape(4, 10), points(RESPOND_1_LEVEL), shape(Suit.Hearts, 0, 3)),
+                    shows(Bid._2C, points(MAX_PASSED), shape(5, 10)),
+                    shows(Bid._2D, points(MAX_PASSED), shape(5, 10)),
+                    shows(Bid._1NT, points(6, 10), shape(Suit.Hearts, 0, 2), shape(Suit.Spades, 0, 3)),
+                    shows(Bid._2NT, points(11, 12), shape(Suit.Hearts, 0, 2), shape(Suit.Spades, 0, 3))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(Jacoby2NT.initiateConvention(ps));
             choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
-                shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
-                shows(Bid._2D, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
-                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
-                shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(4, 5)),
-                shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
-                properties(Bid._1S, true),
-                shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), shape(Suit.Hearts, 0, 3)),
-                properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
-                shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
-                shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    properties(new Call[]{Bid._2C, Bid._2D}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
+                    shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
+                    shows(Bid._2D, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+                    shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
+                    shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(4, 5)),
+                    shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
+                    properties(Bid._1S, true),
+                    shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), shape(Suit.Hearts, 0, 3)),
+                    properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
+                    shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
+                    shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
             choices.addRules(weakJumpShift(Suit.Hearts));
         }
@@ -150,39 +150,40 @@ public class RespondNatC extends NatC {
         Call[] raises = new Call[]{Bid._2S, Bid._3S, Bid._4S};
         if (ps.isPassedHand()) {
             choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
-                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                shows(Bid._2S, highCardPoints(MINIMUM_HAND), shape(3, 5)),
-                shows(Bid._3S, highCardPoints(11, 11), shape(3, 5)),
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+                    propertiesAgreeTrump(new Call[]{Bid._2NT}, OpenBid2NatC::responderRaisedNT, true),
+                    shows(Bid._2S, highCardPoints(MINIMUM_HAND), shape(3, 5)),
+                    shows(Bid._3S, highCardPoints(11, 11), shape(3, 5)),
 
-                shows(Bid._3H, highCardPoints(11, 11), shape(5, 10)),
+                    shows(Bid._3H, highCardPoints(11, 11), shape(5, 10)),
 
-                shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10)),
-                shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10)),
-                shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(5, 10)),
+                    shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10)),
+                    shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10)),
+                    shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(5, 10)),
 
-                shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2)),
-                shows(Bid._2NT, highCardPoints(11, 11), shape(Suit.Spades, 0, 2))
+                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2)),
+                    shows(Bid._2NT, highCardPoints(11, 11), shape(Suit.Spades, 0, 2))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
-                choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
-                properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
-                shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2D, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
-                shows(Bid._2H, shape(5, 10), points(GAME_OR_BETTER)),
-                propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),
-                shows(Bid._3S, dummyPoints(MEDIUM_HAND), shape(4, 5)),
-                shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
-                properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
-                shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Spades, 0, 3)),
-                shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
+            choices.addRules(
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    properties(new Call[]{Bid._2C, Bid._2D, Bid._2H}, OpenBid2NatC::twoOverOne, false, true, false, null, null, null, null, null),
+                    shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2D, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
+                    shows(Bid._2H, shape(5, 10), points(GAME_OR_BETTER)),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+                    shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),
+                    shows(Bid._3S, dummyPoints(MEDIUM_HAND), shape(4, 5)),
+                    shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
+                    properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
+                    shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Spades, 0, 3)),
+                    shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
             choices.addRules(weakJumpShift(Suit.Spades));
         }
