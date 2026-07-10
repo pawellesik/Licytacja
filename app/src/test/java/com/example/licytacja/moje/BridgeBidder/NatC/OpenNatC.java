@@ -1,18 +1,17 @@
 package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
-import com.example.licytacja.moje.BridgeBidder.Conventions.Strong2Clubs;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenNatC extends NatC {
 
-    public static final HandConstraint OneLevel = highCardPoints(12, 17);
+    public static final HandConstraint FirstOpen = highCardPoints(12, 17);
     public static final HandConstraint Strong = highCardPoints(18, 40);
     public static final HandConstraint Weak = highCardPoints(7, 11);
     public static final HandConstraint DontOpen = highCardPoints(0, 11);
 
-    public static final HandConstraint Minimum = highCardPoints(12, 17);
     public static final HandConstraint CantJumpShift = highCardPoints(12, 18);
     public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
     public static final HandConstraint Medium = highCardPoints(17, 18);
@@ -47,34 +46,14 @@ public class OpenNatC extends NatC {
         bids.add(partnerBids(Bid._1H, RespondNatC::oneHeart));
         bids.add(partnerBids(Bid._1S, RespondNatC::oneSpade));
 
-        // Strong hands
         bids.add(shows(Bid._1C, Strong));
 
-        // Natural openings
-        bids.add(shows(Bid._1H, OneLevel, shape(5, 8), betterThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, OneLevel, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
-        bids.add(shows(Bid._1D, OneLevel, shape(5, 10)));
-        bids.add(shows(Bid._1C, OneLevel, note("Otwarcie naturalne")));
+        bids.add(shows(Bid._1H, FirstOpen, shape(5, 8), betterThan(Suit.Spades)));
+        bids.add(shows(Bid._1S, FirstOpen, shape(5, 8), longerOrEqual(Suit.Spades, Suit.Hearts)));
+        bids.add(shows(Bid._1D, FirstOpen, shape(5, 10)));
+        bids.add(shows(Bid._1C, FirstOpen, note("Otwarcie naturalne")));
 
         bids.add(shows(Call.PASS, isSeat(4), DontOpen));
-        return bids;
-    }
-
-    private static List<CallFeature> thirdSeat4CardMajor(Constraint range) {
-        List<CallFeature> bids = new ArrayList<>();
-        bids.add(shows(Bid._1S, range, GOOD_PLUS_SUIT, shape(4), betterOrEqualTo(Suit.Hearts)));
-        bids.add(shows(Bid._1H, range, GOOD_PLUS_SUIT, shape(4), betterThan(Suit.Spades)));
-        return bids;
-    }
-
-    private static List<CallFeature> thirdSeatWeak(Constraint range) {
-        List<CallFeature> bids = new ArrayList<>();
-        bids.add(shows(Bid._1C, range, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
-        bids.add(shows(Bid._1C, range, shape(4, 11), longerThan(Suit.Diamonds), longestMajor(4)));
-        bids.add(shows(Bid._1D, range, LONGEST_SUIT, shape(Suit.Hearts, 0, 4)));
-        bids.add(shows(Bid._1D, range, shape(4, 10), longerOrEqual(Suit.Diamonds, Suit.Clubs), longestMajor(4)));
-        bids.add(shows(Bid._1H, range, shape(5, 10), longerThan(Suit.Spades)));
-        bids.add(shows(Bid._1S, range, shape(5, 10), longerOrEqual(Suit.Spades, Suit.Hearts)));
         return bids;
     }
 

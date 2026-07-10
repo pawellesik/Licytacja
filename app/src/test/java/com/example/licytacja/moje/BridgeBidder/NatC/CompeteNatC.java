@@ -28,7 +28,7 @@ public class CompeteNatC extends NatC {
         bids.add(shows(Bid._2S, FIT_8_PLUS, pairPoints(20, 22)));
 
         bids.add(shows(Bid._3C, FIT_8_PLUS, pairPoints(23, 25)));
-        bids.add(shows(Bid._3D, FIT_8_PLUS, pairPoints(23, 25)));
+        bids.add(shows(Bid._3D, FIT_8_PLUS, pairPoints(23, 25), id("tutaj")));
         bids.add(shows(Bid._3H, FIT_8_PLUS, pairPoints(23, 25)));
         bids.add(shows(Bid._3S, FIT_8_PLUS, pairPoints(23, 25)));
 

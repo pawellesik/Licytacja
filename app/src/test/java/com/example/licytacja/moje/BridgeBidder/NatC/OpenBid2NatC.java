@@ -24,7 +24,7 @@ public class OpenBid2NatC extends OpenNatC {
                 shows(Bid._1H, shape(4, 6)),
                 shows(Bid._1S, shape(4, 6)),
 
-                shows(Bid._2D, raisePartner(), Minimum),
+                shows(Bid._2D, raisePartner(), FirstOpen),
                 shows(Bid._3D, raisePartner(null, 1, 8), Medium),
 
                 shows(Bid._2NT, BALANCED, points(Rebid2NT)),
@@ -34,14 +34,14 @@ public class OpenBid2NatC extends OpenNatC {
                 shows(Bid._2H, IS_REVERSE_BID, REVERSE_SHAPE, MediumOrBetter),
                 shows(Bid._2S, IS_REVERSE_BID, REVERSE_SHAPE, MediumOrBetter),
 
-                shows(Bid._2H, IS_NEW_SUIT, IS_NOT_REVERSE, NOT_BALANCED, Minimum, shape(4, 6)),
+                shows(Bid._2H, IS_NEW_SUIT, IS_NOT_REVERSE, NOT_BALANCED, FirstOpen, shape(4, 6)),
                 shows(Bid._2C, IS_NEW_SUIT, NOT_BALANCED, CantJumpShift, shape(4, 6)),
                 shows(Bid._2D, IS_NEW_SUIT, IS_NOT_REVERSE, NOT_BALANCED, CantJumpShift, shape(4, 6)),
 
-                shows(Bid._2C, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2D, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2H, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2S, IS_REBID, shape(6, 11), Minimum),
+                shows(Bid._2C, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2D, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2H, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2S, IS_REBID, shape(6, 11), FirstOpen),
 
                 shows(Bid._3C, IS_REBID, shape(6, 11), Medium),
                 shows(Bid._3D, IS_REBID, shape(6, 11), Medium),
@@ -109,10 +109,10 @@ public class OpenBid2NatC extends OpenNatC {
     public static PositionCalls responderPassedInCompetition(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
-                shows(Bid._2C, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2D, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2H, IS_REBID, shape(6, 11), Minimum),
-                shows(Bid._2S, IS_REBID, shape(6, 11), Minimum),
+                shows(Bid._2C, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2D, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2H, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2S, IS_REBID, shape(6, 11), FirstOpen),
 
                 shows(Bid._3C, IS_REBID, shape(6, 11), MediumOrBetter),
                 shows(Bid._3D, IS_REBID, shape(6, 11), MediumOrBetter),
@@ -186,7 +186,23 @@ public class OpenBid2NatC extends OpenNatC {
         return choices;
     }
 
-    public static PositionCalls responderRaisedNT(PositionState ps) {
+    public static PositionCalls responder1NT(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(
+                shows(Bid._2H, IS_REBID, shape(6, 11), points(12, 16)),
+                shows(Bid._2S, IS_REBID, shape(6, 11), points(12, 16)),
+
+                shows(Bid._2C, IS_NEW_SUIT, shape(5, 6), points(12, 17)),
+                shows(Bid._2D, IS_NEW_SUIT, shape(5, 6), points(12, 17)),
+                shows(Bid._2H, IS_NEW_SUIT, shape(5, 6), points(12, 17)),
+                shows(Bid._2S, IS_NEW_SUIT, shape(5, 6), points(12, 17)),
+
+                shows(Bid._3NT, pairPoints(PAIR_GAME)),
+                shows(Call.PASS)
+        );
+        return choices;
+    }
+    public static PositionCalls responder2NT(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
                 partnerBids(Bid._3H, RespondBid2NatC::openerInvitedGame),

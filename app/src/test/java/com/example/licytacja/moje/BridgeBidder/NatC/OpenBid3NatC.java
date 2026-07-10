@@ -11,7 +11,7 @@ public class OpenBid3NatC extends OpenNatC {
         bids.add(shows(Bid._1NT, BALANCED, points(Rebid1NT)));
         bids.add(shows(Bid._2NT, BALANCED, points(Rebid2NT)));
 
-        bids.add(shows(Call.PASS, partner(isJump(1)), Minimum));
+        bids.add(shows(Call.PASS, partner(isJump(1)), FirstOpen));
 
         for (CallFeature cf : CompeteNatC.compBids(ps)) {
             bids.add(cf);
