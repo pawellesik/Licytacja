@@ -11,9 +11,9 @@ public class Plesik {
         // 1. Tworzymy obiekt gry
         Game game = new Game();
 
-        game.getDeal().put(Direction.N, Hand.parse("K9854.T92.AKQJ.3"));
+        game.getDeal().put(Direction.N, Hand.parse("AJT.AJ98.T5432.2"));
 
-        game.getDeal().put(Direction.S, Hand.parse("AJT.AQJ8.T5432.K"));
+        game.getDeal().put(Direction.S, Hand.parse("K9854.T92.AKQJ.3"));
 
         // 3. Konfiguracja licytacji
         game.dealer = Direction.N;
