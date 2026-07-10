@@ -9,7 +9,7 @@
 [Auction "N"]
 1S Pass 4C Pass
 4H Pass 4NT Pass
-5H Pass 6S Pass
+5H Pass 5S Pass
 [Play "E"]
 
 % Cleaned by CleanPBN
@@ -36,6 +36,6 @@
 [Contract "Pass"]
 [Auction "N"]
 1S Pass 4C Pass
-4S Pass 4NT Pass
-5H Pass 7S Pass
+4H Pass 4NT Pass
+5S Pass 7S Pass
 [Play "E"]
