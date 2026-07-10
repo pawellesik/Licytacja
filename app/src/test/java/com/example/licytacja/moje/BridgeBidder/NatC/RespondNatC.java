@@ -152,17 +152,17 @@ public class RespondNatC extends NatC {
             choices.addRules(
                 partnerBids(OpenBid2NatC::responderChangedSuits),
                 propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                shows(Bid._2S, points(MINIMUM_HAND), shape(3, 5)),
-                shows(Bid._3S, points(11, 11), shape(3, 5)),
+                shows(Bid._2S, highCardPoints(MINIMUM_HAND), shape(3, 5)),
+                shows(Bid._3S, highCardPoints(11, 11), shape(3, 5)),
 
-                shows(Bid._3H, points(11, 11), shape(5, 10)),
+                shows(Bid._3H, highCardPoints(11, 11), shape(5, 10)),
 
-                shows(Bid._2C, points(MINIMUM_HAND), shape(5, 10)),
-                shows(Bid._2D, points(MINIMUM_HAND), shape(5, 10)),
-                shows(Bid._2H, points(MINIMUM_HAND), shape(5, 10)),
+                shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10)),
+                shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10)),
+                shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(5, 10)),
 
-                shows(Bid._1NT, points(MINIMUM_HAND), shape(Suit.Spades, 0, 2)),
-                shows(Bid._2NT, points(11, 11), shape(Suit.Spades, 0, 2))
+                shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2)),
+                shows(Bid._2NT, highCardPoints(11, 11), shape(Suit.Spades, 0, 2))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));

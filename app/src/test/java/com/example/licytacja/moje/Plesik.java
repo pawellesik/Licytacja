@@ -11,7 +11,7 @@ public class Plesik {
         // 1. Tworzymy obiekt gry
         Game game = new Game();
 
-        game.getDeal().put(Direction.N, Hand.parse("AJT.AJ98.T5432.2"));
+        game.getDeal().put(Direction.N, Hand.parse("AJT.AJ98.J5432.2"));
 
         game.getDeal().put(Direction.S, Hand.parse("K9854.T92.AKQJ.3"));
 
@@ -98,9 +98,11 @@ public class Plesik {
             }
         }
         
-        // Wyświetlamy wspólne HCP dla par
+        // Wyświetlamy wspólne HCP i punkty dla par
         printPairHCP(state, Direction.N, Direction.S, "NS");
+        printPairPoints(state, Direction.N, Direction.S, "NS");
         printPairHCP(state, Direction.E, Direction.W, "EW");
+        printPairPoints(state, Direction.E, Direction.W, "EW");
         
         // Wyświetlamy uzgodnione atuty dla obu par (NS i EW)
         Suit nsTrump = state.getPositions().get(Direction.N).getPairState().getTrumpSuit();
@@ -121,6 +123,21 @@ public class Plesik {
             int min = hcp1.getMin() + hcp2.getMin();
             int max = hcp1.getMax() + hcp2.getMax();
             System.out.println("   WSPÓLNE HCP " + pairName + ": " + min + "-" + max);
+        }
+    }
+
+    private void printPairPoints(BiddingState state, Direction d1, Direction d2, String pairName) {
+        PositionState p1 = state.getPositions().get(d1);
+        PositionState p2 = state.getPositions().get(d2);
+        if (p1 == null || p2 == null) return;
+
+        Range pts1 = p1.getPublicHandSummary().getPoints();
+        Range pts2 = p2.getPublicHandSummary().getPoints();
+
+        if (pts1 != null && pts2 != null && (pts1.getMin() > 0 || pts2.getMin() > 0)) {
+            int min = pts1.getMin() + pts2.getMin();
+            int max = pts1.getMax() + pts2.getMax();
+            System.out.println("   WSPÓLNE PKT " + pairName + ": " + min + "-" + max);
         }
     }
 }

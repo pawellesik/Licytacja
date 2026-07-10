@@ -12,14 +12,14 @@ public class OpenNatC extends NatC {
     public static final HandConstraint Weak = highCardPoints(7, 11);
     public static final HandConstraint DontOpen = highCardPoints(0, 11);
 
-    public static final HandConstraint Minimum = points(12, 17);
-    public static final HandConstraint CantJumpShift = points(12, 18);
+    public static final HandConstraint Minimum = highCardPoints(12, 17);
+    public static final HandConstraint CantJumpShift = highCardPoints(12, 18);
     public static final HandConstraint DummyMinimum = dummyPoints(12, 16);
-    public static final HandConstraint Medium = points(17, 18);
+    public static final HandConstraint Medium = highCardPoints(17, 18);
     public static final HandConstraint DummyMedium = dummyPoints(17, 18);
-    public static final HandConstraint Maximum = points(19, 21);
+    public static final HandConstraint Maximum = highCardPoints(19, 21);
     public static final HandConstraint DummyMaximum = dummyPoints(19, 26);
-    public static final HandConstraint MediumOrBetter = points(17, 21);
+    public static final HandConstraint MediumOrBetter = highCardPoints(17, 21);
 
     public static final Range Rebid1NT = new Range(12, 15);
     public static final Range Rebid2NT = new Range(18, 20);
