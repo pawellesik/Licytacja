@@ -10,8 +10,6 @@ public class CompeteNatC extends NatC {
 
     public static Iterable<CallFeature> compBids(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        for (CallFeature cf : Blackwood.initiateConvention(ps)) bids.add(cf);
-        for (CallFeature cf : Gerber.initiateConvention(ps)) bids.add(cf);
 
         bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(26, 28)));
         bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(26, 28)));

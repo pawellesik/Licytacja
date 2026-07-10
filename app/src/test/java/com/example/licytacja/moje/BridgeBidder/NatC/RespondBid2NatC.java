@@ -42,7 +42,7 @@ public class RespondBid2NatC extends RespondNatC {
         //bids.add(shows(Bid._3D, FIT_8_PLUS, IS_NOT_REBID, IS_NON_JUMP, IS_FORCED_TO_BID, points(MINIMUM_HAND)));
         //bids.add(shows(Bid._3H, FIT_8_PLUS, IS_NOT_REBID, IS_NON_JUMP, IS_FORCED_TO_BID, points(MINIMUM_HAND)));
         //bids.add(shows(Bid._3S, FIT_8_PLUS, IS_NOT_REBID, IS_NON_JUMP, IS_FORCED_TO_BID, points(MINIMUM_HAND)));
-
+        bids.add(shows(Call.PASS));
         return bids;
     }
 

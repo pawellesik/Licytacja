@@ -175,6 +175,8 @@ public abstract class Bidder {
     public static Constraint sumPairAcesAndKings(String description, int... count) { return new SumPairAcesAndKings(description, count); }
     public static Constraint sumPairAcesAndKings(String description, int min, int max) { return new SumPairAcesAndKings(description, new Range(min, max)); }
     public static HandConstraint pairHighCardPoints(int min, int max) { return new PairPoints.PairShowsPoints(min, max, true); }
+
+    public static HandConstraint pairHighCardPoints(Range range) { return new PairPoints.PairShowsPoints(range.getMin(), range.getMax(), true); }
     public static HandConstraint keyCards(Suit suit, int... count) { return new KeyCards(suit, null, count); }
     public static HandConstraint keyCards(Suit suit, Boolean hasQueen, int... count) { return new KeyCards(suit, hasQueen, count); }
     public static HandConstraint pairKeyCards(Suit suit, Boolean hasQueen, int... count) { return new PairKeyCards(suit, hasQueen, count); }

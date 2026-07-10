@@ -1,6 +1,7 @@
 package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
+import com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk;
 import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class OpenBid2NatC extends OpenNatC {
 
     public static PositionCalls responderChangedSuits(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(AcesAsk.initiateConvention(ps));
         choices.addRules(
                 partnerBids(RespondBid2NatC::secondBid),
 
@@ -17,7 +19,10 @@ public class OpenBid2NatC extends OpenNatC {
                 shows(Bid._2H, IS_REBID, shape(6, 11), FirstOpen),
 
                 shows(Bid._2S, IS_NEW_SUIT, shape(4, 11)),
-                shows(Bid._2H, IS_NEW_SUIT, shape(4, 11))
+                shows(Bid._2H, IS_NEW_SUIT, shape(4, 11)),
+
+                shows(Bid._5D,  shape(3, 5), pairHighCardPoints(PAIR_GAME)),
+                shows(Bid._5C,  shape(3, 5), pairHighCardPoints(PAIR_GAME))
 
                 //properties(new Bid[]{Bid._2D, Bid._2H, Bid._2S}, true, IS_REVERSE_BID),
                 //shows(Bid._2D, IS_REVERSE_BID, REVERSE_SHAPE, FirstOpen),
@@ -47,7 +52,7 @@ public class OpenBid2NatC extends OpenNatC {
                 //shows(Bid._1NT, BALANCED, highCardPoints(12, 14), points(Rebid1NT))
 
         );
-
+        choices.addRules(CompeteNatC::compBids);//todo ??
         return choices;
     }
 

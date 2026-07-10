@@ -152,8 +152,8 @@ public class RespondNatC extends NatC {
                     shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10)),
                     shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(5, 10)),
 
-                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2)),
-                    shows(Bid._2NT, highCardPoints(11, 11), shape(Suit.Spades, 0, 2))
+                    shows(Bid._2NT, highCardPoints(11, 11), shape(Suit.Spades, 0, 2)),
+                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
