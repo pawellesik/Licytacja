@@ -16,7 +16,7 @@ import java.util.List;
 public class AcesAsk extends Bidder {
     private static final Range ASK_ACES = new Range(16, 40);
     private static final Range SLAM_OR_BETTER = new Range(32, 40);
-
+    private static final Range GRAND_SLAM = new Range(36, 100);
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
@@ -105,7 +105,8 @@ public class AcesAsk extends Bidder {
         if (suit != null) {
             choices.addRules(
                     shows(new Bid(7, suit), sumPairAcesAndKings(8), id("AcesAsk tryGrandSlam 1")),
-                    shows(new Bid(7, suit),  pairAces(4), pairKings(3), pairPoints(SLAM_OR_BETTER), id("AcesAsk tryGrandSlam 2")),
+                    shows(new Bid(7, suit),  pairAces(4), pairKings(3), pairPoints(GRAND_SLAM), id("AcesAsk tryGrandSlam 2")),
+                    shows(new Bid(6, suit),  pairAces(4), pairKings(3), pairPoints(SLAM_OR_BETTER), id("AcesAsk tryGrandSlam 2")),
                     shows(new Bid(6, suit), sumPairAcesAndKings(7), id("AcesAsk tryGrandSlam 3")),
                     shows(Call.PASS, CONTRACT_IS_AGREED_STRAIN, id("AcesAsk tryGrandSlam 4")),
                     shows(new Bid(6, suit), secondSuit(suit, 6), hasShortness(0, 1), sumPairAcesAndKings(6, 7), id("AcesAsk tryGrandSlam 5")),
