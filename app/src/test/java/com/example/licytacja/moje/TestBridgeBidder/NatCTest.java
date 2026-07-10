@@ -39,6 +39,7 @@ public class NatCTest {
         if (files != null) {
             for (File file : files) {
                 try {
+                    System.out.println(file.getName());
                     String content = new String(Files.readAllBytes(file.toPath()));
                     List<PBNTest> pbnTests = PBNUtils.importTests(content);
                     for (PBNTest t : pbnTests) {

@@ -13,14 +13,12 @@ public class Plesik {
 
         game.getDeal().put(Direction.N, Hand.parse("AJT.AJ98.J5432.2"));
 
-        game.getDeal().put(Direction.S, Hand.parse("K9854.T92.AKQJ.3"));
+        game.getDeal().put(Direction.S, Hand.parse("K9854.T92.AKQT.3"));
 
         // 3. Konfiguracja licytacji
         game.dealer = Direction.N;
         game.bidSystemNS = "NatC";
         game.bidSystemEW = "NatC";
-        //game.bidSystemNS = "LC-Basic";
-        //game.bidSystemEW = "LC-Basic";
 
         BiddingState state = new BiddingState(game);
 
