@@ -2,10 +2,6 @@ package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 import com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk;
-import com.example.licytacja.moje.BridgeBidder.Conventions.Jacoby2NT;
-import com.example.licytacja.moje.BridgeBidder.Conventions.NegativeDouble;
-import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
-import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +86,7 @@ public class RespondNatC extends NatC {
                     shows(Bid._3S, highCardPoints(WEAK), shape(7, 10), id("RespondNatC.oneDiamond _3S")),
                     shows(Bid._3H, highCardPoints(WEAK), shape(7, 10), id("RespondNatC.oneDiamond _3H")),
 
-                    shows(Bid._5D, highCardPoints(PAIR_WEAK_GAME), fit(), id("RespondNatC.oneDiamond _5D")),
+                    shows(Bid._5D, highCardPoints(PAIR_MINOR_GAME), fit(), id("RespondNatC.oneDiamond _5D")),
 
                     shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneDiamond _2C")),
                     shows(Bid._2D, highCardPoints(MINIMUM_HAND), fit(), id("RespondNatC.oneDiamond _2D")),

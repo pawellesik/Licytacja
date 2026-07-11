@@ -36,8 +36,8 @@ public class OpenBid2NatC extends OpenNatC {
         choices.addRules(
                 com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk.initiateConvention(ps),
 
-                shows(Bid._5D, pairHighCardPoints(PAIR_WEAK_GAME), fit(), id("RespondNatC.oneSpade _5D")),
-                shows(Bid._5C, pairHighCardPoints(PAIR_WEAK_GAME), fit(), id("RespondNatC.oneSpade _5C")),
+                shows(Bid._5D, pairHighCardPoints(PAIR_MINOR_GAME), fit(), id("RespondNatC.oneSpade _5D")),
+                shows(Bid._5C, pairHighCardPoints(PAIR_MINOR_GAME), fit(), id("RespondNatC.oneSpade _5C")),
                 shows(Call.PASS, id("OpenBid2NatC.responderRaisedMajor _PASS"))
         );
         return choices;
