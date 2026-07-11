@@ -35,8 +35,8 @@ public class CompeteNatC extends NatC {
         bids.add(shows(Bid._4C, not(Gerber.APPLIES), FIT_8_PLUS, pairPoints(26, 28), id("CompeteNatC.compBids _4C")));
         bids.add(shows(Bid._4D, FIT_8_PLUS, pairPoints(26, 28), id("CompeteNatC.compBids _4D")));
 
-        bids.add(shows(Bid._5C, FIT_8_PLUS, pairPoints(29, 32), not(fit(Suit.Spades)), id("CompeteNatC.compBids _5C")));
-        bids.add(shows(Bid._5D, FIT_8_PLUS, pairPoints(29, 32), id("CompeteNatC.compBids _5D")));
+        bids.add(shows(Bid._5C, FIT_8_PLUS, pairPoints(29, 32), fit(Suit.Spades, false), fit(Suit.Hearts, false), id("CompeteNatC.compBids _5C")));
+        bids.add(shows(Bid._5D, FIT_8_PLUS, pairPoints(29, 32), fit(Suit.Spades, false), fit(Suit.Hearts, false), id("CompeteNatC.compBids _5D")));
 
         for (CallFeature cf : ForcedBidNatC.bids(ps)) {
             bids.add(cf);
