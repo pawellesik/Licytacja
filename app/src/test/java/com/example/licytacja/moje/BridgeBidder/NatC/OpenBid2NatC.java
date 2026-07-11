@@ -37,13 +37,16 @@ public class OpenBid2NatC extends OpenNatC {
         choices.addRules(
                 com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood.initiateConvention(ps),
                 propertiesAgreeTrump(new Call[]{Bid._3H, Bid._3S}, RespondBid2NatC::openerInvitedGame, false),
-               // partnerBids(Bid._3S, RespondBid2NatC::openerInvitedGame),
-
-                shows(Bid._3H, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responderRaisedMajor _3H")),
-                shows(Bid._3S, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responderRaisedMajor _2S")),
 
                 shows(Bid._4H, FIT_8_PLUS, pairPoints(PAIR_GAME), id("OpenBid2NatC.responderRaisedMajor _4H")),
                 shows(Bid._4S, FIT_8_PLUS, pairPoints(PAIR_GAME), id("OpenBid2NatC.responderRaisedMajor _4S")),
+
+                shows(Bid._3H, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responderRaisedMajor _3H")),
+                shows(Bid._3S, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responderRaisedMajor _3S")),
+
+                shows(Bid._2H, FIT_8_PLUS, pairHighCardPoints(PAIR_LOW_GAME), id("OpenBid2NatC.responderRaisedMajor _2H")),
+                shows(Bid._2S, FIT_8_PLUS, pairHighCardPoints(PAIR_LOW_GAME), id("OpenBid2NatC.responderRaisedMajor _2S")),
+
                 shows(Call.PASS, id("OpenBid2NatC.responderRaisedMajor _PASS"))
         );
         return choices;
