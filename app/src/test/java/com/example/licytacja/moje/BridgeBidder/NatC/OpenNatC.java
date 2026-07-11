@@ -17,7 +17,7 @@ public class OpenNatC extends NatC {
     public static PositionCalls getOpenPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
 
-        //choices.addRules(SolidSuitNatC.BIDS(ps));
+        choices.addRules(SolidSuitNatC.BIDS(ps));
         //choices.addRules(NoTrumpNatC.open(ps));
         //choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));

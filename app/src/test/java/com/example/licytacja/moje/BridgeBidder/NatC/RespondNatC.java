@@ -11,26 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RespondNatC extends NatC {
-    public static final Range RESPOND_PASS = new Range(0, 5);
+    public static final Range RESPOND_PASS = new Range(0, 6);
     public static final Range MINIMUM_HAND = new Range(7, 10);
     public static final Range JUMP_HAND = new Range(11, 28);
-    public static final Range RAISE_1 = new Range(6, 10);
-    public static final Range LIMIT_RAISE = new Range(11, 12);
-    public static final Range NEW_SUIT_2_LEVEL = new Range(13, 40);
-    public static final Range RESPOND_1NT_OVER_MAJOR = new Range(6, 12);
-    public static final Range MEDIUM_HAND = new Range(11, 13);
-    public static final Range RAISE_TO_3NT = new Range(13, 16);
-    public static final Range RAISE_TO_4M = new Range(13, 16);
-    public static final Range LIMIT_RAISE_OR_BETTER = new Range(11, 40);
-    public static final Range WEAK_4_LEVEL = new Range(0, 10);
-    public static final Range WEAK_5_LEVEL = new Range(0, 10);
-    public static final Range GAME_OR_BETTER = new Range(13, 40);
-    public static final Range MAX_PASSED = new Range(10, 11);
 
 
     public static PositionCalls oneClub(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(Blackwood.initiateConvention(ps));
         if (ps.isPassedHand()) {
             choices.addRules(
                     //partnerBids(OpenBid2NatC::responderChangedSuits),
@@ -45,7 +32,6 @@ public class RespondNatC extends NatC {
                     //shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         } else {
-            choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
                     //properties(new Call[]{Bid._1D, Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
                     //shows(Bid._1D, points(RESPOND_1_LEVEL), shape(5, 10), longestMajor(3)),
@@ -66,7 +52,6 @@ public class RespondNatC extends NatC {
 
     public static PositionCalls oneDiamond(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(SolidSuitNatC.BIDS(ps));
         choices.addRules(
                 //propertiesAgreeTrump(new Call[]{Bid._2D, Bid._3D, Bid._4D, Bid._5D}, OpenBid2NatC::responderRaisedMinor, true),
                 //properties(new Call[]{Bid._1H, Bid._1S}, OpenBid2NatC::responderChangedSuits, true),
@@ -80,6 +65,7 @@ public class RespondNatC extends NatC {
                 //shows(Bid._4D, points(WEAK_4_LEVEL), shape(6))
         );
         choices.addPassRule(points(RESPOND_PASS));
+        choices.addRules(CompeteNatC::compBids);
         return choices;
     }
 
@@ -108,27 +94,31 @@ public class RespondNatC extends NatC {
                     shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), id("RespondNatC.oneSpade _1NT"))
             );
         } else {
-            choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
-                    //partnerBids(OpenBid2NatC::responderChangedSuits),
-                    //shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                    //shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                    //shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                    //shows(Bid._2C, dummyPoints(Suit.Hearts, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Spades, 0, 4)),
-                    //shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
-                    //shows(Bid._2D, dummyPoints(Suit.Hearts, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Spades, 0, 4)),
-                    //propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                    //shows(Bid._2H, dummyPoints(RAISE_1), shape(3, 5)),
-                    //shows(Bid._3H, dummyPoints(MEDIUM_HAND), shape(4, 5)),
-                    //shows(Bid._4H, points(WEAK_4_LEVEL), shape(5, 10)),
-                    //properties(Bid._1S, true),
-                    //shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), shape(Suit.Hearts, 0, 3)),
-                    //properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
-                    //shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
-                    //shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+
+                    shows(Bid._2S, highCardPoints(MINIMUM_HAND), fit(), id("RespondNatC.oneSpade _2S")),
+                    shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _2H")),
+
+                    shows(Bid._3S, highCardPoints(JUMP_HAND), fit(), id("RespondNatC.oneSpade _2C")),
+                    shows(Bid._3H, highCardPoints(JUMP_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _3H")),
+
+                    shows(Bid._4S, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4S")),
+                    shows(Bid._4H, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4H")),
+
+                    shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2C")),
+                    shows(Bid._3C, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneSpade _3C")),
+
+                    shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2D")),
+                    shows(Bid._3D, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneSpade _3D")),
+
+                    shows(Bid._1NT, shape(Suit.Spades, 0, 2), pairHighCardPoints(MINIMUM_HAND)),
+                    shows(Bid._3NT, BALANCED, pairHighCardPoints(PAIR_GAME),id("RespondNatC.oneSpade _3NT"))
             );
         }
-        choices.addPassRule(points(RESPOND_PASS));
+        choices.addPassRule(points(RESPOND_PASS), id("RespondNatC.oneHeartvvvv _PASS"));
+        choices.addRules(CompeteNatC::compBids);
         return choices;
     }
 

@@ -11,8 +11,7 @@ public class SolidSuit extends LCStandard {
             bids.add(shows(new Bid(7, suit), shape(13)));
             bids.add(shows(new Bid(7, suit), shape(12), aces(2)));
             bids.add(shows(new Bid(6, suit), shape(12), aces(1)));
-            bids.add(shows(new Bid(6, suit), shape(11), aces(3)));
-            bids.add(shows(new Bid(6, suit), shape(10), aces(4)));
+
         }
         return bids;
     }
