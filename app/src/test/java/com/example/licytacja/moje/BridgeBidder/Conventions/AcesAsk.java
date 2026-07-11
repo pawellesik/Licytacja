@@ -23,6 +23,7 @@ public class AcesAsk extends Bidder {
         bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, ps.getPartner().getBid().getSuit(), null, null, UserText.AcesAsc, null));
         bids.add(shows(Bid._4C, fit( ps.getPartner().getBid().getSuit()), IS_ANY_JUMP, points(ASK_ACES),id("AcesAsk 1")));
         bids.add(shows(Bid._4C, fit( ps.getPartner().getBid().getSuit()), pairHighCardPoints(SLAM_OR_BETTER),id("AcesAsk 2")));
+
         return bids;
     }
     private static Suit getAgreedSuit(PositionState ps) {

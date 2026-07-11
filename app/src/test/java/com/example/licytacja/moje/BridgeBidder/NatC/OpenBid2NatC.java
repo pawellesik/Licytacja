@@ -28,14 +28,19 @@ public class OpenBid2NatC extends OpenNatC {
 
     public static PositionCalls responderRaisedMinor(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(CompeteNatC::compBids);
+        choices.addRules(
+                com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk.initiateConvention(ps),
+
+                shows(Bid._5D, pairHighCardPoints(PAIR_WEAK_GAME), fit(), id("RespondNatC.oneSpade _5D")),
+                shows(Bid._5C, pairHighCardPoints(PAIR_WEAK_GAME), fit(), id("RespondNatC.oneSpade _5C")),
+                shows(Call.PASS, id("OpenBid2NatC.responderRaisedMajor _PASS"))
+        );
         return choices;
     }
-
     public static PositionCalls responderRaisedMajor(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
-                com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood.initiateConvention(ps),
+                com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk.initiateConvention(ps),
                 propertiesAgreeTrump(new Call[]{Bid._3H, Bid._3S}, RespondBid2NatC::openerInvitedGame, false),
 
                 shows(Bid._4H, FIT_8_PLUS, pairPoints(PAIR_GAME), id("OpenBid2NatC.responderRaisedMajor _4H")),
