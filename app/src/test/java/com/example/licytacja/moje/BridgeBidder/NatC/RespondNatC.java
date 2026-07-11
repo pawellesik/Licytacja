@@ -173,6 +173,7 @@ public class RespondNatC extends NatC {
             //choices.addRules(weakJumpShift(Suit.Spades));
         }
         choices.addPassRule(points(RESPOND_PASS), id("RespondNatC.oneSpade _PASS"));
+        choices.addRules(CompeteNatC::compBids);
         return choices;
     }
 
