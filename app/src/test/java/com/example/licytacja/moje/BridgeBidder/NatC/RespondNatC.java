@@ -129,8 +129,8 @@ public class RespondNatC extends NatC {
                     shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2C")),
                     shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2D")),
 
-                    shows(Bid._2NT, highCardPoints(JUMP_AFTER_PASS), shape(Suit.Spades, 0, 2), id("RespondNatC.oneSpade _2NT")),
-                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), id("RespondNatC.oneSpade _1NT"))
+                    shows(Bid._2NT, highCardPoints(JUMP_AFTER_PASS), shape(Suit.Hearts, 0, 2), id("RespondNatC.oneSpade _2NT")),
+                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Hearts, 0, 2), id("RespondNatC.oneSpade _1NT"))
             );
         } else {
             choices.addRules(
@@ -183,8 +183,8 @@ public class RespondNatC extends NatC {
                     shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2C")),
                     shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2D")),
 
-                    shows(Bid._2NT, highCardPoints(JUMP_AFTER_PASS), shape(Suit.Hearts, 0, 2), id("RespondNatC.oneSpade _2NT")),
-                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Hearts, 0, 2), id("RespondNatC.oneSpade _1NT"))
+                    shows(Bid._2NT, highCardPoints(JUMP_AFTER_PASS), shape(Suit.Spades, 0, 2), id("RespondNatC.oneSpade _2NT")),
+                    shows(Bid._1NT, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), id("RespondNatC.oneSpade _1NT"))
             );
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
