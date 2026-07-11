@@ -8,7 +8,8 @@ public class OpenBid2NatC extends OpenNatC {
     public static PositionCalls responderChangedSuits(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(AcesAsk.initiateConvention(ps));
-        if (ps.getBid() != null && ps.getBid().getLevel() == 2) {
+        System.out.print("level sie rowna "+ ps.getPartner().getBid().toString());
+        if ( ps.getPartner().getBid() != null && ps.getPartner().getBid().getLevel() == 2) {
             choices.addRules(partnerBids(RespondBid2NatC::secondBid));
         }
         choices.addRules(

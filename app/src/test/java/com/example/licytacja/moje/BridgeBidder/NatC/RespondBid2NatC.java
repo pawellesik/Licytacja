@@ -11,9 +11,9 @@ public class RespondBid2NatC extends RespondNatC {
     public static Iterable<CallFeature> secondBid(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(OpenBid3NatC::thirdBid));
-
-        bids.add(shows(Bid._2S, IS_PARTNERS_SUIT, betterThan(Suit.Hearts), id("secondBid _2S")));
-        bids.add(shows(Bid._2H, IS_PARTNERS_SUIT, betterThan(Suit.Spades), id("secondBid _2H")));
+        System.out.print("test plesik");
+        bids.add(shows(Bid._2S, IS_PARTNERS_SUIT, betterThan(Suit.Hearts), id("RespondBid2NatC.secondBid _2S")));
+        bids.add(shows(Bid._2H, IS_PARTNERS_SUIT, betterThan(Suit.Spades), id("RespondBid2NatC.secondBid _2H")));
 
 
         //bids.add(shows(Bid._2S, raisePartner(), points(MINIMUM_HAND)));

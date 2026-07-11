@@ -60,7 +60,7 @@ PASS PASS 1S PASS
 1NT PASS
 
 % Cleaned by CleanPBN
-[Event "NatC Deal 5"]
+[Event "NatC Deal 6"]
 [Board "2"]
 [Dealer "N"]
 [Vulnerable "None"]
@@ -72,7 +72,7 @@ PASS PASS 1S PASS
 2NT PASS 3D PASS
 
 % Cleaned by CleanPBN
-[Event "NatC Deal 5"]
+[Event "NatC Deal 7"]
 [Board "2"]
 [Dealer "N"]
 [Vulnerable "None"]
@@ -85,7 +85,7 @@ PASS PASS 1S PASS
 2S PASS
 
 % Cleaned by CleanPBN
-[Event "NatC Deal 5"]
+[Event "NatC Deal 8"]
 [Board "2"]
 [Dealer "N"]
 [Vulnerable "None"]
@@ -97,7 +97,7 @@ PASS PASS 1S PASS
 3D PASS 5D PASS
 
 % Cleaned by CleanPBN
-[Event "NatC Deal 5"]
+[Event "NatC Deal 9"]
 [Board "2"]
 [Dealer "N"]
 [Vulnerable "None"]
