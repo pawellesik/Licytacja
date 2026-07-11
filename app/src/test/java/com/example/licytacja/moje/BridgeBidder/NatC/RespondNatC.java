@@ -12,12 +12,12 @@ import java.util.List;
 
 public class RespondNatC extends NatC {
     public static final Range RESPOND_PASS = new Range(0, 5);
-    public static final Range RESPOND_1_LEVEL = new Range(6, 10);
+    public static final Range MINIMUM_HAND = new Range(7, 10);
+    public static final Range JUMP_HAND = new Range(11, 28);
     public static final Range RAISE_1 = new Range(6, 10);
     public static final Range LIMIT_RAISE = new Range(11, 12);
     public static final Range NEW_SUIT_2_LEVEL = new Range(13, 40);
     public static final Range RESPOND_1NT_OVER_MAJOR = new Range(6, 12);
-    public static final Range MINIMUM_HAND = new Range(6, 10);
     public static final Range MEDIUM_HAND = new Range(11, 13);
     public static final Range RAISE_TO_3NT = new Range(13, 16);
     public static final Range RAISE_TO_4M = new Range(13, 16);
@@ -60,7 +60,6 @@ public class RespondNatC extends NatC {
                     //shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
             );
         }
-        choices.addRules(weakJumpShift(Suit.Clubs));
         choices.addPassRule(points(RESPOND_PASS));
         return choices;
     }
@@ -120,7 +119,6 @@ public class RespondNatC extends NatC {
                     //shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3)),
                     //shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
             );
-            choices.addRules(weakJumpShift(Suit.Hearts));
         }
         choices.addPassRule(points(RESPOND_PASS));
         return choices;
@@ -154,23 +152,27 @@ public class RespondNatC extends NatC {
         } else {
             choices.addRules(SolidSuitNatC.BIDS(ps));
             choices.addRules(
-                    //partnerBids(OpenBid2NatC::responderChangedSuits),
-                    //shows(Bid._2C, points(GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2C, points(GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerThan(Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2C, dummyPoints(Suit.Spades, GAME_OR_BETTER), shape(4), longerOrEqual(Suit.Clubs, Suit.Diamonds), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2D, points(GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2D, dummyPoints(Suit.Spades, GAME_OR_BETTER), longerOrEqual(Suit.Diamonds, Suit.Clubs), shape(Suit.Hearts, 0, 4)),
-                    //shows(Bid._2H, shape(5, 10), points(GAME_OR_BETTER)),
-                    //propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
-                    //shows(Bid._2S, dummyPoints(RAISE_1), shape(3, 5)),
-                    //shows(Bid._3S, dummyPoints(MEDIUM_HAND), shape(4, 5)),
-                    //shows(Bid._4S, points(WEAK_4_LEVEL), shape(5, 10)),
-                    //properties(Bid._1NT, OpenBid2NatC::semiForcingNT, false, false, false, null, null, null, UserText.SemiForcing, null),
-                    //shows(Bid._1NT, points(RESPOND_1NT_OVER_MAJOR), shape(Suit.Spades, 0, 3)),
-                    //shows(Bid._3NT, FLAT, points(RAISE_TO_3NT))
-            );
-            //choices.addRules(weakJumpShift(Suit.Spades));
+                    partnerBids(OpenBid2NatC::responderChangedSuits),
+                    propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
+
+                    shows(Bid._2S, highCardPoints(MINIMUM_HAND), fit(), id("RespondNatC.oneSpade _2S")),
+                    shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _2H")),
+
+                    shows(Bid._3S, highCardPoints(JUMP_HAND), fit(), id("RespondNatC.oneSpade _2C")),
+                    shows(Bid._3H, highCardPoints(JUMP_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _3H")),
+
+                    shows(Bid._4S, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4S")),
+                    shows(Bid._4H, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4H")),
+
+                    shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2C")),
+                    shows(Bid._3C, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneSpade _3C")),
+
+                    shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2D")),
+                    shows(Bid._3D, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneSpade _3D")),
+
+                    shows(Bid._1NT, shape(Suit.Spades, 0, 2), pairHighCardPoints(MINIMUM_HAND)),
+                    shows(Bid._3NT, BALANCED, pairHighCardPoints(PAIR_GAME),id("RespondNatC.oneSpade _3NT"))
+                    );
         }
         choices.addPassRule(points(RESPOND_PASS), id("RespondNatC.oneSpade _PASS"));
         choices.addRules(CompeteNatC::compBids);
@@ -188,14 +190,4 @@ public class RespondNatC extends NatC {
         return bids;
     }
 
-    public static Iterable<CallFeature> weakJumpShift(Suit openSuit) {
-        List<CallFeature> bids = new ArrayList<>();
-        //for (Suit suit : Suit.values()) {
-        //    if (suit != openSuit) {
-        //        bids.add(shows(new Bid(2, suit), IS_SINGLE_JUMP, points(WEAK_JUMP_SHIFT_POINTS), shape(6, 10), DECENT_PLUS_SUIT));
-        //        bids.add(shows(new Bid(3, suit), IS_SINGLE_JUMP, points(WEAK_JUMP_SHIFT_POINTS), shape(6, 10), DECENT_PLUS_SUIT));
-        //    }
-        //}
-        return bids;
-    }
 }
