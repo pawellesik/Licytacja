@@ -7,7 +7,7 @@ import java.util.List;
 
 public class OpenNatC extends NatC {
 
-    public static final HandConstraint FirstOpen = highCardPoints(12, 17);
+    public static final HandConstraint OpenBidding = highCardPoints(12, 17);
     public static final HandConstraint Strong = highCardPoints(18, 40);
     public static final HandConstraint Weak = highCardPoints(7, 11);
     public static final HandConstraint DontOpen = highCardPoints(0, 11);
@@ -36,10 +36,10 @@ public class OpenNatC extends NatC {
 
         bids.add(shows(Bid._1C, Strong));
 
-        bids.add(shows(Bid._1S, FirstOpen, shape(5, 8)));
-        bids.add(shows(Bid._1H, FirstOpen, shape(5, 8)));
-        bids.add(shows(Bid._1D, FirstOpen, shape(5, 10)));
-        bids.add(shows(Bid._1C, FirstOpen, note("Otwarcie naturalne")));
+        bids.add(shows(Bid._1S, OpenBidding, shape(5, 8)));
+        bids.add(shows(Bid._1H, OpenBidding, shape(5, 8)));
+        bids.add(shows(Bid._1D, OpenBidding, shape(5, 10)));
+        bids.add(shows(Bid._1C, OpenBidding));
 
         bids.add(shows(Call.PASS, isSeat(4), DontOpen));
         return bids;

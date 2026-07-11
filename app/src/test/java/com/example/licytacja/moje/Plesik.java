@@ -11,7 +11,7 @@ public class Plesik {
         // 1. Tworzymy obiekt gry
         Game game = new Game();
 
-        game.getDeal().put(Direction.N, Hand.parse("AQJ.AT3.T5432.98"));
+        game.getDeal().put(Direction.N, Hand.parse("AQ.AJT3.T5432.98"));
 
         game.getDeal().put(Direction.S, Hand.parse("AK984.AKQT3.JT3."));
 

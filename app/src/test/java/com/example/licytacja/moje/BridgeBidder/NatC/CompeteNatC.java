@@ -10,14 +10,13 @@ public class CompeteNatC extends NatC {
 
     public static Iterable<CallFeature> compBids(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-
         bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(26, 28)));
         bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(26, 28)));
 
         bids.add(shows(Bid._4H, IS_FORCED_TO_GAME, FIT_8_PLUS, pairPoints(23, 25)));
         bids.add(shows(Bid._4S, IS_FORCED_TO_GAME, FIT_8_PLUS, pairPoints(23, 25)));
 
-        bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(29, 32)));
+        bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(29, 32), id(" compBids _4H")));
         bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(29, 32)));
 
         bids.add(shows(Bid._2C, FIT_8_PLUS, pairPoints(20, 22)));
@@ -26,7 +25,7 @@ public class CompeteNatC extends NatC {
         bids.add(shows(Bid._2S, FIT_8_PLUS, pairPoints(20, 22)));
 
         bids.add(shows(Bid._3C, FIT_8_PLUS, pairPoints(23, 25)));
-        bids.add(shows(Bid._3D, FIT_8_PLUS, pairPoints(23, 25), id("tutaj")));
+        bids.add(shows(Bid._3D, FIT_8_PLUS, pairPoints(23, 25)));
         bids.add(shows(Bid._3H, FIT_8_PLUS, pairPoints(23, 25)));
         bids.add(shows(Bid._3S, FIT_8_PLUS, pairPoints(23, 25)));
 
@@ -37,7 +36,7 @@ public class CompeteNatC extends NatC {
         bids.add(shows(Bid._4D, FIT_8_PLUS, pairPoints(26, 28)));
 
         bids.add(shows(Bid._5C, FIT_8_PLUS, pairPoints(29, 32)));
-        bids.add(shows(Bid._5D, FIT_8_PLUS, pairPoints(29, 32)));
+        bids.add(shows(Bid._5D, FIT_8_PLUS, pairPoints(29, 32), id(" compBids _5D")));
 
         for (CallFeature cf : ForcedBidNatC.bids(ps)) {
             bids.add(cf);

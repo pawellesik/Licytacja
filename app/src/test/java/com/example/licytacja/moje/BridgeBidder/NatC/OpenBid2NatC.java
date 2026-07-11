@@ -2,10 +2,6 @@ package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 import com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk;
-import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OpenBid2NatC extends OpenNatC {
 
@@ -13,19 +9,20 @@ public class OpenBid2NatC extends OpenNatC {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(AcesAsk.initiateConvention(ps));
         choices.addRules(
+                //properties(new Call[]{Bid._3S, Bid._3H}, RespondBid2NatC::secondBidToGame),
                 partnerBids(RespondBid2NatC::secondBid),
 
-                shows(Bid._2S, IS_REBID, shape(6, 11), FirstOpen),
-                shows(Bid._2H, IS_REBID, shape(6, 11), FirstOpen),
+                shows(Bid._2S, IS_REBID, shape(6, 11), OpenBidding),
+                shows(Bid._2H, IS_REBID, shape(6, 11), OpenBidding),
 
                 shows(Bid._2S, IS_NEW_SUIT, shape(4, 11)),
                 shows(Bid._2H, IS_NEW_SUIT, shape(4, 11)),
 
-                shows(Bid._5D,  shape(3, 5), pairHighCardPoints(PAIR_GAME)),
-                shows(Bid._5C,  shape(3, 5), pairHighCardPoints(PAIR_GAME))
+                shows(Bid._3S, IS_NEW_SUIT, shape(4, 11), pairHighCardPoints(PAIR_GAME)),
+                shows(Bid._3H, IS_NEW_SUIT, shape(4, 11), pairHighCardPoints(PAIR_GAME))
 
         );
-        choices.addRules(CompeteNatC::compBids);//todo ??
+        //choices.addRules(CompeteNatC::compBids);//todo ??
         return choices;
     }
 

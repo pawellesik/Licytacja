@@ -46,10 +46,19 @@ public class RespondBid2NatC extends RespondNatC {
         return bids;
     }
 
+    public static PositionCalls secondBidToGame(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)), note("koniec"), id("test"));
+        choices.addRules(shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
+        choices.addRules(shows(Bid._3NT, pairHighCardPoints(PAIR_GAME)));
+        choices.addRules(shows(Call.PASS));
+        return choices;
+    }
+
     public static Iterable<CallFeature> openerInvitedGame(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
-        bids.add(shows(Bid._4H, FIT_8_PLUS, pairPoints(PAIR_GAME)));
-        bids.add(shows(Bid._4S, FIT_8_PLUS, pairPoints(PAIR_GAME)));
+        bids.add(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
+        bids.add(shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
         bids.add(shows(Call.PASS));
         return bids;
     }
