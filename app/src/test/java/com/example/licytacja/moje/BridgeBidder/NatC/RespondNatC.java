@@ -98,11 +98,11 @@ public class RespondNatC extends NatC {
                     partnerBids(OpenBid2NatC::responderChangedSuits),
                     propertiesAgreeTrump(raises, OpenBid2NatC::responderRaisedMajor, true),
 
-                    shows(Bid._2S, highCardPoints(MINIMUM_HAND), fit(), id("RespondNatC.oneSpade _2S")),
-                    shows(Bid._2H, highCardPoints(MINIMUM_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _2H")),
+                    shows(Bid._2H, highCardPoints(MINIMUM_HAND), fit(), id("RespondNatC.oneSpade _2H")),
+                    shows(Bid._2S, highCardPoints(MINIMUM_HAND), shape(Suit.Hearts, 0, 2), shape(5,10), id("RespondNatC.oneSpade _2S")),
 
-                    shows(Bid._3S, highCardPoints(JUMP_HAND), fit(), id("RespondNatC.oneSpade _2C")),
-                    shows(Bid._3H, highCardPoints(JUMP_HAND), shape(Suit.Spades, 0, 2), shape(5,10), id("RespondNatC.oneSpade _3H")),
+                    shows(Bid._3H, highCardPoints(JUMP_HAND), fit(), id("RespondNatC.oneSpade _3H")),
+                    shows(Bid._2S, highCardPoints(JUMP_HAND), shape(Suit.Hearts, 0, 2), shape(5,10), id("RespondNatC.oneSpade _2S")),
 
                     shows(Bid._4S, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4S")),
                     shows(Bid._4H, highCardPoints(PAIR_GAME), fit(), id("RespondNatC.oneSpade _4H")),
@@ -113,7 +113,7 @@ public class RespondNatC extends NatC {
                     shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneSpade _2D")),
                     shows(Bid._3D, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneSpade _3D")),
 
-                    shows(Bid._1NT, shape(Suit.Spades, 0, 2), pairHighCardPoints(MINIMUM_HAND)),
+                    shows(Bid._1NT, shape(Suit.Hearts, 0, 2), pairHighCardPoints(MINIMUM_HAND)),
                     shows(Bid._3NT, BALANCED, pairHighCardPoints(PAIR_GAME),id("RespondNatC.oneSpade _3NT"))
             );
         }
