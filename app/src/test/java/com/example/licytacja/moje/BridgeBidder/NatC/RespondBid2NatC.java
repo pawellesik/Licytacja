@@ -2,6 +2,7 @@ package com.example.licytacja.moje.BridgeBidder.NatC;
 
 import com.example.licytacja.moje.BridgeBidder.*;
 import com.example.licytacja.moje.BridgeBidder.Conventions.Blackwood;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class RespondBid2NatC extends RespondNatC {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(OpenBid3NatC::thirdBid));
 
-        bids.add(shows(Bid._2S, IS_PARTNERS_SUIT, betterThan(Suit.Hearts)));
-        bids.add(shows(Bid._2H, IS_PARTNERS_SUIT, betterThan(Suit.Spades)));
+        bids.add(shows(Bid._2S, IS_PARTNERS_SUIT, betterThan(Suit.Hearts), id("secondBid _2S")));
+        bids.add(shows(Bid._2H, IS_PARTNERS_SUIT, betterThan(Suit.Spades), id("secondBid _2H")));
 
 
         //bids.add(shows(Bid._2S, raisePartner(), points(MINIMUM_HAND)));
@@ -48,19 +49,20 @@ public class RespondBid2NatC extends RespondNatC {
 
     public static PositionCalls secondBidToGame(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)), note("koniec"), id("test"));
-        choices.addRules(shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
-        choices.addRules(shows(Bid._3NT, pairHighCardPoints(PAIR_GAME)));
+        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)), note("koniec"), id("test"),
+                (shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME))),
+                (shows(Bid._3NT, pairHighCardPoints(PAIR_GAME))));
         choices.addRules(shows(Call.PASS));
         return choices;
     }
 
-    public static Iterable<CallFeature> openerInvitedGame(PositionState ps) {
-        List<CallFeature> bids = new ArrayList<>();
-        bids.add(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
-        bids.add(shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)));
-        bids.add(shows(Call.PASS));
-        return bids;
+    public static PositionCalls openerInvitedGame(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)),
+                (shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME))),
+                shows(Call.PASS));
+
+        return choices;
     }
 
 }

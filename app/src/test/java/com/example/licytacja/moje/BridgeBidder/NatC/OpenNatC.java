@@ -17,9 +17,9 @@ public class OpenNatC extends NatC {
     public static PositionCalls getOpenPositionCalls(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
 
-        choices.addRules(SolidSuitNatC.BIDS(ps));
+        //choices.addRules(SolidSuitNatC.BIDS(ps));
         //choices.addRules(NoTrumpNatC.open(ps));
-        choices.addRules(openSuitWeak(ps));
+        //choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
         choices.addRules(CompeteNatC::compBids);
         choices.addPassRule(DontOpen);
@@ -36,22 +36,22 @@ public class OpenNatC extends NatC {
 
         bids.add(shows(Bid._1C, Strong));
 
-        bids.add(shows(Bid._1S, OpenBidding, shape(5, 8)));
-        bids.add(shows(Bid._1H, OpenBidding, shape(5, 8)));
-        bids.add(shows(Bid._1D, OpenBidding, shape(5, 10)));
-        bids.add(shows(Bid._1C, OpenBidding));
+        bids.add(shows(Bid._1S, OpenBidding, shape(5, 8), id("OpenNatC.openSuit _1S")));
+        bids.add(shows(Bid._1H, OpenBidding, shape(5, 8), id("OpenNatC.openSuit _1H")));
+        bids.add(shows(Bid._1D, OpenBidding, shape(5, 10), id("OpenNatC.openSuit _1D")));
+        bids.add(shows(Bid._1C, OpenBidding, id("OpenNatC.openSuit _1C")));
 
-        bids.add(shows(Call.PASS, isSeat(4), DontOpen));
+        bids.add(shows(Call.PASS, isSeat(4), DontOpen, id("OpenNatC.openSuit _PASS")));
         return bids;
     }
 
     private static List<CallFeature> openSuitWeak(PositionState ps) {
         List<CallFeature> rules = new ArrayList<>();
         rules.add(partnerBids(RespondNatC::weakOpen));
-        rules.add(shows(Bid._3C, Weak, shape(7, 11)));
-        rules.add(shows(Bid._3D, Weak, shape(7, 11)));
-        rules.add(shows(Bid._3H, Weak, shape(7, 11)));
-        rules.add(shows(Bid._3S, Weak, shape(7, 11)));
+        rules.add(shows(Bid._3C, Weak, shape(7, 11), id("OpenNatC.openSuitWeak _3C")));
+        rules.add(shows(Bid._3D, Weak, shape(7, 11), id("OpenNatC.openSuitWeak _3D")));
+        rules.add(shows(Bid._3H, Weak, shape(7, 11), id("OpenNatC.openSuitWeak _3H")));
+        rules.add(shows(Bid._3S, Weak, shape(7, 11), id("OpenNatC.openSuitWeak _3S")));
         return rules;
     }
 
