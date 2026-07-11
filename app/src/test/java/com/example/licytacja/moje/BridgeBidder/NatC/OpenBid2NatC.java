@@ -8,14 +8,10 @@ public class OpenBid2NatC extends OpenNatC {
     public static PositionCalls responderChangedSuits(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(AcesAsk.initiateConvention(ps));
-        System.out.print("level sie rowna "+ ps.getPartner().getBid().toString());
-        if ( ps.getPartner().getBid() != null && ps.getPartner().getBid().getLevel() == 2) {
-            choices.addRules(partnerBids(RespondBid2NatC::secondBid));
-        }
-        choices.addRules(
-                //properties(new Call[]{Bid._3S, Bid._3H}, RespondBid2NatC::secondBidToGame),
-                //partnerBids(RespondBid2NatC::secondBid),
 
+        choices.addRules(
+                properties(new Call[]{Bid._3S, Bid._3H}, RespondBid2NatC::secondBidToGame),
+                partnerBids(RespondBid2NatC::secondBid),
                 shows(Bid._2S, IS_REBID, shape(6, 11), OpenBidding, id("OpenBid2NatC.responderChangedSuits _2S")),
                 shows(Bid._2H, IS_REBID, shape(6, 11), OpenBidding, id("OpenBid2NatC.responderChangedSuits _2H")),
 
@@ -26,7 +22,7 @@ public class OpenBid2NatC extends OpenNatC {
                 shows(Bid._3H, IS_NEW_SUIT, shape(4, 11), pairHighCardPoints(PAIR_GAME), id("OpenBid2NatC.responderChangedSuits _3H"))
 
         );
-        //choices.addRules(CompeteNatC::compBids);//todo ??
+        choices.addRules(CompeteNatC::compBids);
         return choices;
     }
 
