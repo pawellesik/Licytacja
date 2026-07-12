@@ -20,7 +20,7 @@ public class OpenNatC extends NatC {
 
         choices.addRules(SolidSuitNatC.BIDS(ps));
         //choices.addRules(NoTrumpNatC.open(ps));
-        //choices.addRules(openSuitWeak(ps));
+        choices.addRules(openSuitWeak(ps));
         choices.addRules(openSuit(ps));
         choices.addRules(CompeteNatC::compBids);
         choices.addPassRule(DontOpen);
