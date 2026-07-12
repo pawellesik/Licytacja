@@ -6,12 +6,14 @@ import com.example.licytacja.moje.BridgeBidder.LCStandard.UserText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransferBidder extends NoTrump.OneNoTrumpBidder {
-    public TransferBidder(NoTrump.NoTrumpDescription ntd) {
-        super(ntd);
+public class TransferBidder extends Bidder {
+    protected final NoTrumpDescription ntd;
+
+    public TransferBidder(NoTrumpDescription ntd) {
+        this.ntd = ntd;
     }
 
-    public static CallFeaturesFactory initiateConvention(NoTrump.NoTrumpDescription ntd) {
+    public static CallFeaturesFactory initiateConvention(NoTrumpDescription ntd) {
         return new TransferBidder(ntd)::initiate;
     }
 

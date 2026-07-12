@@ -9,37 +9,6 @@ import java.util.List;
 
 public class NoTrump extends Bidder {
 
-    public static class NoTrumpDescription {
-        public static class OpenerRanges {
-            public Constraint open;
-            public Constraint dontAcceptInvite;
-            public Constraint acceptInvite;
-            public Constraint lessThanSuperAccept;
-            public Constraint superAccept;
-        }
-
-        public static class ResponderRanges {
-            public Constraint lessThanInvite;
-            public Constraint inviteGame;
-            public Constraint inviteOrBetter;
-            public Constraint game;
-            public Constraint gameOrBetter;
-            public Constraint gameIfSuperAccept;
-            public Constraint inviteSlam;
-            public Constraint smallSlam;
-            public Constraint grandSlam;
-
-            public Constraint gameAsDummy;
-            public Constraint inviteAsDummy;
-            public Constraint smallSlamAsDummy;
-            public Constraint grandSlamAsDummy;
-        }
-
-        public String openType;
-        public OpenerRanges OR = new OpenerRanges();
-        public ResponderRanges RR = new ResponderRanges();
-    }
-
     public static class Open1NTDescription extends NoTrumpDescription {
         public Open1NTDescription() {
             openType = "Open1NT";
