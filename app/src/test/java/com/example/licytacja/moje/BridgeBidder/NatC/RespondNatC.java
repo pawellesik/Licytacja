@@ -17,7 +17,7 @@ public class RespondNatC extends NatC {
     public static PositionCalls oneClub(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
-                partnerBids(OpenBid2NatC::responderChangedSuits),
+                partnerBids(OpenBid2NatC::responderClub),
                 properties(new Call[]{Bid._1D}, OpenBid2NatC::responderNegat, true),
                 shows(Bid._1D, highCardPoints(RESPOND_PASS), id("RespondNatC.oneClub _1D")),
                 shows(Bid._1H, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _1H")),
