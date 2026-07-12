@@ -10,7 +10,7 @@ public class OpenBid2NatC extends OpenNatC {
         choices.addRules(AcesAsk.initiateConvention(ps));
         choices.addRules(
                 partnerBids(OpenBid2NatC::responderChangedSuits),
-                partnerBids(RespondBid2NatC::secondBid),
+                properties(new Call[]{Bid._1NT}, RespondBid2NatC::colorAfterPass),
 
                 shows(Bid._1NT, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3), highCardPoints(12, 17), id("OpenBid2NatC.responderNegat _1NT")),
                 shows(Bid._1S, shape(4, 11), id("OpenBid2NatC.responderChangedSuits _1S")),

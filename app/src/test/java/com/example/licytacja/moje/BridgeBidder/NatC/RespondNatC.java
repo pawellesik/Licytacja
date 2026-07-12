@@ -19,7 +19,7 @@ public class RespondNatC extends NatC {
         choices.addRules(
                 partnerBids(OpenBid2NatC::responderChangedSuits),
                 properties(new Call[]{Bid._1D}, OpenBid2NatC::responderNegat, true),
-                shows(Bid._1D, points(RESPOND_PASS)
+                shows(Bid._1D, highCardPoints(RESPOND_PASS)
                 //shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
                 //shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
                 //shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),

@@ -8,6 +8,18 @@ import java.util.List;
 
 public class RespondBid2NatC extends RespondNatC {
 
+
+    public static PositionCalls colorAfterPass(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(partnerBids(OpenBid3NatC::thirdBid),
+                shows(Bid._2S, shape(5, 10)),
+                shows(Bid._2H, shape(5, 10))
+        );
+
+        return choices;
+    }
+
+
     public static Iterable<CallFeature> secondBid(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(partnerBids(OpenBid3NatC::thirdBid));
