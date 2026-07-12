@@ -20,16 +20,21 @@ public class RespondNatC extends NatC {
                 partnerBids(OpenBid2NatC::responderChangedSuits),
                 properties(new Call[]{Bid._1D}, OpenBid2NatC::responderNegat, true),
                 shows(Bid._1D, highCardPoints(RESPOND_PASS), id("RespondNatC.oneClub _1D")),
-                shows(Bid._1H, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _1H"))
-                //shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
-                //shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
-                //propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
-                //shows(Bid._2C, points(RAISE_1), shape(5), longestMajor(3)),
-                //shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
-                //shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
-                //shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
-        );
+                shows(Bid._1H, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _1H")),
+                shows(Bid._1S, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _1H")),
+                shows(Bid._2D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _2D")),
+                shows(Bid._2C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _2C")),
 
+                shows(Bid._2H, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneClub _2H")),
+                shows(Bid._2S, highCardPoints(JUMP_HAND), shape(5, 10), id("RespondNatC.oneClub _2H")),
+                shows(Bid._3D, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _3D")),
+                shows(Bid._3C, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _3C")),
+
+                shows(Bid._3H, highCardPoints(WEAK_LONG), shape(7, 10), id("RespondNatC.oneClub _3H")),
+                shows(Bid._3S, highCardPoints(WEAK_LONG), shape(7, 10), id("RespondNatC.oneClub _3H")),
+
+                shows(Bid._1NT, highCardPoints(MINIMUM_HAND), id("RespondNatC.oneClub _1NT"))
+        );
 
         choices.addPassRule(points(RESPOND_PASS));
         return choices;
