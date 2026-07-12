@@ -19,8 +19,8 @@ public class RespondNatC extends NatC {
         choices.addRules(
                 partnerBids(OpenBid2NatC::responderChangedSuits),
                 properties(new Call[]{Bid._1D}, OpenBid2NatC::responderNegat, true),
-                shows(Bid._1D, highCardPoints(RESPOND_PASS)
-                //shows(Bid._1H, points(RESPOND_1_LEVEL), shape(4), shape(Suit.Spades, 0, 4)),
+                shows(Bid._1D, highCardPoints(RESPOND_PASS), id("RespondNatC.oneClub _1D")),
+                shows(Bid._1H, highCardPoints(MINIMUM_HAND), shape(5, 10), id("RespondNatC.oneClub _1H"))
                 //shows(Bid._1H, points(RESPOND_1_LEVEL), shape(5, 10), longerThan(Suit.Spades)),
                 //shows(Bid._1S, points(RESPOND_1_LEVEL), shape(4, 10), longerOrEqualTo(Suit.Hearts)),
                 //propertiesAgreeTrump(new Call[]{Bid._2C, Bid._3C, Bid._4C, Bid._5C}, OpenBid2NatC::responderRaisedMinor, true),
@@ -28,8 +28,8 @@ public class RespondNatC extends NatC {
                 //shows(Bid._3C, points(LIMIT_RAISE), shape(5), longestMajor(3)),
                 //shows(Bid._5C, points(WEAK_5_LEVEL), shape(7, 10)),
                 //shows(Bid._4C, points(WEAK_4_LEVEL), shape(6))
-                )
         );
+
 
         choices.addPassRule(points(RESPOND_PASS));
         return choices;

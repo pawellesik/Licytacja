@@ -15,13 +15,15 @@ import java.util.List;
 
 public class AcesAsk extends Bidder {
     private static final Range ASK_ACES = new Range(16, 40);
+
+    private static final Range HIGHT_GAME = new Range(28, 40);
     private static final Range SLAM_OR_BETTER = new Range(32, 40);
     private static final Range GRAND_SLAM = new Range(36, 40);
 
     public static Iterable<CallFeature> initiateConvention(PositionState ps) {
         List<CallFeature> bids = new ArrayList<>();
         bids.add(properties(Bid._4C, AcesAsk::respondCountAces, true, true, false, ps.getPartner().getBid().getSuit(), null, null, UserText.AcesAsc, null));
-        bids.add(shows(Bid._4C, fit( ps.getPartner().getBid().getSuit()), IS_ANY_JUMP, points(ASK_ACES),id("AcesAsk 1")));
+        bids.add(shows(Bid._4C, fit( ps.getPartner().getBid().getSuit()), IS_ANY_JUMP, points(ASK_ACES),id("AcesAsk 1"), pairHighCardPoints(HIGHT_GAME)));
         bids.add(shows(Bid._4C, fit( ps.getPartner().getBid().getSuit()), pairHighCardPoints(SLAM_OR_BETTER),id("AcesAsk 2")));
 
         return bids;
