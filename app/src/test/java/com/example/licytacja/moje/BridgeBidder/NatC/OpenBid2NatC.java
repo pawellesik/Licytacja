@@ -5,6 +5,23 @@ import com.example.licytacja.moje.BridgeBidder.Conventions.AcesAsk;
 
 public class OpenBid2NatC extends OpenNatC {
 
+    public static PositionCalls responderNegat(PositionState ps) {
+        PositionCalls choices = new PositionCalls(ps);
+        choices.addRules(AcesAsk.initiateConvention(ps));
+        choices.addRules(
+                partnerBids(OpenBid2NatC::responderChangedSuits),
+                partnerBids(RespondBid2NatC::secondBid),
+
+                shows(Bid._1NT, shape(Suit.Hearts, 0, 3), shape(Suit.Spades, 0, 3), highCardPoints(12, 17), id("OpenBid2NatC.responderNegat _1NT")),
+                shows(Bid._1S, shape(4, 11), id("OpenBid2NatC.responderChangedSuits _1S")),
+                shows(Bid._1H, shape(4, 11), id("OpenBid2NatC.responderChangedSuits _1H"))
+
+
+                );
+        choices.addRules(CompeteNatC::compBids);
+        return choices;
+    }
+
     public static PositionCalls responderChangedSuits(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(AcesAsk.initiateConvention(ps));
@@ -42,6 +59,7 @@ public class OpenBid2NatC extends OpenNatC {
         );
         return choices;
     }
+
     public static PositionCalls responderRaisedMajor(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
@@ -78,20 +96,21 @@ public class OpenBid2NatC extends OpenNatC {
         );
         return choices;
     }
+
     public static PositionCalls responder2NT(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(
                 propertiesAgreeTrump(new Call[]{Bid._3H, Bid._3S}, RespondBid2NatC::openerInvitedGame, false),
-              //  partnerBids(Bid._3S, RespondBid2NatC::openerInvitedGame),
+                //  partnerBids(Bid._3S, RespondBid2NatC::openerInvitedGame),
 
                 shows(Bid._3H, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3H")),
                 shows(Bid._3S, FIT_8_PLUS, pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3S")),
 
-                shows(Bid._3H, IS_NEW_SUIT, shape(5,10), pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3H")),
-                shows(Bid._3S, IS_NEW_SUIT, shape(5,10), pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3S")),
+                shows(Bid._3H, IS_NEW_SUIT, shape(5, 10), pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3H")),
+                shows(Bid._3S, IS_NEW_SUIT, shape(5, 10), pairPoints(PAIR_GAME_INVITE), id("OpenBid2NatC.responder2NT _3S")),
 
-                shows(Bid._3D, IS_NEW_SUIT, shape(5,10), id("OpenBid2NatC.responder2NT _3D")),
-                shows(Bid._3C, IS_NEW_SUIT, shape(5,10), id("OpenBid2NatC.responder2NT _3C")),
+                shows(Bid._3D, IS_NEW_SUIT, shape(5, 10), id("OpenBid2NatC.responder2NT _3D")),
+                shows(Bid._3C, IS_NEW_SUIT, shape(5, 10), id("OpenBid2NatC.responder2NT _3C")),
 
                 shows(Bid._3NT, FIT_8_PLUS, pairPoints(PAIR_GAME), id("OpenBid2NatC.responder2NT _3NT")),
                 shows(Bid._3NT, FIT_8_PLUS, pairPoints(PAIR_GAME), id("OpenBid2NatC.responder2NT _3NT")),
