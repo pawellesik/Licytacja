@@ -28,7 +28,7 @@ public class OpenBid2NatC extends OpenNatC {
         if (ps.getPrivateHandSummary() != null && OpeningStrongBidding.conforms(null, ps, ps.getPrivateHandSummary())) {
             choices.addRules(
                     AcesAsk.initiateConvention(ps),
-//todo
+
                     shows(Bid._2H, isJump(1), highCardPoints(OpeningStrongBiddingRange), shape(5, 10), id("OpenBid2NatC.responderClub _2H")),
                     shows(Bid._2S, isJump(1), highCardPoints(OpeningStrongBiddingRange), shape(5, 10), id("OpenBid2NatC.responderClub _2S")),
                     shows(Bid._3H, isJump(1), highCardPoints(OpeningStrongBiddingRange), shape(5, 10), id("OpenBid2NatC.responderClub _3H")),
