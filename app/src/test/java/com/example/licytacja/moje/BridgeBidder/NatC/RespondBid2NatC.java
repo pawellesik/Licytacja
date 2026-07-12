@@ -12,8 +12,9 @@ public class RespondBid2NatC extends RespondNatC {
     public static PositionCalls colorAfterPass(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
         choices.addRules(partnerBids(OpenBid3NatC::thirdBid),
-                shows(Bid._2S, shape(5, 10)),
-                shows(Bid._2H, shape(5, 10))
+                shows(Bid._2S, shape(5, 10), id("RespondBid2NatC.colorAfterPass _2S")),
+                shows(Bid._2H, shape(5, 10), id("RespondBid2NatC.colorAfterPass _2H")),
+                shows(Call.PASS, id("RespondBid2NatC.colorAfterPass PASS"))
         );
 
         return choices;
@@ -60,18 +61,21 @@ public class RespondBid2NatC extends RespondNatC {
 
     public static PositionCalls secondBidToGame(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)), note("koniec"), id("test"),
-                (shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME))),
-                (shows(Bid._3NT, pairHighCardPoints(PAIR_GAME))));
-        choices.addRules(shows(Call.PASS));
+        choices.addRules(
+                shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)), id("RespondBid2NatC.secondBidToGame _4H"),
+                shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)),
+                shows(Bid._3NT, pairHighCardPoints(PAIR_GAME), id("RespondBid2NatC.secondBidToGame _3NT")),
+                shows(Call.PASS), id("RespondBid2NatC.secondBidToGame PASS"));
+
         return choices;
     }
 
     public static PositionCalls openerInvitedGame(PositionState ps) {
         PositionCalls choices = new PositionCalls(ps);
-        choices.addRules(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)),
-                (shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME))),
-                shows(Call.PASS));
+        choices.addRules(
+                shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME)),
+                shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME), id("RespondBid2NatC.openerInvitedGame _4S")),
+                shows(Call.PASS, id("RespondBid2NatC.openerInvitedGame PASS")));
 
         return choices;
     }
