@@ -9,6 +9,7 @@ import java.util.List;
 public class CompeteNatC extends NatC {
 
     public static Iterable<CallFeature> compBids(PositionState ps) {
+
         List<CallFeature> bids = new ArrayList<>();
         bids.add(shows(Bid._4H, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME), id("CompeteNatC.compBids _4H")));
         bids.add(shows(Bid._4S, FIT_8_PLUS, pairHighCardPoints(PAIR_GAME), id("CompeteNatC.compBids _4S")));
